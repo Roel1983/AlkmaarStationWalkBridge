@@ -7,6 +7,8 @@ include <PlatformC.inc>
 include <BridgeAB.inc>
 include <BridgeBC.inc>
 
+$fn = 64;
+
 walk_bridge_config = WalkBridgeConfig();
 
 WalkBridge(walk_bridge_config);

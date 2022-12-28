@@ -4,7 +4,6 @@ walk_bridge_config = WalkBridgeConfig();
 
 BridgeBC(walk_bridge_config);
 
-bridge_height            = 52;
 bridge_size              = [40, 35];
 bridge_roof_radius       = 40;
 
@@ -12,6 +11,7 @@ module BridgeBC(WalkBridgeConfig) {
     assert(is_config(WalkBridgeConfig, "WalkBridgeConfig"));
     
     distance_platform_b_c = ConfigGet(WalkBridgeConfig, "distance_platform_b_c");
+    bridge_height         = ConfigGet(WalkBridgeConfig, "bridge_clearance");
     
     translate([0, 0, bridge_height]) {
         rotate(90) A([bridge_size[0], distance_platform_b_c, bridge_size[1]], bridge_roof_radius);
