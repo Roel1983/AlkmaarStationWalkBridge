@@ -13,7 +13,7 @@ module BridgeAB(WalkBridgeConfig) {
     distance_platform_a_b = ConfigGet(WalkBridgeConfig, "distance_platform_a_b");
     bridge_height         = ConfigGet(WalkBridgeConfig, "bridge_clearance");
    
-    translate([0, 0, bridge_height]) {
+    %translate([0, 0, bridge_height]) {
         rotate(90) A([bridge_size[0], distance_platform_a_b, bridge_size[1]], bridge_roof_radius);
     }
 }

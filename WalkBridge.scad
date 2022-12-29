@@ -4,11 +4,11 @@ include <../Utils/Box.inc>
 include <../Utils/TransformCopy.inc>
 include <../Utils/Units.inc>
 include <WalkBridge.inc>
+include <BridgeSupport.inc>
 include <PlatformA.inc>
 include <PlatformB.inc>
 include <PlatformC.inc>
-include <BridgeAB.inc>
-include <BridgeBC.inc>
+include <Bridge.inc>
 include <../Utils/Box.inc>
 
 $fn = 64;
@@ -17,13 +17,16 @@ walk_bridge_config = WalkBridgeConfig();
 
 WalkBridge(walk_bridge_config);
 
-module WalkBridge(WalkBridgeConfig) {
-    assert(is_config(WalkBridgeConfig, "WalkBridgeConfig"));
+module WalkBridge(walk_bridge_config) {
+    assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     
-    distance_platform_a_b = ConfigGet(WalkBridgeConfig, "distance_platform_a_b");
-    distance_platform_b_c = ConfigGet(WalkBridgeConfig, "distance_platform_b_c");
+    distance_platform_a_b = ConfigGet(walk_bridge_config, "distance_platform_a_b");
+    distance_platform_b_c = ConfigGet(walk_bridge_config, "distance_platform_b_c");
+    bridge_support_position_y = ConfigGet(walk_bridge_config, "bridge_support_position_y");
+    bridge_clearance      = ConfigGet(walk_bridge_config, "bridge_clearance");
     
-    PlatformA(WalkBridgeConfig);
+    Bridge(walk_bridge_config);
+    PlatformA(walk_bridge_config);
     Box(
         x_size = mm(300),
         y_size = mm(89.2),
@@ -31,12 +34,12 @@ module WalkBridge(WalkBridgeConfig) {
         
     );
     
-    translate([0, distance_platform_a_b / 2]) {
-        BridgeAB (WalkBridgeConfig);
+    translate([0, bridge_support_position_y]) {
+        BridgeSupport(walk_bridge_config);
     }
-    
+        
     translate([0, distance_platform_a_b]) {
-        PlatformB(WalkBridgeConfig);
+        PlatformB(walk_bridge_config);
         Box(
             x_size = mm(300),
             y_size = mm(129.2),
@@ -44,12 +47,8 @@ module WalkBridge(WalkBridgeConfig) {
         );
     }
     
-    translate([0, distance_platform_a_b + distance_platform_b_c / 2]) {
-        BridgeBC (WalkBridgeConfig);
-    }
-    
     translate([0, distance_platform_a_b + distance_platform_b_c]) {
-        PlatformC(WalkBridgeConfig);
+        PlatformC(walk_bridge_config);
         Box(
             x_size = mm(300),
             y_size = mm(80.2),
