@@ -14,7 +14,6 @@ module BridgeWallSegment2Right(
     BridgeWallSegment(
         walk_bridge_config,
         wall_segment_config,
-        mirror_x = false,
-        mirror_y = false
+        mirror_x = false
     );
 }
