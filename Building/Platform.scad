@@ -1,11 +1,11 @@
-include <WalkBridge.inc>
-include <../Utils/Constants.inc>
-include <../Utils/Box.inc>
-include <../Utils/LinearExtrude.inc>
-include <../Utils/Scaled.inc>
-include <../Utils/TransformCopy.inc>
-include <../Utils/TransformIf.inc>
-include <../Utils/Units.inc>
+include <../WalkBridge.inc>
+include <../../Utils/Constants.inc>
+include <../../Utils/Box.inc>
+include <../../Utils/LinearExtrude.inc>
+include <../../Utils/Scaled.inc>
+include <../../Utils/TransformCopy.inc>
+include <../../Utils/TransformIf.inc>
+include <../../Utils/Units.inc>
 
 $fn = 64;
 
@@ -45,7 +45,7 @@ module Platform(walk_bridge_config, platform_config, mirror_y = false) {
     tower2_head_size       = ConfigGet(tower2_config, "head_size");
     tower2_roof_size       = ConfigGet(tower2_config, "roof_size");
     
-    %render() union() {
+    render() union() {
         Abri();
         Tower1();
         Tower2();

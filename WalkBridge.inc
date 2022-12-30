@@ -1,4 +1,5 @@
 SCALED_SCALE = "H0";
+UNITS_LAYER  = mm(0.1);
 include <../Utils/Scaled.inc>
 include <../Utils/Config.inc>
 include <../Utils/Constants.inc>
@@ -20,7 +21,7 @@ function AbriConfig(
 ) = Config(undef,
     "AbriConfig",
     let(
-        head_outer_wall_position_y = [
+        head_bounds_y = [
             head_position_y + head_size[Y] / 2,
             head_position_y - head_size[Y] / 2
         ]
@@ -37,7 +38,7 @@ function AbriConfig(
         ["head_overhang_z",   head_overhang_z],
         ["head_overhang_r",   head_overhang_r],
         /* Derived */
-        ["head_outer_wall_position_y", head_outer_wall_position_y]
+        ["head_bounds_y",     head_bounds_y]
     ]
 );
 
@@ -84,25 +85,64 @@ function PlatformConfig(
     ]
 );
 
+function WallSegmentConfig(
+    pos_y,
+    size_y
+) = Config(undef,
+    "WallSegmentConfig",
+    [
+        ["pos_y",  pos_y],
+        ["size_y", size_y]
+    ]
+);
+
 function WalkBridgeConfig(
-    distance_platform_a_b     = mm(464.25), // ??? Assumption based on H0 space distance
-    distance_platform_b_c     = mm(215.7),  // ??? Assumption based on H0 space distance
-    bridge_support_position_y = mm(217),    // ???
+    distance_platform_a_b     = mm(461), // ??? Assumption based on H0 space distance
+    distance_platform_b_c     = mm(212.5),  // ??? Assumption based on H0 space distance
+    bridge_support_position_y = mm(214.5),    // ???
     bridge_clearance          = scaled(m(5.2)),
     platform_a_config         = PlatformConfig(
         abri_config = AbriConfig(
             head_overhang_z   = scaled(m(1.3))
         )
     ),
-    platform_b_config      = PlatformConfig(),
+    platform_b_config         = PlatformConfig(),
+    bridge_size_xz            = scaled(m([4.5, 3.0])), // ???
+    bridge_wall               = layer(4),
+    bridge_wall_support_panel_width  = scaled(m(0.5)), // ???
+    wall_window_panel_width   = scaled(m(1.3)), // ???
 ) = Config(undef,
     "WalkBridgeConfig",
-    [
-        ["distance_platform_a_b", distance_platform_a_b],
-        ["distance_platform_b_c", distance_platform_b_c],
+    let(
+        wall_segment1_config = WallSegmentConfig(
+            pos_y  = bridge_support_position_y - bridge_wall_support_panel_width / 2,
+            size_y = (
+                bridge_support_position_y
+                - bridge_wall_support_panel_width / 2
+                - ConfigGet(platform_a_config, ["abri_config", "head_bounds_y"])[0]
+            )
+        ),
+        wall_segment2_config = WallSegmentConfig(
+            pos_y  = bridge_support_position_y + bridge_wall_support_panel_width / 2,
+            size_y = (
+                distance_platform_a_b
+                - ConfigGet(platform_b_config, ["abri_config", "head_bounds_y"])[0]
+                - bridge_support_position_y
+                - bridge_wall_support_panel_width / 2
+            )
+        )
+    )[
+        ["distance_platform_a_b",     distance_platform_a_b],
+        ["distance_platform_b_c",     distance_platform_b_c],
         ["bridge_support_position_y", bridge_support_position_y],
-        ["bridge_clearance",      bridge_clearance],
-        ["platform_a_config",     platform_a_config],
-        ["platform_b_config",     platform_b_config]
+        ["bridge_clearance",          bridge_clearance],
+        ["platform_a_config",         platform_a_config],
+        ["platform_b_config",         platform_b_config],
+        ["bridge_size_xz",            bridge_size_xz],
+        ["bridge_wall",               bridge_wall],
+        ["bridge_wall_support_panel_width",  bridge_wall_support_panel_width],
+        /* Derived */
+        ["wall_segment1_config",      wall_segment1_config],
+        ["wall_segment2_config",      wall_segment2_config]
     ]
 );
