@@ -1,5 +1,6 @@
 include <../../../Utils/Box.inc>
 include <../../../Utils/GlueTogether.inc>
+include <../../../Utils/Optional.inc>
 include <../../../Utils/TransformCopy.inc>
 
 include <../../WalkBridge.inc>
@@ -24,7 +25,6 @@ module Wall(
 ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     
-    //color(alpha = .2)  Ghost();
     GlueTogether(
         xray     = xray,
         colorize = colorize
@@ -38,26 +38,76 @@ module Wall(
         BridgeWallSegment3Left (walk_bridge_config);
         BridgeWallSegment3Right(walk_bridge_config);
     }
+}
+
+module BridgeWallSegmentWindowsSides(walk_bridge_config, what, vec) {
+    assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     
-    module Ghost() {
-        assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
+    BridgeWallSegment1WindowsSides(walk_bridge_config, what, vec) children();
+    BridgeWallSegment2WindowsSides(walk_bridge_config, what, vec) children();
+    BridgeWallSegment3WindowsSides(walk_bridge_config, what, vec) children();
+}
+
+module BridgeWallSegment1WindowsSides(walk_bridge_config, what, vec) {
+    assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
+    
+    wall_segment_config = ConfigGet(walk_bridge_config, "wall_segment1_config");
+    assert(is_config(wall_segment_config, "WallSegmentConfig"));
+    
+    BridgeWallSegmentNWindowsSides(
+        wall_segment_config = wall_segment_config,
+        what                = what,
+        vec                 = vec
+    ) children(); 
+}
+
+module BridgeWallSegment2WindowsSides(walk_bridge_config, what, vec) {
+    assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
+    
+    wall_segment_config = ConfigGet(walk_bridge_config, "wall_segment2_config");
+    assert(is_config(wall_segment_config, "WallSegmentConfig"));
+    
+    BridgeWallSegmentNWindowsSides(
+        wall_segment_config = wall_segment_config,
+        what                = what,
+        vec                 = vec
+    ) children(); 
+}
+
+module BridgeWallSegment3WindowsSides(walk_bridge_config, what, vec) {
+    assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
+    
+    wall_segment_config = ConfigGet(walk_bridge_config, "wall_segment3_config");
+    BridgeWallSegmentNWindowsSides(
+        wall_segment_config = wall_segment_config,
+        what                = what,
+        vec                 = vec
+    ) children();
+}
+
+
+module BridgeWallSegmentNWindowsSides(wall_segment_config, what, vec = VEC_Y) {
+    if(!is_undef(wall_segment_config)) {
+        assert(is_config(wall_segment_config, "WallSegmentConfig"));
         
-        bridge_size              = scaled(m([4.5, 3.0]));
+        pos_y              = ConfigGet(wall_segment_config, "pos_y");
+        window_panel_count = ConfigGet(wall_segment_config, "window_panel_count");
+        window_panel_width = ConfigGet(wall_segment_config, "window_panel_width");
+        mirror_y           = ConfigGet(wall_segment_config, "mirror_y");
+        multiplier         = mirror_y ? -window_panel_width : window_panel_width;
         
-        distance_platform_a_b = ConfigGet(walk_bridge_config, "distance_platform_a_b");
-        distance_platform_b_c = ConfigGet(walk_bridge_config, "distance_platform_b_c");
-        bridge_height         = ConfigGet(walk_bridge_config, "bridge_clearance");
-        bridge_wall           = ConfigGet(walk_bridge_config, "bridge_wall");
+        _vec = optional(vec, VEC_Y);
         
-        bridge_length = distance_platform_a_b + distance_platform_b_c;
-       
-        mirror_copy(VEC_X) Box(
-            x_to   = bridge_size[0] / 2,
-            x_size = bridge_wall,
-            y_from = 0,
-            y_to   = distance_platform_a_b + distance_platform_b_c,
-            z_from = bridge_height,
-            z_size = bridge_size[1]
-        );
+        for(i = [0:window_panel_count]) {
+            translate(_vec * (pos_y + multiplier * i)) {
+                if (what == "even") {
+                    if (i % 2 == 0) children();
+                } else if (what == "odd") {
+                    if (i % 2 == 1) children();
+                } else {
+                    children();
+                }
+            }
+        }
     }
 }

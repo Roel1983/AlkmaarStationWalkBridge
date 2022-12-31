@@ -89,19 +89,18 @@ function WallSegmentConfig(
     pos_y,
     size_y,
     mirror_y,
-    wall_window_panel_width
+    window_panel_count
 ) = Config(undef,
     "WallSegmentConfig",
     let(
-        window_panel_count = floor(
-            size_y / wall_window_panel_width
-        )
+        window_panel_width = (size_y/window_panel_count)
     )[
         ["pos_y",              pos_y],
         ["size_y",             size_y],
         ["mirror_y",           mirror_y],
+        ["window_panel_count", window_panel_count],
         /* Derived */
-        ["window_panel_count", window_panel_count]
+        ["window_panel_width", window_panel_width]
     ]
 );
 
@@ -117,9 +116,9 @@ function WalkBridgeConfig(
     ),
     platform_b_config         = PlatformConfig(),
     bridge_size_xz            = scaled(m([4.5, 3.0])), // ???
+    bridge_roof_radius        = scaled(m(3.5)), // ???
     bridge_wall               = layer(4),
-    bridge_wall_support_panel_width  = scaled(m(0.5)), // ???
-    bridge_wall_window_panel_width   = scaled(m(1.25)), // ???
+    bridge_wall_support_panel_width  = scaled(m(0.5)) // ???
 ) = Config(undef,
     "WalkBridgeConfig",
     let(
@@ -131,7 +130,7 @@ function WalkBridgeConfig(
                 - ConfigGet(platform_a_config, ["abri_config", "head_bounds_y"])[0]
             ),
             mirror_y = true,
-            wall_window_panel_width = bridge_wall_window_panel_width
+            window_panel_count = 14
         ),
         wall_segment2_config = WallSegmentConfig(
             pos_y  = bridge_support_position_y + bridge_wall_support_panel_width / 2,
@@ -142,7 +141,7 @@ function WalkBridgeConfig(
                 - bridge_wall_support_panel_width / 2
             ),
             mirror_y = false,
-            wall_window_panel_width = bridge_wall_window_panel_width
+            window_panel_count = 16
         )
     )[
         ["distance_platform_a_b",     distance_platform_a_b],
@@ -152,9 +151,9 @@ function WalkBridgeConfig(
         ["platform_a_config",         platform_a_config],
         ["platform_b_config",         platform_b_config],
         ["bridge_size_xz",            bridge_size_xz],
+        ["bridge_roof_radius",        bridge_roof_radius],
         ["bridge_wall",               bridge_wall],
         ["bridge_wall_support_panel_width",  bridge_wall_support_panel_width],
-        ["bridge_wall_window_panel_width",   bridge_wall_window_panel_width],
         /* Derived */
         ["wall_segment1_config",      wall_segment1_config],
         ["wall_segment2_config",      wall_segment2_config]

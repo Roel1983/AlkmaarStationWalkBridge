@@ -3,7 +3,7 @@ include <../WalkBridge.inc>
 include <Bridge/Floor.inc>
 include <Bridge/Wall.inc>
 include <Bridge/Roof.inc>
-include <Bridge/Arcs.inc>
+include <Bridge/ArcsAndTrestles.inc>
 include <Bridge/SideWalk.inc>
 include <Bridge/LedStrip.inc>
 
@@ -24,12 +24,12 @@ module Bridge(
         xray     = xray,
         colorize = colorize
     ) {
-        Floor   (walk_bridge_config, colorize = false);
-        Wall    (walk_bridge_config, colorize = false);
-        Roof    (walk_bridge_config, colorize = false);
-        Arcs    (walk_bridge_config, colorize = false);
-        SideWalk(walk_bridge_config, colorize = false);
-        LedStrip(walk_bridge_config, colorize = false);
+        Floor          (walk_bridge_config, colorize = false);
+        Wall           (walk_bridge_config, colorize = false);
+        Roof           (walk_bridge_config, colorize = false);
+        ArcsAndTrestles(walk_bridge_config, colorize = false);
+        SideWalk       (walk_bridge_config, colorize = false);
+        LedStrip       (walk_bridge_config, colorize = false);
     }
 }
 

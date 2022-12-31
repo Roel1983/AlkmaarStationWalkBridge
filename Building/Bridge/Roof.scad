@@ -25,8 +25,8 @@ module Roof(
     
     module Ghost() {
         assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
-        bridge_size              = scaled(m([4.5, 3.0]));
-        bridge_roof_radius       = 40;
+        bridge_size_xz           = ConfigGet(walk_bridge_config, "bridge_size_xz");
+        bridge_roof_radius       = ConfigGet(walk_bridge_config, "bridge_roof_radius");
         
         distance_platform_a_b = ConfigGet(walk_bridge_config, "distance_platform_a_b");
         distance_platform_b_c = ConfigGet(walk_bridge_config, "distance_platform_b_c");
@@ -39,7 +39,7 @@ module Roof(
             y_to   = distance_platform_a_b + distance_platform_b_c
         ) {
             rotate(180) difference() {
-                h = bridge_size[1] - sqrt(pow(bridge_roof_radius, 2) - pow(bridge_size[0]/2, 2));
+                h = bridge_size_xz[1] - sqrt(pow(bridge_roof_radius, 2) - pow(bridge_size_xz[0]/2, 2));
                 intersection() {
                     
                     translate([
@@ -48,8 +48,8 @@ module Roof(
                     ]) {
                         circle(r=bridge_roof_radius);
                     }
-                    translate([-bridge_size[0] / 2, 0]) {
-                        square([bridge_size[0], h + bridge_roof_radius]);
+                    translate([-bridge_size_xz[0] / 2, 0]) {
+                        square([bridge_size_xz[0], h + bridge_roof_radius]);
                     }
                 }
                 translate([
