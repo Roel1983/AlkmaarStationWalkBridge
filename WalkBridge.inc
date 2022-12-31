@@ -115,6 +115,7 @@ function WalkBridgeConfig(
         )
     ),
     platform_b_config         = PlatformConfig(),
+    platform_c_config         = PlatformConfig(),
     bridge_size_xz            = scaled(m([4.5, 3.0])), // ???
     bridge_roof_radius        = scaled(m(3.5)), // ???
     bridge_wall               = layer(4),
@@ -142,6 +143,17 @@ function WalkBridgeConfig(
             ),
             mirror_y = false,
             window_panel_count = 16
+        ), wall_segment3_config = WallSegmentConfig(
+            pos_y  = (
+                distance_platform_a_b
+                - ConfigGet(platform_b_config, ["abri_config", "head_bounds_y"])[1]
+            ), size_y = (
+                distance_platform_b_c
+                + ConfigGet(platform_b_config, ["abri_config", "head_bounds_y"])[1]
+                - ConfigGet(platform_c_config, ["abri_config", "head_bounds_y"])[0]
+            ),
+            mirror_y = false,
+            window_panel_count = 10
         )
     )[
         ["distance_platform_a_b",     distance_platform_a_b],
@@ -150,12 +162,14 @@ function WalkBridgeConfig(
         ["bridge_clearance",          bridge_clearance],
         ["platform_a_config",         platform_a_config],
         ["platform_b_config",         platform_b_config],
+        ["platform_c_config",         platform_c_config],
         ["bridge_size_xz",            bridge_size_xz],
         ["bridge_roof_radius",        bridge_roof_radius],
         ["bridge_wall",               bridge_wall],
         ["bridge_wall_support_panel_width",  bridge_wall_support_panel_width],
         /* Derived */
         ["wall_segment1_config",      wall_segment1_config],
-        ["wall_segment2_config",      wall_segment2_config]
+        ["wall_segment2_config",      wall_segment2_config],
+        ["wall_segment3_config",      wall_segment3_config]
     ]
 );

@@ -1,4 +1,3 @@
-include <../../Utils/Constants.inc>
 include <../WalkBridge.inc>
 include <misc/BridgeWallSegement.inc>
 
