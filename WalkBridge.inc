@@ -104,6 +104,19 @@ function WallSegmentConfig(
     ]
 );
 
+function RoofSegmentConfig(
+    pos_y,
+    size_y,
+    section_count
+) = Config(undef,
+    "RoofSegmentConfig",
+    [
+        ["pos_y",              pos_y],
+        ["size_y",             size_y],
+        ["section_count",      section_count],
+    ]
+);
+
 function WalkBridgeConfig(
     distance_platform_a_b     = mm(461), // ??? Assumption based on H0 space distance
     distance_platform_b_c     = mm(212.5),  // ??? Assumption based on H0 space distance
@@ -154,6 +167,24 @@ function WalkBridgeConfig(
             ),
             mirror_y = false,
             window_panel_count = 10
+        ), roof_segment1_config = RoofSegmentConfig(
+            pos_y  = ConfigGet(platform_b_config, ["abri_config", "head_bounds_y"])[0],
+            size_y = (
+                distance_platform_a_b
+                - ConfigGet(platform_a_config, ["abri_config", "head_bounds_y"])[0]
+                - ConfigGet(platform_b_config, ["abri_config", "head_bounds_y"])[0]
+            ),
+            section_count = 4
+        ), roof_segment2_config = RoofSegmentConfig(
+            pos_y  = (
+                distance_platform_a_b
+                - ConfigGet(platform_c_config, ["abri_config", "head_bounds_y"])[1]
+            ), size_y = (
+                distance_platform_b_c
+                + ConfigGet(platform_b_config, ["abri_config", "head_bounds_y"])[1]
+                - ConfigGet(platform_c_config, ["abri_config", "head_bounds_y"])[0]
+            ),
+            section_count = 2
         )
     )[
         ["distance_platform_a_b",     distance_platform_a_b],
@@ -170,6 +201,8 @@ function WalkBridgeConfig(
         /* Derived */
         ["wall_segment1_config",      wall_segment1_config],
         ["wall_segment2_config",      wall_segment2_config],
-        ["wall_segment3_config",      wall_segment3_config]
+        ["wall_segment3_config",      wall_segment3_config],
+        ["roof_segment1_config",      roof_segment1_config],
+        ["roof_segment2_config",      roof_segment2_config]
     ]
 );

@@ -3,6 +3,11 @@ include <../../../Utils/GlueTogether.inc>
 include <../../../Utils/LinearExtrude.inc>
 
 include <../../WalkBridge.inc>
+include <../../Parts/BridgeRoofAbBegin.inc>
+include <../../Parts/BridgeRoofAbCenter.inc>
+include <../../Parts/BridgeRoofAbEnd.inc>
+include <../../Parts/BridgeRoofBcBegin.inc>
+include <../../Parts/BridgeRoofBcEnd.inc>
 
 walk_bridge_config = WalkBridgeConfig();
 Roof(
@@ -16,11 +21,19 @@ module Roof(
 ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     
-    color(alpha = .2)  Ghost();
+    section_count = ConfigGet(walk_bridge_config, ["roof_segment1_config", "section_count"]);
+    
     GlueTogether(
         xray     = xray,
         colorize = colorize
     ) {
+        BridgeRoofAbBegin(walk_bridge_config);
+        if(section_count >= 3) for (index = [0 : section_count - 3]) {
+            BridgeRoofAbCenter(walk_bridge_config, index = index);
+        }
+        BridgeRoofAbEnd(walk_bridge_config);
+        BridgeRoofBcBegin(walk_bridge_config);
+        BridgeRoofBcEnd(walk_bridge_config);
     }
     
     module Ghost() {
