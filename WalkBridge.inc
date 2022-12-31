@@ -128,7 +128,15 @@ function WalkBridgeConfig(
         )
     ),
     platform_b_config         = PlatformConfig(),
-    platform_c_config         = PlatformConfig(),
+    platform_c_config         = PlatformConfig(
+        tower1_config = Tower2Config(
+            base_size       = scaled(m([2.74, 2.46, 10.0])), // ???
+            position_x = scaled(m(-8.32))
+        ),
+        tower2_config = Tower2Config(
+            base_size       = scaled(m([2.74, 2.46, 10.0])) // ???
+        )
+    ),
     bridge_size_xz            = scaled(m([4.5, 3.0])), // ???
     bridge_roof_radius        = scaled(m(3.5)), // ???
     bridge_wall               = layer(4),
