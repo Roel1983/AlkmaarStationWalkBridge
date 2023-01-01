@@ -88,16 +88,18 @@ function PlatformConfig(
 function WallSegmentConfig(
     pos_y,
     size_y,
-    mirror_y,
+    offset_begin = 0,
+    offset_end = 0,
     window_panel_count
 ) = Config(undef,
     "WallSegmentConfig",
     let(
-        window_panel_width = (size_y/window_panel_count)
+        window_panel_width = ((size_y-offset_begin-offset_end)/window_panel_count)
     )[
         ["pos_y",              pos_y],
         ["size_y",             size_y],
-        ["mirror_y",           mirror_y],
+        ["offset_begin",       offset_begin],
+        ["offset_end",         offset_end],
         ["window_panel_count", window_panel_count],
         /* Derived */
         ["window_panel_width", window_panel_width]
@@ -140,18 +142,19 @@ function WalkBridgeConfig(
     bridge_size_xz            = scaled(m([4.5, 3.0])), // ???
     bridge_roof_radius        = scaled(m(3.5)), // ???
     bridge_wall               = layer(4),
-    bridge_wall_support_panel_width  = scaled(m(0.5)) // ???
+    bridge_wall_support_panel_width  = scaled(m(0.5)), // ???
+    wall_segmment_offset_y    = scaled(m(.3)) // ???
 ) = Config(undef,
     "WalkBridgeConfig",
     let(
         wall_segment1_config = WallSegmentConfig(
-            pos_y  = bridge_support_position_y - bridge_wall_support_panel_width / 2,
+            pos_y  = ConfigGet(platform_a_config, ["abri_config", "head_bounds_y"])[0],
             size_y = (
                 bridge_support_position_y
                 - bridge_wall_support_panel_width / 2
                 - ConfigGet(platform_a_config, ["abri_config", "head_bounds_y"])[0]
             ),
-            mirror_y = true,
+            offset_begin       = wall_segmment_offset_y,
             window_panel_count = 14
         ),
         wall_segment2_config = WallSegmentConfig(
@@ -162,7 +165,7 @@ function WalkBridgeConfig(
                 - bridge_support_position_y
                 - bridge_wall_support_panel_width / 2
             ),
-            mirror_y = false,
+            offset_end         = wall_segmment_offset_y,
             window_panel_count = 16
         ), wall_segment3_config = WallSegmentConfig(
             pos_y  = (
@@ -173,7 +176,8 @@ function WalkBridgeConfig(
                 + ConfigGet(platform_b_config, ["abri_config", "head_bounds_y"])[1]
                 - ConfigGet(platform_c_config, ["abri_config", "head_bounds_y"])[0]
             ),
-            mirror_y = false,
+            offset_begin       = wall_segmment_offset_y,
+            offset_end         = wall_segmment_offset_y,
             window_panel_count = 10
         ), roof_segment1_config = RoofSegmentConfig(
             pos_y  = ConfigGet(platform_b_config, ["abri_config", "head_bounds_y"])[0],

@@ -23,24 +23,21 @@ module BridgeSideWalkSegment(
         
     pos_y              = ConfigGet(wall_segment_config, "pos_y");
     size_y             = ConfigGet(wall_segment_config, "size_y");
-    mirror_y           = ConfigGet(wall_segment_config, "mirror_y");
+    offset_begin       = ConfigGet(wall_segment_config, "offset_begin");
+    offset_end         = ConfigGet(wall_segment_config, "offset_end");
     
-    side_walk_overlap = mm(6) / 2 - mm(1);
+    side_walk_overlap = layer(6) / 2 + nozzle(2) + mm(1);
      
     translate([0, pos_y]) {
-        mirror_if(mirror_x, VEC_X) mirror_if(mirror_y, VEC_Y) {
-
-        Box(
-            x_from = bridge_size_xz[0] / 2 + mm(2),
-            x_to   = bridge_size_xz[0] / 2 + scaled(m(1)),
-            y_from = -side_walk_overlap,
-            y_to   = size_y + 2 * side_walk_overlap,
-            z_from = bridge_clearance + scaled(m(.5)),
-            z_size = mm(1)
-        );
-            
-            
-
+        mirror_if(mirror_x, VEC_X) {
+            Box(
+                x_from = bridge_size_xz[0] / 2 + mm(2),
+                x_to   = bridge_size_xz[0] / 2 + scaled(m(1)),
+                y_from = offset_begin - side_walk_overlap,
+                y_to   = size_y + side_walk_overlap - offset_end,
+                z_from = bridge_clearance + scaled(m(.5)),
+                z_size = mm(1)
+            );
         }
     }
 }

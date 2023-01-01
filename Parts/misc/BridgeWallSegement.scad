@@ -24,12 +24,12 @@ module BridgeWallSegment(
     
     pos_y              = ConfigGet(wall_segment_config, "pos_y");
     size_y             = ConfigGet(wall_segment_config, "size_y");
-    mirror_y           = ConfigGet(wall_segment_config, "mirror_y");
     window_panel_count = ConfigGet(wall_segment_config, "window_panel_count");
     window_panel_width = ConfigGet(wall_segment_config, "window_panel_width");
+    offset_begin       = ConfigGet(wall_segment_config, "offset_begin");
      
     translate([0, pos_y]) {
-        mirror_if(mirror_x, VEC_X) mirror_if(mirror_y, VEC_Y) {
+        mirror_if(mirror_x, VEC_X) {
             LinearExtrude(
                 x_to   = bridge_size_xz[0] / 2,
                 x_size = bridge_wall
@@ -42,7 +42,7 @@ module BridgeWallSegment(
                     );
                     for(i = [0:window_panel_count - 1 ]) {
                         translate([
-                            window_panel_width * (i + .5),
+                            offset_begin + window_panel_width * (i + .5),
                             0
                         ]) {
                             Box(

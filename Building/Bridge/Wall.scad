@@ -92,13 +92,12 @@ module BridgeWallSegmentNWindowsSides(wall_segment_config, what, vec = VEC_Y) {
     pos_y              = ConfigGet(wall_segment_config, "pos_y");
     window_panel_count = ConfigGet(wall_segment_config, "window_panel_count");
     window_panel_width = ConfigGet(wall_segment_config, "window_panel_width");
-    mirror_y           = ConfigGet(wall_segment_config, "mirror_y");
-    multiplier         = mirror_y ? -window_panel_width : window_panel_width;
+    offset_begin       = ConfigGet(wall_segment_config, "offset_begin");
     
     _vec = optional(vec, VEC_Y);
     
     for(i = [0:window_panel_count]) {
-        translate(_vec * (pos_y + multiplier * i)) {
+        translate(_vec * (offset_begin + pos_y + window_panel_width * i)) {
             if (what == "even") {
                 if (i % 2 == 0) children();
             } else if (what == "odd") {
