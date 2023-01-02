@@ -2,6 +2,9 @@ include <../WalkBridgeConfig.inc>
 
 include <../../Utils/GlueTogether.inc>
 
+use <PlatformA/PlatformABase.scad>
+use <PlatformA/PlatformATower2Head.scad>
+
 use <Platform.scad>
 
 walk_bridge_config = WalkBridgeConfig();
@@ -16,12 +19,13 @@ module PlatformA(
 ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     
-    color(alpha = .2)  Ghost();
+    //color(alpha = .2)  Ghost();
     GlueTogether(
         xray     = xray,
         colorize = colorize
     ) {
-        
+        PlatformABase      (walk_bridge_config, colorize = false);
+        PlatformATower2Head(walk_bridge_config, colorize = false);
     }
     
     module Ghost() {

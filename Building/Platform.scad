@@ -10,6 +10,13 @@ include <../../Utils/Units.inc>
 
 $fn = 64;
 
+walk_bridge_config = WalkBridgeConfig();
+platform_config = ConfigGet(walk_bridge_config, "platform_a_config");
+Platform(
+    walk_bridge_config = walk_bridge_config,
+    platform_config    = platform_config
+);
+
 module Platform(walk_bridge_config, platform_config, mirror_y = false) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     assert(is_config(platform_config,    "PlatformConfig"));
@@ -61,14 +68,14 @@ module Platform(walk_bridge_config, platform_config, mirror_y = false) {
                     z_to   = abri_base_size[Z]
                 );
                 translate([(abri_base_size[X] - abri_support_width) / 2, abri_base_size[Y] / 2]) {
-                    mirror_copy(VEC_X) {
+                    #mirror_copy(VEC_X) {
                         Box(
-                        x_to = abri_support_width / 2,
-                        x_size = abri_support_beam_size[X],
-                        y_from = 0,
-                        y_size  = abri_support_beam_size[Y],
-                        z_to   = abri_support_height
-                    );
+                            x_to = abri_support_width / 2,
+                            x_size = abri_support_beam_size[X],
+                            y_from = 0,
+                            y_size  = abri_support_beam_size[Y],
+                            z_to   = abri_support_height
+                        );
                     }
                     Box(
                         x_size = abri_support_width,

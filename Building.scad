@@ -28,7 +28,7 @@ module Building(
         PlatformA(walk_bridge_config, colorize = false);
         PlatformB(walk_bridge_config, colorize = false);
         PlatformC(walk_bridge_config, colorize = false);
-        Support(walk_bridge_config, colorize = false);
+        Support(walk_bridge_config,   colorize = false);
         Bridge(walk_bridge_config,    colorize = false);
     }
 }

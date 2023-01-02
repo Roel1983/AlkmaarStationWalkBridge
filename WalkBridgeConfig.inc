@@ -145,7 +145,7 @@ function WalkBridgeConfig(
     bridge_wall               = layer(4),
     bridge_wall_support_panel_width  = scaled(m(0.5)), // ???
     wall_segmment_offset_y    = scaled(m(.3)), // ???
-    abri_wall                 = layer(4)
+    abri_wall                 = layer(6)
 ) = Config(undef,
     "WalkBridgeConfig",
     let(
@@ -236,6 +236,7 @@ function WalkBridgeConfig(
         ["bridge_roof_radius",        bridge_roof_radius],
         ["bridge_wall",               bridge_wall],
         ["bridge_wall_support_panel_width",  bridge_wall_support_panel_width],
+        ["abri_wall",                 abri_wall],
         /* Derived */
         ["wall_segment1_config",      wall_segment1_config],
         ["wall_segment2_config",      wall_segment2_config],
