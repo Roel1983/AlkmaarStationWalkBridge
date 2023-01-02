@@ -1,11 +1,13 @@
+include <../WalkBridgeConfig.inc>
+
 include <../../Utils/GlueTogether.inc>
-include <../WalkBridge.inc>
-include <Bridge/Floor.inc>
-include <Bridge/Wall.inc>
-include <Bridge/Roof.inc>
-include <Bridge/ArcsAndTrestles.inc>
-include <Bridge/SideWalk.inc>
-include <Bridge/LedStrip.inc>
+
+use <Bridge/Floor.scad>
+use <Bridge/Wall.scad>
+use <Bridge/Roof.scad>
+use <Bridge/ArcsAndTrestles.scad>
+use <Bridge/SideWalk.scad>
+use <Bridge/LedStrip.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 Bridge(

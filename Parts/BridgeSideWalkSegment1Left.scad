@@ -1,5 +1,6 @@
-include <../WalkBridge.inc>
-include <misc/BridgeSideWalkSegement.inc>
+include <../WalkBridgeConfig.inc>
+
+use <misc/BridgeSideWalkSegement.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 BridgeSideWalkSegment1Left(walk_bridge_config, is_printable = true);

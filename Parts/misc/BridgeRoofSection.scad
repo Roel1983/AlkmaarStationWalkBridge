@@ -1,7 +1,7 @@
-UNITS_NOZZLE = mm(.4);
+include <../../WalkBridgeConfig.inc>
+
 include <../../../Utils/Box.inc>
 include <../../../Utils/LinearExtrude.inc>
-include <../../WalkBridge.inc>
 
 walk_bridge_config = WalkBridgeConfig();
 roof_segment_config     = ConfigGet(walk_bridge_config, "roof_segment1_config");

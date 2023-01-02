@@ -1,6 +1,8 @@
+include <../WalkBridgeConfig.inc>
+
 include <../../Utils/Box.inc>
-include <../WalkBridge.inc>
-include <misc/BridgeWallSupport.inc>
+
+use <misc/BridgeWallSupport.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 BridgeWallSupportLeft(walk_bridge_config);

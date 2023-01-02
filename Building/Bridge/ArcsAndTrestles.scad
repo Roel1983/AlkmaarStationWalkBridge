@@ -1,10 +1,12 @@
+include <../../WalkBridgeConfig.inc>
+
 include <../../../Utils/Box.inc>
 include <../../../Utils/GlueTogether.inc>
 include <../../../Utils/TransformCopy.inc>
-include <../../WalkBridge.inc>
-include <Wall.inc>
-include <../../Parts/BridgeArc.inc>
-include <../../Parts/BridgeTrestle.inc>
+
+use <Wall.scad>
+use <../../Parts/BridgeArc.scad>
+use <../../Parts/BridgeTrestle.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 ArcsAndTrestles(

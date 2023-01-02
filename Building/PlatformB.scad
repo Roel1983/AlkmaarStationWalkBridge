@@ -1,6 +1,8 @@
+include <../WalkBridgeConfig.inc>
+
 include <../../Utils/GlueTogether.inc>
-include <../WalkBridge.inc>
-include <Platform.inc>
+
+use <Platform.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 PlatformB(

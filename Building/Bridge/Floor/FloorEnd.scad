@@ -1,6 +1,7 @@
+include <../../../WalkBridgeConfig.inc>
+
 include <../../../../FlatChain/FloorHub.inc>
 include <../../../../FlatChain/Floor.inc>
-include <../../../WalkBridge.inc>
 
 walk_bridge_config = WalkBridgeConfig();
 

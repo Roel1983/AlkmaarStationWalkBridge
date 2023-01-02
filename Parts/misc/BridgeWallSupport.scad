@@ -1,6 +1,7 @@
+include <../../WalkBridgeConfig.inc>
+
 include <../../../Utils/Box.inc>
 include <../../../Utils/TransformIf.inc>
-include <../../WalkBridge.inc>
 
 walk_bridge_config = WalkBridgeConfig();
 BridgeWallSupport(walk_bridge_config);

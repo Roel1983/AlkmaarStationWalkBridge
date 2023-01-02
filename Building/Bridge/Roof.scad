@@ -1,13 +1,14 @@
+include <../../WalkBridgeConfig.inc>
+
 include <../../../Utils/Box.inc>
 include <../../../Utils/GlueTogether.inc>
 include <../../../Utils/LinearExtrude.inc>
 
-include <../../WalkBridge.inc>
-include <../../Parts/BridgeRoofAbBegin.inc>
-include <../../Parts/BridgeRoofAbCenter.inc>
-include <../../Parts/BridgeRoofAbEnd.inc>
-include <../../Parts/BridgeRoofBcBegin.inc>
-include <../../Parts/BridgeRoofBcEnd.inc>
+use <../../Parts/BridgeRoofAbBegin.scad>
+use <../../Parts/BridgeRoofAbCenter.scad>
+use <../../Parts/BridgeRoofAbEnd.scad>
+use <../../Parts/BridgeRoofBcBegin.scad>
+use <../../Parts/BridgeRoofBcEnd.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 Roof(

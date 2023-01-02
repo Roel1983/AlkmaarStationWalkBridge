@@ -1,6 +1,7 @@
+include <../../WalkBridgeConfig.inc>
+
 include <../../../Utils/GlueTogether.inc>
 include <../../../Utils/Box.inc>
-include <../../WalkBridge.inc>
 
 walk_bridge_config = WalkBridgeConfig();
 LedStrip(

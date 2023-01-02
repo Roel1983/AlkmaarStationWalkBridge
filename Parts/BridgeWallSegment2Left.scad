@@ -1,6 +1,8 @@
+include <../WalkBridgeConfig.inc>
+
 include <../../Utils/Constants.inc>
-include <../WalkBridge.inc>
-include <misc/BridgeWallSegement.inc>
+
+use <misc/BridgeWallSegement.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 BridgeWallSegment2Left(walk_bridge_config);

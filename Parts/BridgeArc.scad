@@ -1,9 +1,10 @@
-UNITS_NOZZLE = mm(0.4);
+include <../WalkBridgeConfig.inc>
+
 include <../../Utils/Box.inc>
 include <../../Utils/LinearExtrude.inc>
 include <../../Utils/TransformCopy.inc>
-include <../WalkBridge.inc>
-include <BridgeTrestle.inc>
+
+use <BridgeTrestle.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 BridgeArc(

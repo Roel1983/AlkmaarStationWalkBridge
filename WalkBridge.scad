@@ -1,5 +1,5 @@
-include <Environment.inc>
-include <Building.inc>
+use <Environment.scad>
+use <Building.scad>
 
 $fn = 64;
 

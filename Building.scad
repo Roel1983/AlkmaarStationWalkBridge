@@ -1,10 +1,12 @@
 include <../Utils/GlueTogether.inc>
-include <WalkBridge.inc>
-include <Building/PlatformA.inc>
-include <Building/PlatformB.inc>
-include <Building/PlatformC.inc>
-include <Building/Support.inc>
-include <Building/Bridge.inc>
+
+include <WalkBridgeConfig.inc>
+
+use <Building/PlatformA.scad>
+use <Building/PlatformB.scad>
+use <Building/PlatformC.scad>
+use <Building/Support.scad>
+use <Building/Bridge.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 Building(

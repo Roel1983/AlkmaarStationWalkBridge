@@ -1,9 +1,9 @@
-UNITS_NOZZLE = mm(.4);
+include <../../WalkBridgeConfig.inc>
+
 include <../../../Utils/Box.inc>
 include <../../../Utils/Constants.inc>
 include <../../../Utils/LinearExtrude.inc>
 include <../../../Utils/TransformIf.inc>
-include <../../WalkBridge.inc>
 
 walk_bridge_config  = WalkBridgeConfig();
 wall_segment_config = ConfigGet(walk_bridge_config, "wall_segment1_config");

@@ -1,17 +1,18 @@
+include <../../WalkBridgeConfig.inc>
+
 include <../../../Utils/Box.inc>
 include <../../../Utils/GlueTogether.inc>
 include <../../../Utils/Optional.inc>
 include <../../../Utils/TransformCopy.inc>
 
-include <../../WalkBridge.inc>
-include <../../Parts/BridgeWallSegment1Left.inc>
-include <../../Parts/BridgeWallSegment1Right.inc>
-include <../../Parts/BridgeWallSegment2Left.inc>
-include <../../Parts/BridgeWallSegment2Right.inc>
-include <../../Parts/BridgeWallSegment3Left.inc>
-include <../../Parts/BridgeWallSegment3Right.inc>
-include <../../Parts/BridgeWallSupportLeft.inc>
-include <../../Parts/BridgeWallSupportRight.inc>
+use <../../Parts/BridgeWallSegment1Left.scad>
+use <../../Parts/BridgeWallSegment1Right.scad>
+use <../../Parts/BridgeWallSegment2Left.scad>
+use <../../Parts/BridgeWallSegment2Right.scad>
+use <../../Parts/BridgeWallSegment3Left.scad>
+use <../../Parts/BridgeWallSegment3Right.scad>
+use <../../Parts/BridgeWallSupportLeft.scad>
+use <../../Parts/BridgeWallSupportRight.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 Wall(

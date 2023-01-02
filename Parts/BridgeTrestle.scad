@@ -1,6 +1,6 @@
-UNITS_NOZZLE = mm(0.4);
+include <../WalkBridgeConfig.inc>
+
 include <../../Utils/LinearExtrude.inc>
-include <../WalkBridge.inc>
 
 walk_bridge_config = WalkBridgeConfig();
 BridgeTrestle(

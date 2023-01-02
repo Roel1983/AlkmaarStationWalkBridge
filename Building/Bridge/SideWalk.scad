@@ -1,13 +1,15 @@
+include <../../WalkBridgeConfig.inc>
+
 include <../../../Utils/GlueTogether.inc>
 include <../../../Utils/Box.inc>
 include <../../../Utils/TransformCopy.inc>
-include <../../WalkBridge.inc>
-include <../../Parts/BridgeSideWalkSegment1Left.inc>
-include <../../Parts/BridgeSideWalkSegment1Right.inc>
-include <../../Parts/BridgeSideWalkSegment2Left.inc>
-include <../../Parts/BridgeSideWalkSegment2Right.inc>
-include <../../Parts/BridgeSideWalkSegment3Left.inc>
-include <../../Parts/BridgeSideWalkSegment3Right.inc>
+
+use <../../Parts/BridgeSideWalkSegment1Left.scad>
+use <../../Parts/BridgeSideWalkSegment1Right.scad>
+use <../../Parts/BridgeSideWalkSegment2Left.scad>
+use <../../Parts/BridgeSideWalkSegment2Right.scad>
+use <../../Parts/BridgeSideWalkSegment3Left.scad>
+use <../../Parts/BridgeSideWalkSegment3Right.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 SideWalk(

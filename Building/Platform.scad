@@ -1,4 +1,5 @@
-include <../WalkBridge.inc>
+include <../WalkBridgeConfig.inc>
+
 include <../../Utils/Constants.inc>
 include <../../Utils/Box.inc>
 include <../../Utils/LinearExtrude.inc>

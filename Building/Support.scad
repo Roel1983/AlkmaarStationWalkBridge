@@ -1,7 +1,7 @@
-UNITS_NOZZLE = mm(.4);
+include <../WalkBridgeConfig.inc>
+
 include <../../Utils/Box.inc>
 include <../../Utils/GlueTogether.inc>
-include <../WalkBridge.inc>
 
 walk_bridge_config = WalkBridgeConfig();
 Support(

@@ -1,8 +1,6 @@
-UNITS_NOZZLE = mm(.4);
-include <../../Utils/Box.inc>
-include <../../Utils/LinearExtrude.inc>
-include <../WalkBridge.inc>
-include <misc/BridgeRoofSection.inc>
+include <../WalkBridgeConfig.inc>
+
+use <misc/BridgeRoofSection.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 BridgeRoofAbBegin(

@@ -4,7 +4,7 @@ include <../Utils/LinearExtrude.inc>
 include <../Utils/TransformCopy.inc>
 include <../Utils/Units.inc>
 
-include <WalkBridge.inc>
+include <WalkBridgeConfig.inc>
 
 walk_bridge_config = WalkBridgeConfig();
 Environment(walk_bridge_config);

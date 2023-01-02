@@ -1,4 +1,5 @@
-include <../WalkBridge.inc>
+include <../WalkBridgeConfig.inc>
+
 include <../../Utils/GlueTogether.inc>
 include <../../Utils/Constants.inc>
 include <../../Utils/Box.inc>
@@ -7,8 +8,8 @@ include <../../Utils/Scaled.inc>
 include <../../Utils/TransformCopy.inc>
 include <../../Utils/TransformIf.inc>
 include <../../Utils/Units.inc>
-include <../WalkBridge.inc>
-include <Platform.inc>
+
+use <Platform.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 PlatformC(
