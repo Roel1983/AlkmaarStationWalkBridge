@@ -4,6 +4,7 @@ include <../Utils/Scaled.inc>
 include <../Utils/Config.inc>
 include <../Utils/Constants.inc>
 include <../Utils/Units.inc>
+include <../FlatChain/Floor.inc>
 use<WalkBridge.scad>
 
 function AbriConfig(
@@ -143,7 +144,8 @@ function WalkBridgeConfig(
     bridge_roof_radius        = scaled(m(3.5)), // ???
     bridge_wall               = layer(4),
     bridge_wall_support_panel_width  = scaled(m(0.5)), // ???
-    wall_segmment_offset_y    = scaled(m(.3)) // ???
+    wall_segmment_offset_y    = scaled(m(.3)), // ???
+    abri_wall                 = layer(4)
 ) = Config(undef,
     "WalkBridgeConfig",
     let(
@@ -197,8 +199,32 @@ function WalkBridgeConfig(
                 - ConfigGet(platform_c_config, ["abri_config", "head_bounds_y"])[0]
             ),
             section_count = 2
-        )
-    )[
+        ), link_config     = (
+            LinkConfig()
+        ), link_size = (
+            ConfigGet(link_config, "size")
+        ), bridge_floor_from = (
+            ConfigGet(platform_a_config, ["abri_config", "head_bounds_y"])[1]
+            + abri_wall
+        ), bridge_floor_to = (
+            distance_platform_a_b
+            + distance_platform_b_c
+            - ConfigGet(platform_c_config, ["abri_config", "head_bounds_y"])[1]
+            - abri_wall
+        ), bridge_floor_length = (
+            bridge_floor_to - bridge_floor_from
+        ), bridge_floor_straight_link_count = (
+            round((bridge_floor_length / 3) / link_size)
+        ), bridge_floor_hub_length = (
+            (bridge_floor_length
+             - bridge_floor_straight_link_count * link_size) / 2
+        ), bridge_chain_floor_config    = FloorConfig(
+            groove_config       = GrooveConfig(link_config = link_config),
+            hub_length          = bridge_floor_hub_length,
+            straight_link_count = bridge_floor_straight_link_count,
+            width               = bridge_size_xz[0] - 2 * bridge_wall
+        ) 
+    ) [
         ["distance_platform_a_b",     distance_platform_a_b],
         ["distance_platform_b_c",     distance_platform_b_c],
         ["bridge_support_position_y", bridge_support_position_y],
@@ -215,6 +241,10 @@ function WalkBridgeConfig(
         ["wall_segment2_config",      wall_segment2_config],
         ["wall_segment3_config",      wall_segment3_config],
         ["roof_segment1_config",      roof_segment1_config],
-        ["roof_segment2_config",      roof_segment2_config]
+        ["roof_segment2_config",      roof_segment2_config],
+        ["bridge_floor_from",         bridge_floor_from],
+        ["bridge_floor_to",           bridge_floor_to],
+        ["bridge_floor_length",       bridge_floor_length],
+        ["bridge_chain_floor_config", bridge_chain_floor_config]
     ]
 );
