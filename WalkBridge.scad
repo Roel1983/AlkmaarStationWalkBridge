@@ -1,5 +1,5 @@
 use <Environment.scad>
-use <Building.scad>
+use <Building/Building.scad>
 
 $fn = 64;
 
