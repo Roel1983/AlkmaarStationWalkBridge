@@ -3,6 +3,7 @@ include <../WalkBridgeConfig.inc>
 include <../../Utils/GlueTogether.inc>
 
 use <PlatformA/PlatformABase.scad>
+use <PlatformA/PlatformAAbriRoof.scad>
 use <PlatformA/PlatformATower2Head.scad>
 
 use <Platform.scad>
@@ -25,6 +26,7 @@ module PlatformA(
         colorize = colorize
     ) {
         PlatformABase      (walk_bridge_config, colorize = false);
+        PlatformAAbriRoof  (walk_bridge_config, colorize = false);
         PlatformATower2Head(walk_bridge_config, colorize = false);
     }
     
