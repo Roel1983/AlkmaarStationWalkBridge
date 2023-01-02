@@ -6,7 +6,8 @@ use <../../Parts/BuildingAFront.scad>
 use <../../Parts/BuildingABack.scad>
 use <../../Parts/BuildingAAbriHeadFront.scad>
 use <../../Parts/BuildingAAbriHeadBack.scad>
-use <../../Parts/BuildingAAbriRoofPart1.scad>
+use <../../Parts/BuildingAAbriHeadLeft.scad>
+use <../../Parts/BuildingAAbriHeadRight.scad>
 use <../../Parts/BuildingAAbriRoofPart2.scad>
 use <../../Parts/BuildingATower1BaseSide.scad>
 use <../../Parts/BuildingATower1HeadFront.scad>
@@ -35,7 +36,8 @@ module PlatformABase(
         BuildingABack                 (walk_bridge_config);
         BuildingAAbriHeadFront        (walk_bridge_config);
         BuildingAAbriHeadBack         (walk_bridge_config);
-        BuildingAAbriRoofPart1        (walk_bridge_config);
+        BuildingAAbriHeadLeft         (walk_bridge_config);
+        BuildingAAbriHeadRight        (walk_bridge_config);
         BuildingAAbriRoofPart2        (walk_bridge_config);
         BuildingATower1BaseSide       (walk_bridge_config);
         BuildingATower1HeadFront      (walk_bridge_config);
