@@ -19,6 +19,7 @@ function AbriConfig(
     head_position_y   = scaled(m(-0.475)),
     head_overhang_z   = scaled(m(0.3)),
     head_overhang_r   = scaled(m(3.0)),
+    roof_seam_position = mm(30)
 ) = Config(undef,
     "AbriConfig",
     let(
@@ -38,6 +39,7 @@ function AbriConfig(
         ["head_position_y",   head_position_y],
         ["head_overhang_z",   head_overhang_z],
         ["head_overhang_r",   head_overhang_r],
+        ["roof_seam_position", roof_seam_position],
         /* Derived */
         ["head_bounds_y",     head_bounds_y]
     ]
