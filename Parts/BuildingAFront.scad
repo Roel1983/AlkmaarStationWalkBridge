@@ -87,7 +87,7 @@ module BuildingAFront(
             x_to   = -bridge_size_xz[0] / 2,
             y_from = abri_base_size[Z],
             y_size = abri_head_size[Z],
-            z_to   = abri_support_wall + (abri_base_size[Y] - tower1_base_size[Y]) / 2 + abri_wall
+            z_to   = abri_head_bounds_y[0] - tower1_base_size[Y] / 2 + abri_wall
         );
     }
     module Support() {
