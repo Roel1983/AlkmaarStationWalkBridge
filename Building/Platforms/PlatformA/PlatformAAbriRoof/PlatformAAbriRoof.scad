@@ -2,7 +2,7 @@ include <../../../../WalkBridgeConfig.inc>
 
 include <../../../../../Utils/GlueTogether.inc>
 
-use <Parts/BuildingAAbriRoofPart1.scad>
+use <BuildingAAbriRoofPart1_Part.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 PlatformAAbriRoof(
@@ -20,6 +20,6 @@ module PlatformAAbriRoof(
         xray     = xray,
         colorize = colorize
     ) {
-        BuildingAAbriRoofPart1        (walk_bridge_config);
+        BuildingAAbriRoofPart1_Part(walk_bridge_config);
     }
 }

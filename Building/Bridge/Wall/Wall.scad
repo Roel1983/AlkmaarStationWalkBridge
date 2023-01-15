@@ -5,14 +5,14 @@ include <../../../../Utils/GlueTogether.inc>
 include <../../../../Utils/Optional.inc>
 include <../../../../Utils/TransformCopy.inc>
 
-use <Parts/BridgeWallSegment1Left.scad>
-use <Parts/BridgeWallSegment1Right.scad>
-use <Parts/BridgeWallSegment2Left.scad>
-use <Parts/BridgeWallSegment2Right.scad>
-use <Parts/BridgeWallSegment3Left.scad>
-use <Parts/BridgeWallSegment3Right.scad>
-use <Parts/BridgeWallSupportLeft.scad>
-use <Parts/BridgeWallSupportRight.scad>
+use <BridgeWallSegment1Left_Part.scad>
+use <BridgeWallSegment1Right_Part.scad>
+use <BridgeWallSegment2Left_Part.scad>
+use <BridgeWallSegment2Right_Part.scad>
+use <BridgeWallSegment3Left_Part.scad>
+use <BridgeWallSegment3Right_Part.scad>
+use <BridgeWallSupportLeft_Part.scad>
+use <BridgeWallSupportRight_Part.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 Wall(
@@ -30,14 +30,14 @@ module Wall(
         xray     = xray,
         colorize = colorize
     ) {
-        BridgeWallSegment1Left (walk_bridge_config);
-        BridgeWallSegment1Right(walk_bridge_config);
-        BridgeWallSupportLeft  (walk_bridge_config);
-        BridgeWallSupportRight (walk_bridge_config);
-        BridgeWallSegment2Left (walk_bridge_config);
-        BridgeWallSegment2Right(walk_bridge_config);
-        BridgeWallSegment3Left (walk_bridge_config);
-        BridgeWallSegment3Right(walk_bridge_config);
+        BridgeWallSegment1Left_Part (walk_bridge_config);
+        BridgeWallSegment1Right_Part(walk_bridge_config);
+        BridgeWallSupportLeft_Part  (walk_bridge_config);
+        BridgeWallSupportRight_Part (walk_bridge_config);
+        BridgeWallSegment2Left_Part (walk_bridge_config);
+        BridgeWallSegment2Right_Part(walk_bridge_config);
+        BridgeWallSegment3Left_Part (walk_bridge_config);
+        BridgeWallSegment3Right_Part(walk_bridge_config);
     }
 }
 

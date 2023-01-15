@@ -4,12 +4,12 @@ include <../../../../Utils/GlueTogether.inc>
 include <../../../../Utils/Box.inc>
 include <../../../../Utils/TransformCopy.inc>
 
-use <Parts/BridgeSideWalkSegment1Left.scad>
-use <Parts/BridgeSideWalkSegment1Right.scad>
-use <Parts/BridgeSideWalkSegment2Left.scad>
-use <Parts/BridgeSideWalkSegment2Right.scad>
-use <Parts/BridgeSideWalkSegment3Left.scad>
-use <Parts/BridgeSideWalkSegment3Right.scad>
+use <BridgeSideWalkSegment1Left_Part.scad>
+use <BridgeSideWalkSegment1Right_Part.scad>
+use <BridgeSideWalkSegment2Left_Part.scad>
+use <BridgeSideWalkSegment2Right_Part.scad>
+use <BridgeSideWalkSegment3Left_Part.scad>
+use <BridgeSideWalkSegment3Right_Part.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 SideWalk(
@@ -27,11 +27,11 @@ module SideWalk(
         xray     = xray,
         colorize = colorize
     ) {
-        BridgeSideWalkSegment1Left (walk_bridge_config);
-        BridgeSideWalkSegment1Right(walk_bridge_config);
-        BridgeSideWalkSegment2Left (walk_bridge_config);
-        BridgeSideWalkSegment2Right(walk_bridge_config);
-        BridgeSideWalkSegment3Left (walk_bridge_config);
-        BridgeSideWalkSegment3Right(walk_bridge_config);
+        BridgeSideWalkSegment1Left_Part (walk_bridge_config);
+        BridgeSideWalkSegment1Right_Part(walk_bridge_config);
+        BridgeSideWalkSegment2Left_Part (walk_bridge_config);
+        BridgeSideWalkSegment2Right_Part(walk_bridge_config);
+        BridgeSideWalkSegment3Left_Part (walk_bridge_config);
+        BridgeSideWalkSegment3Right_Part(walk_bridge_config);
     }
 }

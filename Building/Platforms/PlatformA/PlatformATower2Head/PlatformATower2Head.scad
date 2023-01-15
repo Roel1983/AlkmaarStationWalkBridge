@@ -2,10 +2,10 @@ include <../../../../WalkBridgeConfig.inc>
 
 include <../../../../../Utils/GlueTogether.inc>
 
-use <Parts/BuildingATower2HeadFront.scad>
-use <Parts/BuildingATower2HeadBack.scad>
-use <Parts/BuildingATower2HeadLeft.scad>
-use <Parts/BuildingATower2HeadRight.scad>
+use <BuildingATower2HeadFront_Part.scad>
+use <BuildingATower2HeadBack_Part.scad>
+use <BuildingATower2HeadLeft_Part.scad>
+use <BuildingATower2HeadRight_Part.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 PlatformATower2Head(
@@ -23,11 +23,11 @@ module PlatformATower2Head(
         xray     = xray,
         colorize = colorize
     ) {
-        BuildingATower2HeadFront      (walk_bridge_config);
-        BuildingATower2HeadBack       (walk_bridge_config);
-        BuildingATower2HeadLeft       (walk_bridge_config);
-        BuildingATower2HeadRight      (walk_bridge_config);
-//        BuildingATower2HeadFloor      (walk_bridge_config);
-//        BuildingATower2HeadRoof       (walk_bridge_config);
+        BuildingATower2HeadFront_Part      (walk_bridge_config);
+        BuildingATower2HeadBack_Part       (walk_bridge_config);
+        BuildingATower2HeadLeft_Part       (walk_bridge_config);
+        BuildingATower2HeadRight_Part      (walk_bridge_config);
+//        BuildingATower2HeadFloor_Part      (walk_bridge_config);
+//        BuildingATower2HeadRoof_Part       (walk_bridge_config);
     }
 }

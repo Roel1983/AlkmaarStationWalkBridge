@@ -4,11 +4,11 @@ include <../../../../Utils/Box.inc>
 include <../../../../Utils/GlueTogether.inc>
 include <../../../../Utils/LinearExtrude.inc>
 
-use <Parts/BridgeRoofAbBegin.scad>
-use <Parts/BridgeRoofAbCenter.scad>
-use <Parts/BridgeRoofAbEnd.scad>
-use <Parts/BridgeRoofBcBegin.scad>
-use <Parts/BridgeRoofBcEnd.scad>
+use <BridgeRoofAbBegin_Part.scad>
+use <BridgeRoofAbCenter_Part.scad>
+use <BridgeRoofAbEnd_Part.scad>
+use <BridgeRoofBcBegin_Part.scad>
+use <BridgeRoofBcEnd_Part.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 Roof(
@@ -28,13 +28,13 @@ module Roof(
         xray     = xray,
         colorize = colorize
     ) {
-        BridgeRoofAbBegin(walk_bridge_config);
+        BridgeRoofAbBegin_Part(walk_bridge_config);
         if(section_count >= 3) for (index = [0 : section_count - 3]) {
-            BridgeRoofAbCenter(walk_bridge_config, index = index);
+            BridgeRoofAbCenter_Part(walk_bridge_config, index = index);
         }
-        BridgeRoofAbEnd(walk_bridge_config);
-        BridgeRoofBcBegin(walk_bridge_config);
-        BridgeRoofBcEnd(walk_bridge_config);
+        BridgeRoofAbEnd_Part(walk_bridge_config);
+        BridgeRoofBcBegin_Part(walk_bridge_config);
+        BridgeRoofBcEnd_Part(walk_bridge_config);
     }
     
     module Ghost() {
