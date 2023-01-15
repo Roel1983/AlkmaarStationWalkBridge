@@ -1,7 +1,7 @@
 include <../../../WalkBridgeConfig.inc>
 
-include <../../../../FlatChain/FloorStraight.inc>
-include <../../../../FlatChain/Floor.inc>
+use <../../../../FlatChain/FloorStraight.scad>
+use <../../../../FlatChain/Floor.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 

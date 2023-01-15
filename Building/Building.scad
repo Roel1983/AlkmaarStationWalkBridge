@@ -2,10 +2,8 @@ include <../../Utils/GlueTogether.inc>
 
 include <../WalkBridgeConfig.inc>
 
-use <PlatformA.scad>
-use <PlatformB.scad>
-use <PlatformC.scad>
-use <Support.scad>
+use <Platforms/Platforms.scad>
+use <Support/Support.scad>
 use <Bridge/Bridge.scad>
 
 walk_bridge_config = WalkBridgeConfig();
@@ -25,9 +23,7 @@ module Building(
         xray     = xray,
         colorize = colorize
     ) {
-        PlatformA(walk_bridge_config, colorize = false);
-        PlatformB(walk_bridge_config, colorize = false);
-        PlatformC(walk_bridge_config, colorize = false);
+        Platforms(walk_bridge_config, colorize = false);
         Support(walk_bridge_config,   colorize = false);
         Bridge(walk_bridge_config,    colorize = false);
     }
