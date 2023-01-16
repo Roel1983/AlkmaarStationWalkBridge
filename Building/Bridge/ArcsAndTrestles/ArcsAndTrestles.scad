@@ -5,8 +5,8 @@ include <../../../../Utils/GlueTogether.inc>
 include <../../../../Utils/TransformCopy.inc>
 
 use <../Wall/Wall.scad>
-use <BridgeArc_Part.scad>
-use <BridgeTrestle_Part.scad>
+use <Arc_Part.scad>
+use <Trestle_Part.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 ArcsAndTrestles(
@@ -24,12 +24,12 @@ module ArcsAndTrestles(
         xray     = xray,
         colorize = colorize
     ) {
-        BridgeWallSegmentWindowsSides(walk_bridge_config, "even") {
-            BridgeArc_Part(walk_bridge_config);
+        WallSegmentWindowsSides(walk_bridge_config, "even") {
+            Arc_Part(walk_bridge_config);
         }
-        BridgeWallSegmentWindowsSides(walk_bridge_config, "odd") {
+        WallSegmentWindowsSides(walk_bridge_config, "odd") {
             rotate_copy(180, VEC_Z) {
-                BridgeTrestle_Part(walk_bridge_config);
+                Trestle_Part(walk_bridge_config);
             }
         }
     }

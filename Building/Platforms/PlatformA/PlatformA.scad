@@ -2,9 +2,9 @@ include <../../../WalkBridgeConfig.inc>
 
 include <../../../../Utils/GlueTogether.inc>
 
-use <PlatformABase/PlatformABase.scad>
-use <PlatformAAbriRoof/PlatformAAbriRoof.scad>
-use <PlatformATower2Head/PlatformATower2Head.scad>
+use <Base/Base.scad>
+use <AbriRoof/AbriRoof.scad>
+use <Tower2Head/Tower2Head.scad>
 
 use <../misc/Platform.scad>
 
@@ -25,9 +25,9 @@ module PlatformA(
         xray     = xray,
         colorize = colorize
     ) {
-        PlatformABase      (walk_bridge_config, colorize = false);
-        PlatformAAbriRoof  (walk_bridge_config, colorize = false);
-        PlatformATower2Head(walk_bridge_config, colorize = false);
+        Base      (walk_bridge_config, colorize = false);
+        AbriRoof  (walk_bridge_config, colorize = false);
+        Tower2Head(walk_bridge_config, colorize = false);
     }
     
     module Ghost() {
