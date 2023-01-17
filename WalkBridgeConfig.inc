@@ -5,7 +5,6 @@ include <../Utils/Config.inc>
 include <../Utils/Constants.inc>
 include <../Utils/Units.inc>
 include <../FlatChain/Floor.inc>
-use<WalkBridge.scad>
 
 function AbriConfig(
     base_size         = scaled(m([9.25, 3.05, 5.2])),
@@ -143,7 +142,7 @@ function WalkBridgeConfig(
         )
     ),
     bridge_size_xz            = scaled(m([4.5, 3.0])), // ???
-    bridge_roof_radius        = scaled(m(3.5)), // ???
+    bridge_roof_radius        = scaled(m(3.85)),
     bridge_wall               = layer(4),
     bridge_wall_support_panel_width  = scaled(m(0.5)), // ???
     wall_segmment_offset_y    = scaled(m(.3)), // ???
