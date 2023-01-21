@@ -25,8 +25,7 @@ module LedStrip(
     module Ghost() {
         assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
         
-        bridge_size              = scaled(m([4.5, 3.0]));
-        
+        bridge_size           = ConfigGet(walk_bridge_config, "bridge_size_xz");
         distance_platform_a_b = ConfigGet(walk_bridge_config, "distance_platform_a_b");
         distance_platform_b_c = ConfigGet(walk_bridge_config, "distance_platform_b_c");
         bridge_height         = ConfigGet(walk_bridge_config, "bridge_clearance");
