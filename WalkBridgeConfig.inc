@@ -5,6 +5,7 @@ include <../Utils/Config.inc>
 include <../Utils/Constants.inc>
 include <../Utils/Units.inc>
 include <../FlatChain/Floor.inc>
+include <Building/Misc/WindowConfig.inc>
 
 function AbriConfig(
     base_size         = scaled(m([9.25, 3.05, 5.2])),
@@ -146,7 +147,14 @@ function WalkBridgeConfig(
     bridge_wall               = layer(4),
     bridge_wall_support_panel_width  = scaled(m(0.5)), // ???
     wall_segmment_offset_y    = scaled(m(.3)), // ???
-    abri_wall                 = layer(6)
+    abri_wall                 = layer(6),
+    bridge_window_config      = WindowConfig(
+        width            = scaled(m(1.1)),
+        height           = scaled(m(1.3)),
+        radius           = scaled(m(1.45)),
+        slat_count_x     = 2,
+        slat_positions_y = [scaled(m(.68))]
+    )
 ) = Config(undef,
     "WalkBridgeConfig",
     let(
@@ -238,6 +246,7 @@ function WalkBridgeConfig(
         ["bridge_wall",               bridge_wall],
         ["bridge_wall_support_panel_width",  bridge_wall_support_panel_width],
         ["abri_wall",                 abri_wall],
+        ["bridge_window_config",      bridge_window_config],
         /* Derived */
         ["wall_segment1_config",      wall_segment1_config],
         ["wall_segment2_config",      wall_segment2_config],

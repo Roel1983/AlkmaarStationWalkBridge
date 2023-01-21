@@ -5,13 +5,14 @@ include <../../../Utils/LinearExtrude.inc>
 include <../../../Utils/Box.inc>
 include <../../../Utils/Constants.inc>
 include <../../../Utils/Config.inc>
-use <WindowConfig.scad>
+include <WindowConfig.inc>
 
 $fn = 128;
 
 translate([-15, 0]) {
     bridge_window_config = WindowConfig(
-        size             = scaled(m([1.1, 1.3])),
+        width            = scaled(m(1.1)),
+        height           = scaled(m(1.3)),
         radius           = scaled(m(1.45)),
         slat_count_x     = 2,
         slat_positions_y = [scaled(m(.68))]
@@ -23,7 +24,8 @@ translate([-15, 0]) {
 
 translate([15, 0]) {
     abri_window_config = WindowConfig(
-        size               = scaled(m([1.4, 2.1])),
+        width              = scaled(m(1.4)),
+        height             = scaled(m(2.1)),
         radius             = scaled(m(3.8)),
         slat_count_x       = 2,
         slat_positions_y   = scaled(m([.7, 1.35])),
@@ -40,7 +42,8 @@ module Window(
     thickness = mm(1)
 ) {
     assert(is_config(window_config, "WindowConfig"));
-    size             = ConfigGet(window_config, "size");
+    width            = ConfigGet(window_config, "width");
+    height           = ConfigGet(window_config, "height");
     radius           = ConfigGet(window_config, "radius");
     slat_size        = ConfigGet(window_config, "slat_size");
     slat_count_x     = ConfigGet(window_config, "slat_count_x");
@@ -48,9 +51,9 @@ module Window(
     
     difference() {
         Box(
-            x_size = size[X] + 2 * border,
+            x_size = width + 2 * border,
             y_from = -border,
-            y_to   = size[Y] + border,
+            y_to   = height + border,
             z_to   = thickness
         );
         WindowGap(
@@ -67,7 +70,8 @@ module WindowSlats(
     extra =  0.1
 ) {
     assert(is_config(window_config, "WindowConfig"));
-    size               = ConfigGet(window_config, "size");
+    width            = ConfigGet(window_config, "width");
+    height           = ConfigGet(window_config, "height");
     radius             = ConfigGet(window_config, "radius");
     slat_size          = ConfigGet(window_config, "slat_size");
     slat_count_x       = ConfigGet(window_config, "slat_count_x");
@@ -75,7 +79,7 @@ module WindowSlats(
     different_top_slat = ConfigGet(window_config, "different_top_slat");
     
     period_x = (
-        size[X] + slat_size[X]
+        width + slat_size[X]
     ) / (slat_count_x + 1);
     for (i=[-(slat_count_x - 1) / 2 : (slat_count_x - 1) / 2]) {
         translate([
@@ -85,7 +89,7 @@ module WindowSlats(
             Box(
                 x_size = slat_size[X],
                 y_from = -extra,
-                y_to   = extra + size[Y],
+                y_to   = extra + height,
                 z_to   = slat_size[Y]
             );
         }
@@ -98,21 +102,21 @@ module WindowSlats(
         ]) {
             if (different_top_slat && i == len(slat_positions_y) - 1 ) {
                 Box(
-                    x_from = -size[X] / 2 - extra,
-                    x_to   = size[X] /2 + extra,
+                    x_from = -width / 2 - extra,
+                    x_to   = width /2 + extra,
                     y_size = 2 * slat_size[X],
                     z_to   = slat_size[Y]
                 );
                 Box(
-                    x_from = -size[X] / 2 - extra,
-                    x_to   = size[X] /2 + extra,
+                    x_from = -width / 2 - extra,
+                    x_to   = width /2 + extra,
                     y_to   = slat_size[X],
                     z_to   = 2 * slat_size[Y]
                 );
             } else {
                 Box(
-                    x_from = -size[X] / 2 - extra,
-                    x_to   = size[X] /2 + extra,
+                    x_from = -width / 2 - extra,
+                    x_to   = width /2 + extra,
                     y_size = slat_size[X],
                     z_to   = slat_size[Y]
                 );
@@ -127,7 +131,8 @@ module WindowGap(
     extra     = 0.1
 ) {
     assert(is_config(window_config, "WindowConfig"));
-    size               = ConfigGet(window_config, "size");
+    width              = ConfigGet(window_config, "width");
+    height             = ConfigGet(window_config, "height");
     radius             = ConfigGet(window_config, "radius");
     slat_size          = ConfigGet(window_config, "slat_size");
     slat_count_x       = ConfigGet(window_config, "slat_count_x");
@@ -137,12 +142,12 @@ module WindowGap(
     LinearExtrude(z_from = -extra, z_to = thickness + extra) {
         intersection() {
             Box(
-                x_size = size[X],
-                y_to   = size[Y]
+                x_size = width,
+                y_to   = height
             );
             translate([
                 radius_center,
-                size[Y] - radius
+                height - radius
             ]) {
                 circle(r = radius);
             }

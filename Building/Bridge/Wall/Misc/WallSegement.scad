@@ -4,6 +4,7 @@ include <../../../../../Utils/Box.inc>
 include <../../../../../Utils/Constants.inc>
 include <../../../../../Utils/LinearExtrude.inc>
 include <../../../../../Utils/TransformIf.inc>
+use <../../../Misc/Window.scad>
 
 walk_bridge_config  = WalkBridgeConfig();
 wall_segment_config = ConfigGet(walk_bridge_config, "wall_segment1_config");
@@ -27,32 +28,40 @@ module WallSegment(
     window_panel_count = ConfigGet(wall_segment_config, "window_panel_count");
     window_panel_width = ConfigGet(wall_segment_config, "window_panel_width");
     offset_begin       = ConfigGet(wall_segment_config, "offset_begin");
+    
+    window_config = ConfigGet(walk_bridge_config, "bridge_window_config");
      
-    translate([0, pos_y]) {
-        mirror_if(mirror_x, VEC_X) {
-            LinearExtrude(
-                x_to   = bridge_size_xz[0] / 2,
-                x_size = bridge_wall
-            ) {
-                difference() {
+    adjusted_window_config = WindowConfig(
+        parent = window_config,
+        width  = scaled(m(1.0)) // TODO calculate
+    );
+    
+    mirror_if(mirror_x, VEC_X) {
+        translate([bridge_size_xz[0] / 2, pos_y, bridge_clearance]) {
+            rotate(90, VEC_Y) rotate(90, VEC_Z) {
+                difference() { 
                     Box(
                         x_to   = size_y,
-                        y_from = bridge_clearance,
-                        y_size = bridge_size_xz[1]
+                        y_to   = bridge_size_xz[1],
+                        z_to   = bridge_wall
                     );
-                    for(i = [0:window_panel_count - 1 ]) {
-                        translate([
-                            offset_begin + window_panel_width * (i + .5),
-                            0
-                        ]) {
-                            Box(
-                                x_size   = window_panel_width - nozzle(8),
-                                y_from = bridge_clearance + bridge_size_xz[1] - mm(20),
-                                y_to   = bridge_clearance + bridge_size_xz[1] - mm(2)
-                            );
-                        }
+                    AtEachWindowPosition() {
+                        WindowGap(adjusted_window_config);
                     }
                 }
+                AtEachWindowPosition() {
+                    WindowSlats(adjusted_window_config);
+                }
+            }
+        }
+    }
+    module AtEachWindowPosition() {
+        for(i = [0 : window_panel_count - 1 ]) {
+            translate([
+                offset_begin + window_panel_width * (i + .5),
+                bridge_size_xz[1] - ConfigGet(window_config, "height") - nozzle(4)
+            ]) {
+                children();
             }
         }
     }
