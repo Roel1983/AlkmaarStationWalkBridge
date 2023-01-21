@@ -51,7 +51,7 @@ module AbriRoofPart(
             }
         }
     } else {
-        LinearExtrude(
+        color("Silver") LinearExtrude(
             z_to =  x_to - x_from
         ) {
             translate([

@@ -36,10 +36,12 @@ module Tower2BaseSide_Part(
             }
         }
     } else {
-        Box(
-            x_size = tower2_base_size[Y],
-            y_to   = tower2_base_size[Z],
-            z_to   = abri_wall        
-        );
+        color("#81cdc6") {
+            Box(
+                x_size = tower2_base_size[Y],
+                y_to   = tower2_base_size[Z],
+                z_to   = abri_wall        
+            );
+        }
     }
 }

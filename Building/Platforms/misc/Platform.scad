@@ -68,7 +68,7 @@ module Platform(walk_bridge_config, platform_config, mirror_y = false) {
                     z_to   = abri_base_size[Z]
                 );
                 translate([(abri_base_size[X] - abri_support_width) / 2, abri_base_size[Y] / 2]) {
-                    #mirror_copy(VEC_X) {
+                    mirror_copy(VEC_X) {
                         Box(
                             x_to = abri_support_width / 2,
                             x_size = abri_support_beam_size[X],

@@ -8,7 +8,7 @@ use <../../../Misc/Window.scad>
 walk_bridge_config = WalkBridgeConfig();
 AbriHeadBack_Part(
     walk_bridge_config,
-    is_printable = true
+    is_printable = false
 );
 
 module AbriHeadBack_Part(
@@ -49,7 +49,7 @@ module AbriHeadBack_Part(
             abri_head_bounds_y[1],
             abri_base_size[Z]
         ]) {
-            rotate(90, VEC_X) {
+            color("#81cdc6") rotate(90, VEC_X) {
                 difference() {
                     Box(
                         x_size = abri_head_size[X],
@@ -63,6 +63,17 @@ module AbriHeadBack_Part(
                 }
                 AtEachWindowPosition() {
                     WindowSlats(window_config);
+                }
+            }
+            if(!is_printable) {
+                color("black", .2) {
+                    Box(
+                        x_size = abri_head_size[X],
+                        z_from = abri_head_size[Z] / 3,
+                        z_to   = abri_head_size[Z] - 1,
+                        y_to   = .2,
+                        y_from = .1
+                    );
                 }
             }
         }

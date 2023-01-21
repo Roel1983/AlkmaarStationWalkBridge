@@ -21,9 +21,9 @@ module WallSupport(
     
     mirror_if(mirror_x, VEC_X) {
         translate([0, bridge_support_position_y]) {
-            Box(
+            color("#81cdc6") Box(
                 x_from = bridge_size_xz[0] / 2 - bridge_wall,
-                x_size = 2 * bridge_wall,
+                x_size = 4 * bridge_wall,
                 y_size = bridge_wall_support_panel_width,
                 z_from = bridge_clearance,
                 z_size = bridge_size_xz[1]

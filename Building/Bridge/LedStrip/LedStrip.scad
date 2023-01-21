@@ -15,7 +15,7 @@ module LedStrip(
 ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     
-    color(alpha = .2)  Ghost();
+    color("OrangeRed")  Ghost();
     GlueTogether(
         xray     = xray,
         colorize = colorize

@@ -40,27 +40,29 @@ module AbriHeadLeft_Part(
             }
         }
     } else {
-        abri_head_roof_r = ConfigGet(platform_a_config, ["abri_config", "head_roof_r"]);
-        $fn = 64;
-        LinearExtrude(
-            z_to   = abri_wall
-        ) {
-            A(
-                size   = [abri_head_size[Y], abri_head_size[Z]],
-                roof_r = abri_head_roof_r
-            );
-            difference() {
-                Box(
-                    x_from = -abri_head_size[Y]/ 2,
-                    x_to   = 0,
-                    y_from = -abri_head_overhang_r,
-                    y_to   = 0
+        color("#81cdc6") {
+            abri_head_roof_r = ConfigGet(platform_a_config, ["abri_config", "head_roof_r"]);
+            $fn = 64;
+            LinearExtrude(
+                z_to   = abri_wall
+            ) {
+                A(
+                    size   = [abri_head_size[Y], abri_head_size[Z]],
+                    roof_r = abri_head_roof_r
                 );
-                translate([
-                    -abri_head_size[Y] / 2,
-                    -abri_head_overhang_r - abri_head_overhang_z
-                ]) {
-                    circle(r=abri_head_overhang_r);
+                difference() {
+                    Box(
+                        x_from = -abri_head_size[Y]/ 2,
+                        x_to   = 0,
+                        y_from = -abri_head_overhang_r,
+                        y_to   = 0
+                    );
+                    translate([
+                        -abri_head_size[Y] / 2,
+                        -abri_head_overhang_r - abri_head_overhang_z
+                    ]) {
+                        circle(r=abri_head_overhang_r);
+                    }
                 }
             }
         }

@@ -13,7 +13,8 @@ WallSegment(walk_bridge_config, wall_segment_config);
 module WallSegment(
     walk_bridge_config,
     wall_segment_config,
-    mirror_x = false
+    mirror_x = false,
+    is_printable = false
  ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     assert(is_config(wall_segment_config, "WallSegmentConfig"));
@@ -38,20 +39,31 @@ module WallSegment(
     
     mirror_if(mirror_x, VEC_X) {
         translate([bridge_size_xz[0] / 2, pos_y, bridge_clearance]) {
-            rotate(90, VEC_Y) rotate(90, VEC_Z) {
-                difference() { 
-                    Box(
-                        x_to   = size_y,
-                        y_to   = bridge_size_xz[1],
-                        z_to   = bridge_wall
-                    );
+            color("#81cdc6") {
+                rotate(90, VEC_Y) rotate(90, VEC_Z) {
+                    difference() { 
+                        Box(
+                            x_to   = size_y,
+                            y_to   = bridge_size_xz[1],
+                            z_to   = bridge_wall
+                        );
+                        AtEachWindowPosition() {
+                            WindowGap(adjusted_window_config);
+                        }
+                    }
                     AtEachWindowPosition() {
-                        WindowGap(adjusted_window_config);
+                        WindowSlats(adjusted_window_config);
                     }
                 }
-                AtEachWindowPosition() {
-                    WindowSlats(adjusted_window_config);
-                }
+            }
+            if(!is_printable) {
+                color("black", alpha= 0.2) Box(
+                    x_from = -1,
+                    x_to   = 0.1,
+                    y_to   = size_y,
+                    z_from = bridge_size_xz[1] / 2,
+                    z_to   = bridge_size_xz[1]
+                );
             }
         }
     }

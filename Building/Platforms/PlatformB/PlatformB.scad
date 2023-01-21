@@ -16,7 +16,7 @@ module PlatformB(
 ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     
-    color(alpha = .2) Ghost();
+    color("#81cdc6") Ghost();
     GlueTogether(
         xray     = xray,
         colorize = colorize

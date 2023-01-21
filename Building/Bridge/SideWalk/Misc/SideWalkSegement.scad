@@ -28,7 +28,7 @@ module SideWalkSegment(
     
     side_walk_overlap = layer(6) / 2 + nozzle(2) + mm(1);
      
-    translate([0, pos_y]) {
+    color("Peru") translate([0, pos_y]) {
         mirror_if(mirror_x, VEC_X) {
             Box(
                 x_from = bridge_size_xz[0] / 2 + mm(2),

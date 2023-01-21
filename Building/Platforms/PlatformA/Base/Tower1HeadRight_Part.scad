@@ -39,14 +39,16 @@ module Tower1HeadRight_Part(
             }
         }
     } else {
-        $fn = 64;
-        LinearExtrude(
-            z_to   = abri_wall
-        ) {
-            A(
-                size   = [tower1_head_size[Y], tower1_head_size[Z]],
-                roof_r = tower1_head_roof_r
-            );
+        color("#81cdc6") {
+            $fn = 64;
+            LinearExtrude(
+                z_to   = abri_wall
+            ) {
+                A(
+                    size   = [tower1_head_size[Y], tower1_head_size[Z]],
+                    roof_r = tower1_head_roof_r
+                );
+            }
         }
     }
     

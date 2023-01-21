@@ -16,13 +16,14 @@ use <WallSupportRight_Part.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 Wall(
-    walk_bridge_config
+    walk_bridge_config,
+    colorize = false
 );
 
 module Wall(
     walk_bridge_config,
     xray     = false,
-    colorize = true
+    colorize = false
 ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     

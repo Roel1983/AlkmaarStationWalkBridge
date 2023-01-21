@@ -16,7 +16,7 @@ module FloorBegin(
     bridge_chain_floor_config = ConfigGet(walk_bridge_config, "bridge_chain_floor_config");
     floor_thickness           = ConfigGet(bridge_chain_floor_config, "thickness");
     
-    translate([0, 
+    color("DimGray") translate([0, 
         bridge_floor_from,
         bridge_clearance + floor_thickness
     ]) {

@@ -18,7 +18,7 @@ Bridge(
 module Bridge(
     walk_bridge_config,
     xray     = false,
-    colorize = true
+    colorize = false
 ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     

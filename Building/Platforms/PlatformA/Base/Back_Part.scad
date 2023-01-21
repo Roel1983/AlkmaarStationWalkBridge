@@ -47,9 +47,11 @@ module Back_Part(
             }
         }
     } else {
-        AbriBase();
-        Tower1();
-        Tower2();
+        color("#81cdc6") {
+            AbriBase();
+            Tower1();
+            Tower2();
+        }
     }
     
     module Tower1() {

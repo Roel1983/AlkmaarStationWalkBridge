@@ -38,7 +38,9 @@ module Arc_Part(
         Part();
     } else {
         $fn = 32;
-        translate([0, 0, bridge_clearance]) rotate(90, VEC_X) Part();
+        color("#81cdc6") {
+            translate([0, 0, bridge_clearance]) rotate(90, VEC_X) Part();
+        }
     }
     module Part() {
         BIAS = .01;

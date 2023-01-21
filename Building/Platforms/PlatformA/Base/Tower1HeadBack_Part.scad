@@ -38,10 +38,12 @@ module Tower1HeadBack_Part(
             }
         }
     } else {
-        Box(
-            x_size = tower1_head_size[X],
-            y_to   = tower1_head_size[Z],
-            z_to   = abri_wall
-        );
+        color("#81cdc6") {
+            Box(
+                x_size = tower1_head_size[X],
+                y_to   = tower1_head_size[Z],
+                z_to   = abri_wall
+            );
+        }
     }
 }

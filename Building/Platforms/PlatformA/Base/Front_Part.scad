@@ -47,11 +47,13 @@ module Front_Part(
             }
         }
     } else {
-        AbriBase();
-        Tower1();
-        Tower2();
-        Support();
-        AbriHeadRight();
+        color("#81cdc6") {
+            AbriBase();
+            Tower1();
+            Tower2();
+            Support();
+            AbriHeadRight();
+        }
     }
     
     module Tower1() {

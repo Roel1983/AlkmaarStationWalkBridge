@@ -7,29 +7,11 @@ walk_bridge_config = WalkBridgeConfig();
 roof_segment_config     = ConfigGet(walk_bridge_config, "roof_segment1_config");
 platform_config         = ConfigGet(walk_bridge_config, "platform_a_config");
 
-color("red") {
-    RoofSectionBegin(
-        roof_segment_config,
-        is_printable = true,
-        platform_config = platform_config
-    );
-}
-
-color("green") {
-    RoofSectionCenter(
-        roof_segment_config,
-        is_printable = true
-    );
-}
-
-color("blue") {
-    RoofSectionEnd(
-        roof_segment_config,
-        is_printable = true,
-        platform_config = platform_config
-    );
-}
-
+RoofSectionBegin(
+    roof_segment_config,
+    is_printable = true,
+    platform_config = platform_config
+);
 
 module RoofSectionBegin(
     roof_segment_config,
@@ -105,26 +87,28 @@ module RoofSection(
     bridge_height            = ConfigGet(walk_bridge_config, "bridge_clearance");
     
     h = bridge_size_xz[1] - sqrt(pow(bridge_roof_radius, 2) - pow(bridge_size_xz[0]/2, 2));
-    translate([0,0, bridge_height]) LinearExtrude(
-        y_to   = length
-    ) {
-        rotate(180) difference() {
-            intersection() {
+    color("Silver") {
+        translate([0,0, bridge_height]) LinearExtrude(
+            y_to   = length
+        ) {
+            rotate(180) difference() {
+                intersection() {
+                    translate([
+                        0,
+                        h
+                    ]) {
+                        circle(r=bridge_roof_radius);
+                    }
+                    translate([-bridge_size_xz[0] / 2, 0]) {
+                        square([bridge_size_xz[0], h + bridge_roof_radius]);
+                    }
+                }
                 translate([
                     0,
                     h
                 ]) {
-                    circle(r=bridge_roof_radius);
+                    circle(r=bridge_roof_radius - mm(1.5));
                 }
-                translate([-bridge_size_xz[0] / 2, 0]) {
-                    square([bridge_size_xz[0], h + bridge_roof_radius]);
-                }
-            }
-            translate([
-                0,
-                h
-            ]) {
-                circle(r=bridge_roof_radius - mm(1.5));
             }
         }
     }
@@ -145,46 +129,50 @@ module RoofSection(
             assert(is_config(platform_config, "PlatformConfig"));
             abri_head_size = ConfigGet(platform_config, ["abri_config", "head_size"]);
             
-            translate([0,0, bridge_height]) LinearExtrude(
-                y_from = -layer(5)
-            ) {
-                mirror(VEC_Y)difference() {
-                    Box(
-                        x_size = bridge_size_xz[0],
-                        y_from = h,
-                        y_to   = abri_head_size[Z]
-                    );
-                    translate([
-                        0,
-                        h
-                    ]) {
-                        circle(r=bridge_roof_radius - mm(1.5));
+            color("#81cdc6") {
+                translate([0,0, bridge_height]) LinearExtrude(
+                    y_from = -layer(5)
+                ) {
+                    mirror(VEC_Y)difference() {
+                        Box(
+                            x_size = bridge_size_xz[0],
+                            y_from = h,
+                            y_to   = abri_head_size[Z]
+                        );
+                        translate([
+                            0,
+                            h
+                        ]) {
+                            circle(r=bridge_roof_radius - mm(1.5));
+                        }
                     }
                 }
             }
         }
         
         module SeamCap() {
-            translate([0,0, bridge_height]) LinearExtrude(
-                y_size   = mm(2)
-            ) {
-                rotate(180) difference() {
-                    intersection() {
+            color("DarkGray") {
+                translate([0,0, bridge_height]) LinearExtrude(
+                    y_size   = mm(2)
+                ) {
+                    rotate(180) difference() {
+                        intersection() {
+                            translate([
+                                0,
+                                h
+                            ]) {
+                                circle(r=bridge_roof_radius + nozzle(1));
+                            }
+                            translate([-bridge_size_xz[0] / 2, 0]) {
+                                square([bridge_size_xz[0], h + bridge_roof_radius]);
+                            }
+                        }
                         translate([
                             0,
                             h
                         ]) {
-                            circle(r=bridge_roof_radius + nozzle(1));
+                            circle(r=bridge_roof_radius - mm(1.5));
                         }
-                        translate([-bridge_size_xz[0] / 2, 0]) {
-                            square([bridge_size_xz[0], h + bridge_roof_radius]);
-                        }
-                    }
-                    translate([
-                        0,
-                        h
-                    ]) {
-                        circle(r=bridge_roof_radius - mm(1.5));
                     }
                 }
             }

@@ -23,8 +23,10 @@ module Trestle_Part(
             );
         }
     } else {
-        LinearExtrude(z_size = layer(5)) {
-            BridgeTrestle2D(walk_bridge_config);
+        color("#81cdc6") {
+            LinearExtrude(z_size = layer(5)) {
+                BridgeTrestle2D(walk_bridge_config);
+            }
         }
     }
 }

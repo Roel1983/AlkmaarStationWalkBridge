@@ -38,7 +38,7 @@ module Tower2HeadFront_Part(
             }
         }
     } else {
-        Box(
+        color("#81cdc6") Box(
             x_size = tower2_head_size[X],
             y_to   = tower2_head_size[Z],
             z_to   = abri_wall

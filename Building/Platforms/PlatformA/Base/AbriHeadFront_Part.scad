@@ -48,21 +48,32 @@ module AbriHeadFront_Part(
             abri_head_bounds_y[0],
             abri_base_size[Z]
         ]) {
-            rotate(90, VEC_X) {
-                difference() {
-                    Box(
-                        x_from  = abri_head_position_x - (abri_head_size[X] - bridge_size_xz[0])/2,
-                        y_to    = abri_head_size[Z],
-                        z_to    = abri_wall
-                    );
-                    AtEachWindowPosition() WindowGap(window_config);
+            rotate(180) {
+                color("#81cdc6") rotate(90, VEC_X) {
+                    difference() {
+                        Box(
+                            x_to    = -abri_head_position_x + (abri_head_size[X] - bridge_size_xz[0])/2,
+                            y_to    = abri_head_size[Z],
+                            z_to    = abri_wall
+                        );
+                        AtEachWindowPosition() WindowGap(window_config);
+                    }
+                    AtEachWindowPosition() WindowSlats(window_config);
                 }
-                AtEachWindowPosition() WindowSlats(window_config);
+                if(!is_printable) {
+                    color("black", .2) Box(
+                        x_to    = -abri_head_position_x + (abri_head_size[X] - bridge_size_xz[0])/2,
+                        z_from  = abri_head_size[Z] /3,
+                        z_to    = abri_head_size[Z] - 1,
+                        y_to    = .2,
+                        y_from  = .1
+                    );
+                }
             }
         }
         
         module AtEachWindowPosition() {
-            for(xi=[-1:1:1]) translate([scaled(m(-2.4)) + xi * scaled(m(1.55)), scaled(m(1.9))]) {
+            for(xi=[-1:1:1]) translate([scaled(m(2.4)) + xi * scaled(m(1.55)), scaled(m(1.9))]) {
                 children();
             }
         }

@@ -43,38 +43,40 @@ module AbriHeadRight_Part(
             }
         }
     } else {
-        abri_head_roof_r = ConfigGet(platform_a_config, ["abri_config", "head_roof_r"]);
-        $fn = 64;
-        LinearExtrude(
-            z_to   = abri_wall
-        ) {
-            intersection() {
-                union() {
-                    A(
-                        size   = [abri_head_size[Y], abri_head_size[Z]],
-                        roof_r = abri_head_roof_r
-                    );
-                    difference() {
-                        Box(
-                            x_to   = abri_head_size[Y]/ 2,
-                            x_from = 0,
-                            y_from = -abri_head_overhang_r,
-                            y_to   = 0
+        color("#81cdc6") {
+            abri_head_roof_r = ConfigGet(platform_a_config, ["abri_config", "head_roof_r"]);
+            $fn = 64;
+            LinearExtrude(
+                z_to   = abri_wall
+            ) {
+                intersection() {
+                    union() {
+                        A(
+                            size   = [abri_head_size[Y], abri_head_size[Z]],
+                            roof_r = abri_head_roof_r
                         );
-                        translate([
-                            abri_head_size[Y] / 2,
-                            -abri_head_overhang_r - abri_head_overhang_z
-                        ]) {
-                            circle(r=abri_head_overhang_r);
+                        difference() {
+                            Box(
+                                x_to   = abri_head_size[Y]/ 2,
+                                x_from = 0,
+                                y_from = -abri_head_overhang_r,
+                                y_to   = 0
+                            );
+                            translate([
+                                abri_head_size[Y] / 2,
+                                -abri_head_overhang_r - abri_head_overhang_z
+                            ]) {
+                                circle(r=abri_head_overhang_r);
+                            }
                         }
                     }
+                    Box(
+                        x_from = tower_base_size[X] / 2 + abri_head_position_y,
+                        x_to   = abri_head_size[Y] / 2,
+                        y_from = -abri_base_size[Z],
+                        y_to   = 1.5 * abri_head_size[Z] 
+                    );
                 }
-                Box(
-                    x_from = tower_base_size[X] / 2 + abri_head_position_y,
-                    x_to   = abri_head_size[Y] / 2,
-                    y_from = -abri_base_size[Z],
-                    y_to   = 1.5 * abri_head_size[Z] 
-                );
             }
         }
     }

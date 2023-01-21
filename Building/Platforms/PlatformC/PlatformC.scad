@@ -60,11 +60,13 @@ module PlatformC(
     distance_platform_a_b = ConfigGet(walk_bridge_config, "distance_platform_a_b");
     distance_platform_b_c = ConfigGet(walk_bridge_config, "distance_platform_b_c");
     
-    translate([0, distance_platform_a_b + distance_platform_b_c]) {
-        render() union() {
-            Abri();
-            Tower1();
-            Tower2();
+    color("#81cdc6") {
+        translate([0, distance_platform_a_b + distance_platform_b_c]) {
+            render() union() {
+                Abri();
+                Tower1();
+                Tower2();
+            }
         }
     }
 

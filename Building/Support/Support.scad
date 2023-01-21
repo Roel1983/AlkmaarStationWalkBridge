@@ -15,7 +15,7 @@ module Support(
 ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     
-    color(alpha = .2)  Ghost();
+    color("DimGray")  Ghost();
     GlueTogether(
         xray     = xray,
         colorize = colorize
