@@ -6,6 +6,7 @@ use <Platforms/Platforms.scad>
 use <Support/Support.scad>
 use <Bridge/Bridge.scad>
 use <../Reference/ViewEF.scad>
+use <../Reference/MapPlatformA.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 Building(
@@ -15,6 +16,7 @@ Building(
 );
 
 ViewEF();
+MapPlatformA();
 
 module Building(
     walk_bridge_config,
