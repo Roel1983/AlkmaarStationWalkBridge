@@ -8,7 +8,8 @@ use <../Wall/Wall.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 LedStripSegment(
-    walk_bridge_config
+    walk_bridge_config,
+    is_printable = true
 );
 
 led_strip_bottom          = layer(5);
@@ -20,6 +21,7 @@ led_strip_indent          = nozzle(.5);
 
 module LedStripSegment(
     walk_bridge_config,
+    is_printable = false,
     index = 0
 ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
@@ -45,63 +47,71 @@ module LedStripSegment(
     led_strip_width2  = led_strip_width + 2 * (led_strip_clearance + led_strip_wall);
     led_strip_height = led_strip_bottom + led_strip_keep_out_height;
     
-    color("DimGrey") translate([0, 0, bridge_clearance + h]) {
-        translate([0, index * led_strip_length, 0]) {
-            difference() {
-                ExtrudedPart();
-                WallSegmentWindowsSides(walk_bridge_config, "even") {
-                    ArcGap();
+    if(is_printable) {
+        rotate(180, VEC_Y) translate([0,0, -h - bridge_clearance])Part();
+    } else {
+        Part();
+    }
+    
+    module Part() {
+        color("DimGrey") translate([0, 0, bridge_clearance + h]) {
+            translate([0, index * led_strip_length, 0]) {
+                difference() {
+                    ExtrudedPart();
+                    WallSegmentWindowsSides(walk_bridge_config, "even") {
+                        ArcGap();
+                    }
                 }
             }
         }
-    }
-    
-    module ArcGap() {
-        arc_thickness = ConfigGet(walk_bridge_config, "arc_thickness");
-        BIAS = 0.1;
-        mirror_copy(VEC_X) {
-            Box(
-                x_from = led_strip_width2 / 2 - led_strip_indent,
-                x_size = led_strip_indent * 1.1,
-                y_size = arc_thickness,
-                z_from = -led_strip_height - BIAS,
-                z_to   = BIAS
-            );
+        
+        module ArcGap() {
+            arc_thickness = ConfigGet(walk_bridge_config, "arc_thickness");
+            BIAS = 0.1;
+            mirror_copy(VEC_X) {
+                Box(
+                    x_from = led_strip_width2 / 2 - led_strip_indent,
+                    x_size = led_strip_indent * 1.1,
+                    y_size = arc_thickness,
+                    z_from = -led_strip_height - BIAS,
+                    z_to   = BIAS
+                );
+            }
         }
-    }
-    
-    module ExtrudedPart() {
-        LinearExtrude(y_to = led_strip_length, convexity=2) {
-            rotate(180) mirror_copy(VEC_X) polygon([
-                [
-                    0,
-                    0
-                ], [
-                    led_strip_width2 / 2,
-                    0
-                ], [
-                    led_strip_width2 / 2,
-                    -led_strip_height
-                ], [
-                    led_strip_keep_out_width / 2,
-                    -led_strip_height
-                ], [
-                    led_strip_keep_out_width / 2,
-                    (
-                        - led_strip_bottom - led_strip_thickness 
-                        - (led_strip_width / 2 + led_strip_clearance - led_strip_keep_out_width / 2) / led_strip_tangent
-                    )
-                ], [
-                    led_strip_width / 2 + led_strip_clearance,
-                    -led_strip_bottom - led_strip_thickness
-                ], [
-                    led_strip_width / 2 + led_strip_clearance,
-                    -led_strip_bottom
-                ], [
-                    0,
-                    -led_strip_bottom
-                ]
-            ]);
+        
+        module ExtrudedPart() {
+            LinearExtrude(y_to = led_strip_length, convexity=2) {
+                rotate(180) mirror_copy(VEC_X) polygon([
+                    [
+                        0,
+                        0
+                    ], [
+                        led_strip_width2 / 2,
+                        0
+                    ], [
+                        led_strip_width2 / 2,
+                        -led_strip_height
+                    ], [
+                        led_strip_keep_out_width / 2,
+                        -led_strip_height
+                    ], [
+                        led_strip_keep_out_width / 2,
+                        (
+                            - led_strip_bottom - led_strip_thickness 
+                            - (led_strip_width / 2 + led_strip_clearance - led_strip_keep_out_width / 2) / led_strip_tangent
+                        )
+                    ], [
+                        led_strip_width / 2 + led_strip_clearance,
+                        -led_strip_bottom - led_strip_thickness
+                    ], [
+                        led_strip_width / 2 + led_strip_clearance,
+                        -led_strip_bottom
+                    ], [
+                        0,
+                        -led_strip_bottom
+                    ]
+                ]);
+            }
         }
     }
 }
