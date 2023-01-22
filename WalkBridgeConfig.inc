@@ -148,13 +148,18 @@ function WalkBridgeConfig(
     bridge_wall_support_panel_width  = scaled(m(0.5)), // ???
     wall_segmment_offset_y    = scaled(m(.3)), // ???
     abri_wall                 = layer(6),
+    bridge_wall_to_roof       = mm(1),
+    bridge_wall_top_height    = nozzle(3.1),
+    bridge_wall_top_rim_size  = [nozzle(1), layer(1)],
     bridge_window_config      = WindowConfig(
-        width            = scaled(m(1.1)),
-        height           = scaled(m(1.3)),
+        width            = scaled(m(1.1)), // Will be overruled
+        height           = scaled(m(1.3)), // Will be overruled
         radius           = scaled(m(1.45)),
         slat_count_x     = 2,
         slat_positions_y = [scaled(m(.68))]
-    )
+    ),
+    window_clearance_yz       = nozzle([.5, 1]),
+    bridge_window_position_z  = scaled(m(1.60))
 ) = Config(undef,
     "WalkBridgeConfig",
     let(
@@ -246,7 +251,12 @@ function WalkBridgeConfig(
         ["bridge_wall",               bridge_wall],
         ["bridge_wall_support_panel_width",  bridge_wall_support_panel_width],
         ["abri_wall",                 abri_wall],
+        ["bridge_wall_to_roof",       bridge_wall_to_roof],
+        ["bridge_wall_top_height",    bridge_wall_top_height],
+        ["bridge_wall_top_rim_size",  bridge_wall_top_rim_size],
         ["bridge_window_config",      bridge_window_config],
+        ["window_clearance_yz",       window_clearance_yz],
+        ["bridge_window_position_z",  bridge_window_position_z],
         /* Derived */
         ["wall_segment1_config",      wall_segment1_config],
         ["wall_segment2_config",      wall_segment2_config],

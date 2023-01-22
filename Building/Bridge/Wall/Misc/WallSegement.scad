@@ -31,20 +31,21 @@ module WallSegment(
     window_panel_width = ConfigGet(wall_segment_config, "window_panel_width");
     offset_begin       = ConfigGet(wall_segment_config, "offset_begin");
     
-    window_config = ConfigGet(walk_bridge_config, "bridge_window_config");
-     
-    click_top_height   = nozzle(3.1);
-    click_rim_size     = [nozzle(1), layer(1)];
-    window_clearance_z = nozzle(1);
-    window_clearance_y = nozzle(.5);
-    window_position_z  = scaled(m(1.60));
+    bridge_wall_to_roof      = ConfigGet(walk_bridge_config, "bridge_wall_to_roof");
+    bridge_wall_top_height   = ConfigGet(walk_bridge_config, "bridge_wall_top_height");
+    window_config            = ConfigGet(walk_bridge_config, "bridge_window_config");
+    bridge_wall_top_rim_size = ConfigGet(walk_bridge_config, "bridge_wall_top_rim_size");
+    window_clearance_yz      = ConfigGet(walk_bridge_config, "window_clearance_yz");
+    bridge_window_position_z = ConfigGet(walk_bridge_config, "bridge_window_position_z");
     
     horizontal_beam_width = scaled(m(.2));
     
+    size_z = bridge_size_xz[1] - bridge_wall_to_roof;
+    
     adjusted_window_config = WindowConfig(
         parent = window_config,
-        height = bridge_size_xz[1] - window_position_z - click_top_height - window_clearance_z,
-        width  = window_panel_width - horizontal_beam_width - 2 * window_clearance_y
+        height = size_z - bridge_window_position_z - bridge_wall_top_height - window_clearance_yz[1],
+        width  = window_panel_width - horizontal_beam_width - 2 * window_clearance_yz[0]
     );
     
     mirror_if(mirror_x, VEC_X) {
@@ -54,7 +55,7 @@ module WallSegment(
                     difference() { 
                         Box(
                             x_to   = size_y,
-                            y_to   = bridge_size_xz[1],
+                            y_to   = size_z,
                             z_to   = bridge_wall
                         );
                         AtEachWindowPosition() {
@@ -63,9 +64,9 @@ module WallSegment(
                     }
                     Box(
                         x_to   = size_y,
-                        y_to   = bridge_size_xz[1],
-                        y_from = bridge_size_xz[1] - click_rim_size[0],
-                        z_to   = bridge_wall + click_rim_size[1]
+                        y_to   = size_z,
+                        y_from = size_z - bridge_wall_top_rim_size[0],
+                        z_to   = bridge_wall + bridge_wall_top_rim_size[1]
                     );
                     AtEachWindowPosition() {
                         WindowSlats(adjusted_window_config);
@@ -74,29 +75,29 @@ module WallSegment(
                         Box(
                             x_size = scaled(m(.2)),
                             z_to   = scaled(m(.1)),
-                            y_to   = bridge_size_xz[1] - click_top_height
+                            y_to   = size_z - bridge_wall_top_height
                         );
                         Box(
                             x_size = nozzle(2),
                             z_to   = scaled(m(.15)),
-                            y_to   = bridge_size_xz[1] - click_top_height
+                            y_to   = size_z - bridge_wall_top_height
                         );
                     }
                     Box(
                         x_to   = size_y,
-                        y_to   = window_position_z - window_clearance_z,
+                        y_to   = bridge_window_position_z - window_clearance_yz[1],
                         y_size = scaled(m(.2)),
                         z_to   = scaled(m(.15))
                     );
                     Box(
                         x_to   = size_y,
-                        y_to   = window_position_z - window_clearance_z,
+                        y_to   = bridge_window_position_z - window_clearance_yz[1],
                         y_size = scaled(m(.1)),
                         z_to   = scaled(m(.2))
                     );
                     Box(
                         x_to   = size_y,
-                        y_to   = window_position_z - window_clearance_z,
+                        y_to   = bridge_window_position_z - window_clearance_yz[1],
                         y_size = nozzle(1),
                         z_to   = scaled(m(.25))
                     );
@@ -107,8 +108,8 @@ module WallSegment(
                     x_from = -0.2,
                     x_to   = -0.1,
                     y_to   = size_y,
-                    z_from = bridge_size_xz[1] / 2,
-                    z_to   = bridge_size_xz[1]
+                    z_from = size_z / 2,
+                    z_to   = size_z
                 );
             }
         }
@@ -117,7 +118,7 @@ module WallSegment(
         for(i = [0 : window_panel_count - 1 ]) {
             translate([
                 offset_begin + window_panel_width * (i + .5),
-                window_position_z
+                bridge_window_position_z
             ]) {
                 children();
             }
