@@ -160,7 +160,8 @@ function WalkBridgeConfig(
     ),
     window_clearance_yz       = nozzle([.5, 1]),
     bridge_window_position_z  = scaled(m(1.60)),
-    gutter_width              = scaled(cm(25))
+    gutter_width              = scaled(cm(25)),
+    arc_thickness             = nozzle(2.5)
 ) = Config(undef,
     "WalkBridgeConfig",
     let(
@@ -259,6 +260,7 @@ function WalkBridgeConfig(
         ["window_clearance_yz",       window_clearance_yz],
         ["bridge_window_position_z",  bridge_window_position_z],
         ["gutter_width",              gutter_width],
+        ["arc_thickness",             arc_thickness],
         /* Derived */
         ["wall_segment1_config",      wall_segment1_config],
         ["wall_segment2_config",      wall_segment2_config],

@@ -6,6 +6,7 @@ include <../../../../Utils/TransformCopy.inc>
 include <../../../../Utils/Units.inc>
 
 use <Trestle_Part.scad>
+use <../LedStrip/LedStripSegment.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 Arc_Part(
@@ -25,7 +26,7 @@ module Arc_Part(
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     
     bridge_clearance   = ConfigGet(walk_bridge_config, "bridge_clearance");
-    arc_thickness      = nozzle(2.5);
+    arc_thickness      = ConfigGet(walk_bridge_config, "arc_thickness");
     bridge_roof_radius = ConfigGet(walk_bridge_config, "bridge_roof_radius");
     bridge_size_xz     = ConfigGet(walk_bridge_config, "bridge_size_xz");
     arc_to_roof        = scaled(m(0.35));
@@ -102,20 +103,22 @@ module Arc_Part(
             }
             
             module Outer(with_gutter_support) {
-                // TODO: cut out gap for LED strip
-                intersection() {
-                    Box(
-                        x_size = bridge_size_xz[0],
-                        y_to   = roof_height
-                    );
-                    translate([
-                        0,
-                        roof_radius_center_y
-                    ]) {
-                        circle(
-                            r = bridge_roof_radius
+                difference() {
+                    intersection() {
+                        Box(
+                            x_size = bridge_size_xz[0],
+                            y_to   = roof_height
                         );
+                        translate([
+                            0,
+                            roof_radius_center_y
+                        ]) {
+                            circle(
+                                r = bridge_roof_radius
+                            );
+                        }
                     }
+                    LedStripArcCutOut_2D(walk_bridge_config);
                 }
                 if (with_gutter_support) {
                     mirror_copy(VEC_X) GutterSupport();

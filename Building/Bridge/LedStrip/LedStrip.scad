@@ -1,7 +1,10 @@
 include <../../../WalkBridgeConfig.inc>
 
 include <../../../../Utils/GlueTogether.inc>
-include <../../../../Utils/Box.inc>
+use <LedStripSegment1_Part.scad>
+use <LedStripSegment2_Part.scad>
+use <LedStripSegment3_Part.scad>
+use <LedStripSegment4_Part.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 LedStrip(
@@ -15,30 +18,13 @@ module LedStrip(
 ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     
-    color("OrangeRed")  Ghost();
     GlueTogether(
         xray     = xray,
         colorize = colorize
     ) {
-    }
-    
-    module Ghost() {
-        assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
-        
-        bridge_size           = ConfigGet(walk_bridge_config, "bridge_size_xz");
-        distance_platform_a_b = ConfigGet(walk_bridge_config, "distance_platform_a_b");
-        distance_platform_b_c = ConfigGet(walk_bridge_config, "distance_platform_b_c");
-        bridge_height         = ConfigGet(walk_bridge_config, "bridge_clearance");
-        bridge_wall           = ConfigGet(walk_bridge_config, "bridge_wall");
-        
-        bridge_length = distance_platform_a_b + distance_platform_b_c;
-       
-        Box(
-            x_size = mm(12),
-            y_from = 0,
-            y_to   = distance_platform_a_b + distance_platform_b_c,
-            z_from = bridge_height + bridge_size[1] + scaled(m(.5)),
-            z_size = mm(2)
-        );
+        LedStripSegment1_Part(walk_bridge_config);
+        LedStripSegment2_Part(walk_bridge_config);
+        LedStripSegment3_Part(walk_bridge_config);
+        LedStripSegment4_Part(walk_bridge_config);
     }
 }

@@ -23,8 +23,9 @@ module Trestle_Part(
             );
         }
     } else {
+        arc_thickness = ConfigGet(walk_bridge_config, "arc_thickness");
         color("#81cdc6") {
-            LinearExtrude(z_size = layer(5)) {
+            LinearExtrude(z_size = arc_thickness) {
                 BridgeTrestle2D(walk_bridge_config);
             }
         }
