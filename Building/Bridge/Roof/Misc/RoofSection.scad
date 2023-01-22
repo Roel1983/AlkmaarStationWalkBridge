@@ -93,8 +93,8 @@ module RoofSection(
     h = bridge_size_xz[1] - sqrt(pow(bridge_roof_radius, 2) - pow(bridge_size_xz[0]/2, 2));
     
     bridge_wall           = ConfigGet(walk_bridge_config, "bridge_wall");
-    gutter_width = scaled(cm(25));
-    gutter_height = scaled(cm(10));
+    gutter_width          = ConfigGet(walk_bridge_config, "gutter_width");
+    gutter_height         = scaled(cm(10));
     color("DimGrey") {
         translate([0,0, bridge_height]) LinearExtrude(
             y_to   = length
