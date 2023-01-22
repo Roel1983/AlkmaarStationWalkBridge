@@ -5,6 +5,7 @@ include <../WalkBridgeConfig.inc>
 use <Platforms/Platforms.scad>
 use <Support/Support.scad>
 use <Bridge/Bridge.scad>
+use <../Reference/ViewEF.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 Building(
@@ -12,6 +13,8 @@ Building(
     xray = false,
     colorize = false
 );
+
+ViewEF();
 
 module Building(
     walk_bridge_config,
