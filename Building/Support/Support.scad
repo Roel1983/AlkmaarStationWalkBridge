@@ -2,6 +2,7 @@ include <../../WalkBridgeConfig.inc>
 
 include <../../../Utils/Box.inc>
 include <../../../Utils/GlueTogether.inc>
+use<SupportPart.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 Support(
@@ -15,25 +16,11 @@ module Support(
 ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     
-    color("DimGray")  Ghost();
     GlueTogether(
         xray     = xray,
         colorize = colorize
     ) {
-        
+        SupportPart(walk_bridge_config);
     }
     
-    module Ghost() {
-        bridge_support_position_y = ConfigGet(walk_bridge_config, "bridge_support_position_y");
-        bridge_clearance = ConfigGet(walk_bridge_config, "bridge_clearance");
-        
-        translate([0, bridge_support_position_y]) {
-            Box(
-                x_size = scaled(m(4.5)),
-                y_size = mm(5.5) + nozzle(2),
-                z_from = mm(-12),
-                z_to   = bridge_clearance
-            );
-        }
-    }
 }
