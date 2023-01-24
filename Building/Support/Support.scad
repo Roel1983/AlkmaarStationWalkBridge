@@ -2,7 +2,7 @@ include <../../WalkBridgeConfig.inc>
 
 include <../../../Utils/Box.inc>
 include <../../../Utils/GlueTogether.inc>
-use<SupportPart.scad>
+use<Support_Part.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 Support(

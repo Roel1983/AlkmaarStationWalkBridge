@@ -26,6 +26,7 @@ module SupportPart(
     }
     
     module Part() {
+        platform_height   = ConfigGet(walk_bridge_config, "platform_height"); 
         bridge_clearance  = ConfigGet(walk_bridge_config, "bridge_clearance"); 
         bridge_size_xz    = ConfigGet(walk_bridge_config, "bridge_size_xz"); 
         
@@ -46,7 +47,7 @@ module SupportPart(
         hex_nut_tolerance               = mm(.1);
         screw_shaft_diameter            = mm(3.1);
         
-        support_thickness               = hex_nut_size[0] + hex_nut_tolerance + nozzle(4);//scaled(m(0.6));
+        support_thickness               = hex_nut_size[0] + hex_nut_tolerance + nozzle(4);
         
         support_foot_slope = (support_foot_width - support_vertical_beam_thickness) / 2;
         
@@ -65,7 +66,11 @@ module SupportPart(
                 }
                 
                 mirror_copy(VEC_X) {
-                    translate([(bridge_size_xz[0] - support_vertical_beam_thickness)/2, 0, hex_wall_z]) {
+                    translate([
+                        (bridge_size_xz[0] - support_vertical_beam_thickness)/2,
+                        0,
+                        -platform_height + hex_wall_z
+                    ]) {
                         HexNutInsert(-90);
                         cylinder(
                             d = screw_shaft_diameter,
@@ -104,22 +109,22 @@ module SupportPart(
                         bridge_clearance - support_horizontal_beam_thickness - support_inner_slope[1]
                     ], [ // Foot
                         bridge_size_xz[X] / 2 - support_vertical_beam_thickness,
-                        support_foot_height + support_foot_slope
+                        -platform_height + support_foot_height + support_foot_slope
                     ], [
                         bridge_size_xz[X] / 2 - support_vertical_beam_thickness - support_foot_slope,
-                        support_foot_height
+                        -platform_height + support_foot_height
                     ], [
                         bridge_size_xz[X] / 2 - support_vertical_beam_thickness - support_foot_slope,
-                        0
+                        -platform_height
                     ], [
                         bridge_size_xz[X] / 2 + support_foot_slope,
-                        0
+                        -platform_height
                     ], [
                         bridge_size_xz[X] / 2 + support_foot_slope,
-                        support_foot_height
+                        -platform_height + support_foot_height
                     ], [
                         bridge_size_xz[X] / 2,
-                        support_foot_height + support_foot_slope,
+                        -platform_height + support_foot_height + support_foot_slope,
                     ], [ // Vertical beam outer 
                         bridge_size_xz[X] / 2,
                         bridge_clearance - support_outer_slope_pos_z - support_outer_slope[1]

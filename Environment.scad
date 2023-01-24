@@ -14,9 +14,10 @@ module Environment(walk_bridge_config) {
     
     platform_a_width = mm(79);
     platform_b_width = mm(141);
-        
-    distance_platform_a_b = ConfigGet(walk_bridge_config, "distance_platform_a_b");
-    distance_platform_b_c = ConfigGet(walk_bridge_config, "distance_platform_b_c");
+    
+    platform_height           = ConfigGet(walk_bridge_config, "platform_height");
+    distance_platform_a_b     = ConfigGet(walk_bridge_config, "distance_platform_a_b");
+    distance_platform_b_c     = ConfigGet(walk_bridge_config, "distance_platform_b_c");
     bridge_support_position_y = ConfigGet(walk_bridge_config, "bridge_support_position_y");
 
     PlatformA();
@@ -39,7 +40,7 @@ module Environment(walk_bridge_config) {
             x_size = mm(200),
             y_from = distance_platform_a_b + mm(230),
             y_size = mm(100),
-            z_from = mm(-12),
+            z_from = mm(-platform_height),
             z_to   = mm(60)
         );
     }

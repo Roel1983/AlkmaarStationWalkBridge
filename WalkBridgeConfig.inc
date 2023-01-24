@@ -123,6 +123,7 @@ function RoofSegmentConfig(
 );
 
 function WalkBridgeConfig(
+    platform_height           = mm(12),
     distance_platform_a_b     = mm(461), // ??? Assumption based on H0 space distance
     distance_platform_b_c     = mm(212.5),  // ??? Assumption based on H0 space distance
     bridge_support_position_y = mm(214.5),    // ???
@@ -241,6 +242,7 @@ function WalkBridgeConfig(
             width               = bridge_size_xz[0] - 2 * bridge_wall
         ) 
     ) [
+        ["platform_height",           platform_height],
         ["distance_platform_a_b",     distance_platform_a_b],
         ["distance_platform_b_c",     distance_platform_b_c],
         ["bridge_support_position_y", bridge_support_position_y],
