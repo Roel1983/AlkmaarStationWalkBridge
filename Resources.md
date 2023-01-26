@@ -1,5 +1,7 @@
 # Resources
 
+## Images
+
 - [Regionaalarchief Alkmaar - 1954-06-27](https://hdl.handle.net/21.12106/a6616f39-3685-43b3-b0ad-79238da7395e)
   ![](https://images.memorix.nl/raa/thumb/mediabank-horizontal/6299177d-559a-487b-83e4-32d25911c03a.jpg)
 
@@ -46,3 +48,8 @@
   ![](https://images.memorix.nl/raa/thumb/mediabank-horizontal/559b6f4b-a114-45e8-bf75-25000c2edd54.jpg)
 
   
+
+## News papers
+
+- [Regionaalarchief Alkmaar - 1960-01-08](https://kranten.archiefalkmaar.nl/issue/NDA/1960-01-08/edition/null/page/3?query=%22station%20alkmaar%22&period=1900-1960&sort=relevance)
+  Disambly of bridge started
