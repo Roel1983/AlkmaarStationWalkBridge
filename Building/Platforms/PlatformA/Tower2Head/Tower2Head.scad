@@ -6,6 +6,7 @@ use <Tower2HeadFront_Part.scad>
 use <Tower2HeadBack_Part.scad>
 use <Tower2HeadLeft_Part.scad>
 use <Tower2HeadRight_Part.scad>
+use <Tower2HeadRoof_Part.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 Tower2Head(
@@ -27,7 +28,6 @@ module Tower2Head(
         Tower2HeadBack_Part       (walk_bridge_config);
         Tower2HeadLeft_Part       (walk_bridge_config);
         Tower2HeadRight_Part      (walk_bridge_config);
-//        Tower2HeadFloor_Part      (walk_bridge_config);
-//        Tower2HeadRoof_Part       (walk_bridge_config);
+        Tower2HeadRoof_Part       (walk_bridge_config);
     }
 }

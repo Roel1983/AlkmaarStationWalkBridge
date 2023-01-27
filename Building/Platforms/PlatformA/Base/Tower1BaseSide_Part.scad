@@ -3,7 +3,7 @@ include <../../../../WalkBridgeConfig.inc>
 include <../../../../../Utils/Box.inc>
 include <../../../../../Utils/Constants.inc>
 include <../../../../../Utils/LinearExtrude.inc>
-use <../../../../../Utils/Sides.scad>
+use <../../../../../Utils/Chamfered.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 Tower1BaseSide_Part(
@@ -37,36 +37,38 @@ module Tower1BaseSide_Part(
             tower1_position_x - tower1_base_size[X] / 2,
             0
         ]) rotate(-90, VEC_Y) rotate(-90) {
-            Box( // ChamferedSquare(
+            ChamferedSquare(
                 x_size    = tower1_base_size[Y],
                 y_to      = tower1_base_size[Z],
-                z_to /*thickness*/ = abri_wall
+                thickness = abri_wall,
+                chamfer_angle = [0, 45, 0, 45]
             );
-            Box( // ChamferedSquare(
+            ChamferedSquare(
                 x_size    = tower1_base_size[Y],
                 y_to      = tower1_base_size[Z],
                 y_size    = nozzle(2),
-                z_to /*thickness*/ = (head_size[X] - tower1_base_size[X]) / 2 + abri_wall
+                thickness = (head_size[X] - tower1_base_size[X]) / 2 + abri_wall,
+                chamfer_angle = [0, 45, 0, 45]
             );
             Box(
                 x_size    = tower1_base_size[Y],
-                y_to      = tower1_base_size[Z] + nozzle(2),
+                y_from      = tower1_base_size[Z],
+                y_size    = nozzle(6),
+                z_to      = (head_size[X] - tower1_base_size[X]) / 2
+            );
+            Box(
+                x_size    = tower1_base_size[Y] + (head_size[X] - tower1_base_size[X]),
+                y_from    = tower1_base_size[Z] + nozzle(2),
                 y_size    = nozzle(2),
                 z_to      = (head_size[X] - tower1_base_size[X]) / 2
             );
-            Box( // ChamferedSquare(
-                x_size    = tower1_base_size[Y],
-                y_from    = tower1_base_size[Z],
-                y_size    = nozzle(6),
-                z_to /*thickness*/ = (head_size[X] - tower1_base_size[X]) / 2
-            );
-            beam = nozzle([4, 3]);
+            beam = nozzle([4, 2]);
             for (x = [-2/5, 0, 2/5]) translate([tower1_base_size[Y] * x, 0]) {
                 Box(
                     x_size    = beam[0],
                     y_to      = tower1_base_size[Z],
                     y_size    = nozzle(2) + beam[1],
-                    z_to /*thickness*/ = (head_size[X] - tower1_base_size[X]) / 2 + abri_wall
+                    z_to      = (head_size[X] - tower1_base_size[X]) / 2 + abri_wall
                 );
             }
         }

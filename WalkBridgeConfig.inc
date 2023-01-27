@@ -64,14 +64,24 @@ function Tower2Config(
     position_x      = scaled(m(4.17)), // ???
     base_size       = scaled(m([2.74, 2.46, 9.6])), // ???
     head_size       = scaled(m([3.68, 3.4, 3.3])),
-    roof_size       = scaled(m([4.28, 4.0, 0.35]))
+    roof_overhang   = scaled(m(0.3)),
+    roof_height     = scaled(m(0.35))
 ) = Config (undef,
     "Tower2Config",
-    [
-        ["position_x", position_x],
-        ["base_size",  base_size],
-        ["head_size",  head_size],
-        ["roof_size",  roof_size]
+    let(
+        roof_size  = [
+            head_size[X] + 2 * roof_overhang,
+            head_size[Y] + 2 * roof_overhang,
+            roof_height
+        ]
+    )[
+        ["position_x",    position_x],
+        ["base_size",     base_size],
+        ["head_size",     head_size],
+        ["roof_overhang", roof_overhang],
+        ["roof_height",   roof_height],
+        /* Derived */
+        ["roof_size",     roof_size]
     ]
 );
 
