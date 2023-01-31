@@ -7,14 +7,24 @@ include <../Utils/Units.inc>
 include <../FlatChain/Floor.inc>
 include <Building/Misc/WindowConfig.inc>
 
+_abri_wall = layer(10);
+
 function AbriConfig(
-    base_size         = scaled(m([9.25, 3.05, 5.2])),
-    position_x        = scaled(m(-2.075)),
+    front_bounds_x       = [scaled(m(-6.890)) + _abri_wall, scaled(m(2.400)) - _abri_wall],
+    back_bounds_x        = [scaled(m(-6.890)) + _abri_wall, scaled(m(2.550)) - _abri_wall],
+    base_left_bounds_y   = [scaled(m(-1.525)) + _abri_wall, scaled(m(1.525)) - _abri_wall],
+    base_right_bounds_y  = [scaled(m(-1.525)) + _abri_wall, scaled(m(1.855)) - _abri_wall],
+    head_front_y         =  scaled(m(-2.475)) + _abri_wall,
+    head_height          = scaled(m(4.1)),
+    roof_bound_x         = scaled(m([-7.200, 2.710])),
+    backwall_to_bridge_z = scaled(m(0.3)),
+    base_size         = scaled(m([9.29, 3.05, 5.2])), // TODO remove
+    position_x        = scaled(m(-2.075)),            // TODO remove
     support_width     = scaled(m(5.1)),
     support_height    = scaled(m(4.9)),
     support_beam_size = scaled(m([.6, 0.32])),
     support_wall      = scaled(m(.25)),
-    head_size         = scaled(m([9.75, 4.1, 4.2])),
+    head_size         = scaled(m([9.75, 4.1, 4.2])), // TODO remove
     head_roof_r       = scaled(m(3.9)),
     head_position_y   = scaled(m(-0.475)),
     head_overhang_z   = scaled(m(0.3)),
@@ -28,6 +38,15 @@ function AbriConfig(
             head_position_y - head_size[Y] / 2
         ]
     )[
+        ["front_bounds_x",      front_bounds_x],
+        ["back_bounds_x",       back_bounds_x],
+        ["base_left_bounds_y",  base_left_bounds_y],
+        ["base_right_bounds_y", base_right_bounds_y],
+        ["head_front_y",        head_front_y],
+        ["head_height",         head_height],
+        ["roof_bound_x",        roof_bound_x],
+        ["backwall_to_bridge_z", backwall_to_bridge_z],
+    
         ["base_size",         base_size],
         ["position_x",        position_x],
         ["support_width",     support_width],
@@ -137,7 +156,7 @@ function WalkBridgeConfig(
     distance_platform_a_b     = mm(461), // ??? Assumption based on H0 space distance
     distance_platform_b_c     = mm(212.5),  // ??? Assumption based on H0 space distance
     bridge_support_position_y = mm(214.5),    // ???
-    bridge_clearance          = scaled(m(5.2)),
+    bridge_clearance          = scaled(m(5.1)),
     platform_a_config         = PlatformConfig(
         abri_config = AbriConfig(
             head_overhang_z   = scaled(m(1.3))
@@ -158,7 +177,7 @@ function WalkBridgeConfig(
     bridge_wall               = layer(4),
     bridge_wall_support_panel_width  = scaled(m(0.5)), // ???
     wall_segmment_offset_y    = scaled(m(.3)), // ???
-    abri_wall                 = layer(6),
+    abri_wall                 = _abri_wall,
     bridge_wall_to_roof       = mm(1),
     bridge_wall_top_height    = nozzle(3.1),
     bridge_wall_top_rim_size  = [nozzle(1), layer(1)],

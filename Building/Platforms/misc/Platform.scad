@@ -21,6 +21,8 @@ module Platform(walk_bridge_config, platform_config, mirror_y = false) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     assert(is_config(platform_config,    "PlatformConfig"));
     
+    bridge_clearance = ConfigGet(walk_bridge_config, "bridge_clearance");
+    
     abri_config = ConfigGet(platform_config, "abri_config");
     assert(is_config(abri_config, "AbriConfig"));
     
@@ -29,6 +31,14 @@ module Platform(walk_bridge_config, platform_config, mirror_y = false) {
     
     tower2_config = ConfigGet(platform_config, "tower2_config");
     assert(is_config(tower2_config, "Tower2Config"));
+    
+    front_bounds_x         = ConfigGet(abri_config, "front_bounds_x");
+    back_bounds_x          = ConfigGet(abri_config, "back_bounds_x");
+    base_left_bounds_y     = ConfigGet(abri_config, "base_left_bounds_y");
+    base_right_bounds_y    = ConfigGet(abri_config, "base_right_bounds_y");
+    head_front_y           = ConfigGet(abri_config, "head_front_y");
+    roof_bound_x           = ConfigGet(abri_config, "roof_bound_x");
+    backwall_to_bridge_z   = ConfigGet(abri_config, "backwall_to_bridge_z");
     
     abri_base_size         = ConfigGet(abri_config, "base_size");
     abri_position_x        = ConfigGet(abri_config, "position_x");
@@ -60,30 +70,65 @@ module Platform(walk_bridge_config, platform_config, mirror_y = false) {
     }
 
     module Abri() {
-        mirror_if(mirror_y, VEC_Y) {
-            translate([abri_position_x, 0]) {
-                Box(
-                    x_size = abri_base_size[X],
-                    y_size = abri_base_size[Y],
-                    z_to   = abri_base_size[Z]
-                );
-                translate([(abri_base_size[X] - abri_support_width) / 2, abri_base_size[Y] / 2]) {
-                    mirror_copy(VEC_X) {
-                        Box(
-                            x_to = abri_support_width / 2,
-                            x_size = abri_support_beam_size[X],
-                            y_from = 0,
-                            y_size  = abri_support_beam_size[Y],
-                            z_to   = abri_support_height
-                        );
-                    }
-                    Box(
-                        x_size = abri_support_width,
-                        y_from = 0,
-                        y_size = abri_support_wall,
-                        z_to   = abri_support_height
+        module Base() {
+            LinearExtrude(
+                z_to = bridge_clearance - backwall_to_bridge_z
+            ) {
+                polygon([
+                    [ front_bounds_x[1], base_right_bounds_y[0]],
+                    [ front_bounds_x[1], 0],
+                    [ back_bounds_x[1], 0],
+                    [ back_bounds_x[1],  base_right_bounds_y[1]],
+                    [-back_bounds_x[1], base_right_bounds_y[1]],
+                    [-back_bounds_x[1], base_left_bounds_y[1]],
+                    [ back_bounds_x[0], base_left_bounds_y[1]],
+                    [ back_bounds_x[0], base_left_bounds_y[0]]
+                ]);
+            }
+        }
+        
+        module Head() {
+            LinearExtrude(
+                z_from = bridge_clearance - backwall_to_bridge_z,
+                z_size = abri_head_size[Z] + backwall_to_bridge_z
+            ) {
+                polygon([
+                    [ front_bounds_x[1], head_front_y],
+                    [ front_bounds_x[1], 0],
+                    [ back_bounds_x[1], 0],
+                    [ back_bounds_x[1],  base_left_bounds_y[1]],
+                    [ back_bounds_x[0], base_left_bounds_y[1]],
+                    [ back_bounds_x[0], head_front_y]
+                ]);
+            }
+        }
+        
+        module Roof() {
+            translate([
+                0,
+                (base_left_bounds_y[1] + head_front_y) / 2,
+                abri_base_size[Z] + abri_head_size[Z]
+            ]) {
+                LinearExtrude(
+                    x_from = roof_bound_x[0],
+                    x_to   = roof_bound_x[1]
+                ) {
+                    A(
+                        size   = [abri_head_size[Y], 0],
+                        roof_r = abri_head_roof_r
                     );
                 }
+            }
+        }
+        
+        mirror_if(mirror_y, VEC_Y) {
+            Base();
+            Head();
+            Roof();
+            
+            
+            
+            /*translate([abri_position_x, 0]) {
                 translate([0, abri_head_position_y, abri_base_size[Z]]) {
                     LinearExtrude(
                         x_size = abri_head_size[X]
@@ -108,7 +153,7 @@ module Platform(walk_bridge_config, platform_config, mirror_y = false) {
                         }
                     }
                 }
-            }
+            }*/
         }   
     }
     
