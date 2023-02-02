@@ -75,14 +75,14 @@ module Platform(walk_bridge_config, platform_config, mirror_y = false) {
                 z_to = bridge_clearance - backwall_to_bridge_z
             ) {
                 polygon([
-                    [ front_bounds_x[1], base_right_bounds_y[0]],
+                    [ front_bounds_x[1], base_left_bounds_y[0]],
                     [ front_bounds_x[1], 0],
                     [ back_bounds_x[1], 0],
-                    [ back_bounds_x[1],  base_right_bounds_y[1]],
-                    [-back_bounds_x[1], base_right_bounds_y[1]],
+                    [ back_bounds_x[1],  base_left_bounds_y[1]],
                     [-back_bounds_x[1], base_left_bounds_y[1]],
-                    [ back_bounds_x[0], base_left_bounds_y[1]],
-                    [ back_bounds_x[0], base_left_bounds_y[0]]
+                    [-back_bounds_x[1], base_right_bounds_y[1]],
+                    [ back_bounds_x[0], base_right_bounds_y[1]],
+                    [ back_bounds_x[0], base_right_bounds_y[0]]
                 ]);
             }
         }
@@ -96,8 +96,8 @@ module Platform(walk_bridge_config, platform_config, mirror_y = false) {
                     [ front_bounds_x[1], head_front_y],
                     [ front_bounds_x[1], 0],
                     [ back_bounds_x[1], 0],
-                    [ back_bounds_x[1],  base_left_bounds_y[1]],
-                    [ back_bounds_x[0], base_left_bounds_y[1]],
+                    [ back_bounds_x[1],  base_right_bounds_y[1]],
+                    [ back_bounds_x[0], base_right_bounds_y[1]],
                     [ back_bounds_x[0], head_front_y]
                 ]);
             }
@@ -106,7 +106,7 @@ module Platform(walk_bridge_config, platform_config, mirror_y = false) {
         module Roof() {
             translate([
                 0,
-                (base_left_bounds_y[1] + head_front_y) / 2,
+                (base_right_bounds_y[1] + head_front_y) / 2,
                 abri_base_size[Z] + abri_head_size[Z]
             ]) {
                 LinearExtrude(
@@ -125,35 +125,6 @@ module Platform(walk_bridge_config, platform_config, mirror_y = false) {
             Base();
             Head();
             Roof();
-            
-            
-            
-            /*translate([abri_position_x, 0]) {
-                translate([0, abri_head_position_y, abri_base_size[Z]]) {
-                    LinearExtrude(
-                        x_size = abri_head_size[X]
-                    ) {
-                        A(
-                            size   = [abri_head_size[Y], abri_head_size[Z]],
-                            roof_r = abri_head_roof_r
-                        );
-                        difference() {
-                            Box(
-                                x_from = -abri_head_size[Y]/ 2,
-                                x_to   = 0,
-                                y_from = -abri_head_overhang_r,
-                                y_to   = 0
-                            );
-                            translate([
-                                -abri_head_size[Y] / 2,
-                                -abri_head_overhang_r - abri_head_overhang_z
-                            ]) {
-                                circle(r=abri_head_overhang_r);
-                            }
-                        }
-                    }
-                }
-            }*/
         }   
     }
     
