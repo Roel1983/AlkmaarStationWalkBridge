@@ -5,6 +5,7 @@ include <../../../../../Utils/GlueTogether.inc>
 use <Front_Part.scad>
 use <Back_Part.scad>
 use <AbriHeadFront_Part.scad>
+use <AbriBaseFront_Part.scad>
 use <AbriHeadBack_Part.scad>
 use <AbriHeadLeft_Part.scad>
 use <AbriHeadRight_Part.scad>
@@ -33,7 +34,8 @@ module Base(
         colorize = colorize
     ) {
         Front_Part                (walk_bridge_config);
-        Back_Part                 (walk_bridge_config);
+        AbriBaseFront_Part        (walk_bridge_config);
+        Back_Part                 (walk_bridge_config); // TODO remove
         AbriHeadFront_Part        (walk_bridge_config);
         AbriHeadBack_Part         (walk_bridge_config);
         AbriHeadLeft_Part         (walk_bridge_config);

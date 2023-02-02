@@ -41,7 +41,7 @@ module AbriHeadFront_Part(
         
         window_config = WindowConfig(
             width              = scaled(m(1.35)),
-            height             = scaled(m(2.1)),
+            height             = scaled(m(2.05)),
             radius             = scaled(m(1.6)),
             slat_count_x       = 2,
             slat_positions_y   = scaled(m([.7, 1.35])),
@@ -53,8 +53,8 @@ module AbriHeadFront_Part(
             rotate(90, VEC_X) {
                 difference() {
                     ChamferedSquare(
-                        x_from    = front_bounds_x[0] + abri_wall,
-                        x_to      = front_bounds_x[1] - abri_wall,
+                        x_from    = front_bounds_x[0],
+                        x_to      = front_bounds_x[1],
                         y_from    = bridge_clearance,
                         y_size    = abri_head_height,
                         thickness = abri_wall,
