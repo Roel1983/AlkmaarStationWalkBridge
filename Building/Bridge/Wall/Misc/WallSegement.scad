@@ -49,7 +49,7 @@ module WallSegment(
     );
     
     mirror_if(mirror_x, VEC_X) {
-        translate([bridge_size_xz[0] / 2, pos_y, bridge_clearance]) {
+        translate([bridge_size_xz[0] / 2 - bridge_wall, pos_y, bridge_clearance]) {
             color("#81cdc6") {
                 rotate(90, VEC_Y) rotate(90, VEC_Z) {
                     difference() { 
@@ -103,7 +103,7 @@ module WallSegment(
                     );
                 }
             }
-            if(!is_printable) {
+            *if(!is_printable) {
                 color("black", alpha= 0.2) Box(
                     x_from = -0.2,
                     x_to   = -0.1,

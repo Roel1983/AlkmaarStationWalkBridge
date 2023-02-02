@@ -53,11 +53,13 @@ module AbriHeadBack_Part( // TODO Rename to Front
             rotate(90, VEC_X) {
                 difference() {
                     ChamferedSquare(
-                        x_bound   = front_bounds_x,
+                        x_from    = front_bounds_x[0] + abri_wall,
+                        x_to      = front_bounds_x[1] - abri_wall,
                         y_from    = bridge_clearance,
                         y_size    = abri_head_height,
                         thickness = abri_wall,
-                        chamfer   = [0, 1, 0, 1]
+                        chamfer   = [0, 1, 0, 1],
+                        align     = "outer"
                     );
                     AtEachWindowPosition() {
                         WindowGap(window_config);
@@ -80,7 +82,8 @@ module AbriHeadBack_Part( // TODO Rename to Front
             for(x1=scaled(m([-2.3,2.3 ]))) {
                 for(xi=[-1:1:1]) translate([
                     ((front_bounds_x[0] + front_bounds_x[1]) / 2) + x1 + xi * scaled(m(1.50)),
-                    bridge_clearance + scaled(m(1.8))
+                    bridge_clearance + scaled(m(1.8)),
+                    -abri_wall
                 ]) {
                     children();
                 }

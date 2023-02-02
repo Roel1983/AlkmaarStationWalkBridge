@@ -10,11 +10,11 @@ include <Building/Misc/WindowConfig.inc>
 _abri_wall = layer(10);
 
 function AbriConfig(
-    front_bounds_x       = [scaled(m(-6.890)) + _abri_wall, scaled(m(2.400)) - _abri_wall],
-    back_bounds_x        = [scaled(m(-6.890)) + _abri_wall, scaled(m(2.550)) - _abri_wall],
-    base_left_bounds_y   = [scaled(m(-1.525)) + _abri_wall, scaled(m(1.525)) - _abri_wall],
-    base_right_bounds_y  = [scaled(m(-1.525)) + _abri_wall, scaled(m(1.855)) - _abri_wall],
-    head_front_y         =  scaled(m(-2.475)) + _abri_wall,
+    front_bounds_x       = scaled(m([-6.890, 2.400])),
+    back_bounds_x        = scaled(m([-6.890, 2.550])),
+    base_left_bounds_y   = scaled(m([-1.525, 1.525])),
+    base_right_bounds_y  = scaled(m([-1.525, 1.855])),
+    head_front_y         = scaled(m(-2.475)),
     head_height          = scaled(m(4.1)),
     roof_bound_x         = scaled(m([-7.200, 2.710])),
     backwall_to_bridge_z = scaled(m(0.3)),

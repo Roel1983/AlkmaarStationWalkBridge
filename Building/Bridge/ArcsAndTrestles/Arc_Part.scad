@@ -29,10 +29,12 @@ module Arc_Part(
     arc_thickness      = ConfigGet(walk_bridge_config, "arc_thickness");
     bridge_roof_radius = ConfigGet(walk_bridge_config, "bridge_roof_radius");
     bridge_size_xz     = ConfigGet(walk_bridge_config, "bridge_size_xz");
+    bridge_wall        = ConfigGet(walk_bridge_config, "bridge_wall");
     arc_to_roof        = scaled(m(0.35));
     inner_arc_height   = scaled(m(1.7));
     arc_bar_intersect_point = scaled(m([0.3, 1.6]));
     arc_bar_angles     = degree([15.3, 38.3, 52.5]);
+    inner_bridge_width = bridge_size_xz[0] - 2 * bridge_wall;
     
     if(is_printable) {
         $fn = $preview ? 64 : 128;
@@ -47,7 +49,7 @@ module Arc_Part(
         BIAS = .01;
         roof_radius_center_y = (
             bridge_size_xz[1]
-            - sqrt(pow(bridge_roof_radius, 2) - pow(bridge_size_xz[0] / 2, 2))
+            - sqrt(pow(bridge_roof_radius, 2) - pow(inner_bridge_width / 2, 2))
         );
         roof_height = (
             roof_radius_center_y
@@ -106,7 +108,7 @@ module Arc_Part(
                 difference() {
                     intersection() {
                         Box(
-                            x_size = bridge_size_xz[0],
+                            x_size = inner_bridge_width,
                             y_to   = roof_height
                         );
                         translate([
@@ -133,19 +135,19 @@ module Arc_Part(
                     BIAS = 0.1;
                     polygon([
                         [
-                            bridge_size_xz[0] / 2 - BIAS,
+                            inner_bridge_width / 2 - BIAS,
                             bridge_size_xz[1] - bridge_wall_to_roof - bridge_wall_top_height
                         ], [
-                            bridge_size_xz[0] / 2 + bridge_wall + gutter_width,
+                            inner_bridge_width / 2 + bridge_wall + gutter_width,
                             bridge_size_xz[1] - bridge_wall_to_roof - bridge_wall_top_height
                         ], [
-                            bridge_size_xz[0] / 2 + bridge_wall + gutter_width,
+                            inner_bridge_width / 2 + bridge_wall + gutter_width,
                             bridge_size_xz[1] - bridge_wall_to_roof - bridge_wall_top_height - nozzle(1)
                         ], [
-                            bridge_size_xz[0] / 2 + bridge_wall,
+                            inner_bridge_width / 2 + bridge_wall,
                             bridge_size_xz[1] - bridge_wall_to_roof - bridge_wall_top_height - gutter_width
                         ], [
-                            bridge_size_xz[0] / 2 - BIAS,
+                            inner_bridge_width / 2 - BIAS,
                             bridge_size_xz[1] - bridge_wall_to_roof - bridge_wall_top_height - gutter_width
                         ]
                     ]);
@@ -153,7 +155,7 @@ module Arc_Part(
             }
             
             module Inner() {
-                inner_arc_width = bridge_size_xz[0] - 2 * arc_thickness;
+                inner_arc_width = inner_bridge_width - 2 * arc_thickness;
                 Box(
                     x_size = inner_arc_width,
                     y_from = -BIAS,

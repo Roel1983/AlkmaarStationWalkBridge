@@ -14,8 +14,8 @@ module Trestle_Part(
 ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     bridge_height = ConfigGet(walk_bridge_config, "bridge_clearance");
-    arc_thickness = ConfigGet(walk_bridge_config, "arc_thickness");
-    bridge_size_xz = ConfigGet(walk_bridge_config, "bridge_size_xz");
+    arc_thickness      = ConfigGet(walk_bridge_config, "arc_thickness");
+    bridge_size_xz     = ConfigGet(walk_bridge_config, "bridge_size_xz");
     
     if(is_printable) {
         rotate(-90, VEC_X) {
@@ -45,33 +45,35 @@ module BridgeTrestle2D(
     bridge_chain_floor_config = ConfigGet(walk_bridge_config, "bridge_chain_floor_config");
     floor_thickness           = ConfigGet(bridge_chain_floor_config, "thickness");
     
+    inner_bridge_width = bridge_size_xz[0] - 2 * bridge_wall;
+    
     height = scaled(m(0.5));
     triangle_size             = (scaled(m(0.5)) - floor_thickness);
     
     polygon([
         [
-            bridge_size_xz[0] / 2 + bridge_wall,
+            inner_bridge_width / 2 + bridge_wall,
             0
         ], [
-            bridge_size_xz[0] / 2 + scaled(m(1.0)),
+            inner_bridge_width / 2 + scaled(m(1.0)),
             height - nozzle(1)
         ], [
-            bridge_size_xz[0] / 2 + scaled(m(1.0)),
+            inner_bridge_width / 2 + scaled(m(1.0)),
             height
         ], [
-            bridge_size_xz[0] / 2,
+            inner_bridge_width / 2,
             height
         ], [
-            bridge_size_xz[0] / 2 - triangle_size,
+            inner_bridge_width / 2 - triangle_size,
             floor_thickness
         ], [
-            bridge_size_xz[0] / 2 - triangle_size,
+            inner_bridge_width / 2 - triangle_size,
             4/5 * floor_thickness 
         ], [
-            bridge_size_xz[0] / 2 - (triangle_size - bridge_wall) / 2 - bridge_wall,
+            inner_bridge_width / 2 - (triangle_size - bridge_wall) / 2 - bridge_wall,
             4/5 * floor_thickness
         ], [
-            bridge_size_xz[0] / 2 - (triangle_size - bridge_wall) / 2 - bridge_wall,
+            inner_bridge_width / 2 - (triangle_size - bridge_wall) / 2 - bridge_wall,
             0
         ]
     ]);
