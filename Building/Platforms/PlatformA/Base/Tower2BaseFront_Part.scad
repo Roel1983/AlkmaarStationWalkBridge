@@ -6,12 +6,12 @@ include <../../../../../Utils/LinearExtrude.inc>
 use <../../../../../Utils/Chamfered.scad>
 
 walk_bridge_config = WalkBridgeConfig();
-Tower2BaseSide_Part(
+Tower2BaseFront_Part(
     walk_bridge_config,
     is_printable = true
 );
 
-module Tower2BaseSide_Part(
+module Tower2BaseFront_Part(
     walk_bridge_config,
     is_printable = false
 ) {
