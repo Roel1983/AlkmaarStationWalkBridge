@@ -10,5 +10,7 @@ PARTS  += Building/Platforms/PlatformA/Base/Tower1HeadBack
 PARTS  += Building/Platforms/PlatformA/Base/Tower1HeadFront
 PARTS  += Building/Platforms/PlatformA/Base/Tower1HeadLeft
 PARTS  += Building/Platforms/PlatformA/Base/Tower1HeadRight
-PARTS  += Building/Platforms/PlatformA/Base/Tower2BaseSide
+PARTS  += Building/Platforms/PlatformA/Base/Tower2BaseFront
+PARTS  += Building/Platforms/PlatformA/Base/Tower2BaseLeft
+PARTS  += Building/Platforms/PlatformA/Base/Tower2BaseRight
 

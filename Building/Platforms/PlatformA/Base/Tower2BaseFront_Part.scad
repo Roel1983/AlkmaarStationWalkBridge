@@ -42,34 +42,48 @@ module Tower2BaseFront_Part(
                 x_size    = tower2_base_size[Y],
                 y_to      = tower2_base_size[Z],
                 thickness = abri_wall,
-                chamfer_angle = [0, 45, 0, 45]
+                chamfer_angle = [0, 45, 0, 45],
+                align     = "outer"
             );
-            ChamferedSquare(
-                x_size    = tower2_base_size[Y],
-                y_to      = tower2_base_size[Z],
-                y_size    = nozzle(2),
-                thickness = (tower2_head_size[X] - tower2_base_size[X]) / 2 + abri_wall,
-                chamfer_angle = [0, 45, 0, 45]
-            );
-            Box(
-                x_size    = tower2_base_size[Y],
-                y_from    = tower2_base_size[Z],
-                y_size    = nozzle(6),
-                z_to      = (tower2_head_size[X] - tower2_base_size[X]) / 2
-            );
-            Box(
-                x_size    = tower2_base_size[Y] + (tower2_head_size[X] - tower2_base_size[X]),
-                y_from    = tower2_base_size[Z] + nozzle(2),
-                y_size    = nozzle(2),
-                z_to      = (tower2_head_size[X] - tower2_base_size[X]) / 2
-            );
+            translate([
+                0,
+                0,
+                (tower2_head_size[X] - tower2_base_size[X]) / 2
+            ]) {
+                ChamferedSquare(
+                    x_size    = tower2_head_size[Y],
+                    y_to      = tower2_base_size[Z],
+                    y_size    = nozzle(2),
+                    thickness = (tower2_head_size[X] - tower2_base_size[X]) / 2 + abri_wall,
+                    chamfer_angle = [0, 45, 0, 45],
+                    align     = "outer"
+                );
+            }
+            translate([
+                0,
+                0,
+                - abri_wall
+            ]) {
+                Box(
+                    x_size    = tower2_base_size[Y] - 2 * abri_wall,
+                    y_from    = tower2_base_size[Z],
+                    y_size    = nozzle(6),
+                    z_to      = (tower2_head_size[X] - tower2_base_size[X]) / 2
+                );
+                Box(
+                    x_size    = tower2_base_size[Y] + (tower2_head_size[X] - tower2_base_size[X]) - 2 * abri_wall,
+                    y_from    = tower2_base_size[Z] + nozzle(2),
+                    y_size    = nozzle(2),
+                    z_to      = (tower2_head_size[X] - tower2_base_size[X]) / 2
+                );
+            }
             beam = nozzle([4, 2]);
             for (x = [-2/5, 2/5]) translate([tower2_base_size[Y] * x, 0]) {
                 Box(
                     x_size    = beam[0],
                     y_to      = tower2_base_size[Z],
                     y_size    = nozzle(2) + beam[1],
-                    z_to      = (tower2_head_size[X] - tower2_base_size[X]) / 2 + abri_wall
+                    z_to      = (tower2_head_size[X] - tower2_base_size[X]) / 2
                 );
             }
         }
