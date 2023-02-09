@@ -13,18 +13,20 @@ use <Tower2BaseRight_Part.scad>
 use <Tower2BaseFront_Part.scad>
 use <Tower2BaseLeft_Part.scad>
 
+use <Tower1BaseLeft_Part.scad>
+use <Tower1BaseFront_Part.scad>
+use <Tower1BaseRight_Part.scad>
+
 use <RightBack_Part.scad>
 use <AbriHeadFront_Part.scad>
 use <AbriHeadBack_Part.scad>
 use <AbriHeadLeft_Part.scad>
 use <AbriHeadRight_Part.scad>
 use <AbriRoofPart2_Part.scad>
-use <Tower1BaseSide_Part.scad>
 use <Tower1HeadFront_Part.scad>
 use <Tower1HeadBack_Part.scad>
 use <Tower1HeadLeft_Part.scad>
 use <Tower1HeadRight_Part.scad>
-//use <Tower2BaseSide_Part.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 Base(
@@ -53,11 +55,15 @@ module Base(
         Tower2BaseFront_Part      (walk_bridge_config);
         Tower2BaseLeft_Part       (walk_bridge_config);
         
-        AbriRoofPart2_Part        (walk_bridge_config);
-        Tower1BaseSide_Part       (walk_bridge_config);
+        Tower1BaseRight_Part      (walk_bridge_config);
+        Tower1BaseFront_Part      (walk_bridge_config);
+        Tower1BaseLeft_Part       (walk_bridge_config);
+        
         Tower1HeadFront_Part      (walk_bridge_config);
         Tower1HeadBack_Part       (walk_bridge_config);
         Tower1HeadLeft_Part       (walk_bridge_config);
         Tower1HeadRight_Part      (walk_bridge_config);
+        
+        AbriRoofPart2_Part        (walk_bridge_config);
     }
 }

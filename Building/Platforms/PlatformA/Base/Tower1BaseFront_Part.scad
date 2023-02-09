@@ -6,12 +6,12 @@ include <../../../../../Utils/LinearExtrude.inc>
 use <../../../../../Utils/Chamfered.scad>
 
 walk_bridge_config = WalkBridgeConfig();
-Tower1BaseSide_Part(
+Tower1BaseFront_Part(
     walk_bridge_config,
-    is_printable = true
+    is_printable = false
 );
 
-module Tower1BaseSide_Part(
+module Tower1BaseFront_Part(
     walk_bridge_config,
     is_printable = false
 ) {
@@ -41,26 +41,27 @@ module Tower1BaseSide_Part(
                 x_size    = tower1_base_size[Y],
                 y_to      = tower1_base_size[Z],
                 thickness = abri_wall,
-                chamfer_angle = [0, 45, 0, 45]
+                chamfer_angle = [0, 45, 0, 45],
+                align     = "outer"
             );
             ChamferedSquare(
                 x_size    = tower1_base_size[Y],
                 y_to      = tower1_base_size[Z],
                 y_size    = nozzle(2),
-                thickness = (head_size[X] - tower1_base_size[X]) / 2 + abri_wall,
+                thickness = (head_size[X] - tower1_base_size[X]) / 2,
                 chamfer_angle = [0, 45, 0, 45]
             );
             Box(
-                x_size    = tower1_base_size[Y],
+                x_size    = tower1_base_size[Y] - 2 * abri_wall,
                 y_from      = tower1_base_size[Z],
                 y_size    = nozzle(6),
-                z_to      = (head_size[X] - tower1_base_size[X]) / 2
+                z_to      = (head_size[X] - tower1_base_size[X]) / 2 - abri_wall
             );
             Box(
-                x_size    = tower1_base_size[Y] + (head_size[X] - tower1_base_size[X]),
+                x_size    = tower1_base_size[Y] + (head_size[X] - tower1_base_size[X]) - 2 * abri_wall,
                 y_from    = tower1_base_size[Z] + nozzle(2),
                 y_size    = nozzle(2),
-                z_to      = (head_size[X] - tower1_base_size[X]) / 2
+                z_to      = (head_size[X] - tower1_base_size[X]) / 2 - abri_wall
             );
             beam = nozzle([4, 2]);
             for (x = [-2/5, 0, 2/5]) translate([tower1_base_size[Y] * x, 0]) {
@@ -68,7 +69,7 @@ module Tower1BaseSide_Part(
                     x_size    = beam[0],
                     y_to      = tower1_base_size[Z],
                     y_size    = nozzle(2) + beam[1],
-                    z_to      = (head_size[X] - tower1_base_size[X]) / 2 + abri_wall
+                    z_to      = (head_size[X] - tower1_base_size[X]) / 2
                 );
             }
         }
