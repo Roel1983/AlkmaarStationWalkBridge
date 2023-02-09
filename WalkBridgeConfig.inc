@@ -10,11 +10,11 @@ include <Building/Misc/WindowConfig.inc>
 _abri_wall = layer(10);
 
 function AbriConfig(
-    front_bounds_x       = scaled(m([-6.890, 2.400])),
-    back_bounds_x        = scaled(m([-6.890, 2.550])),
-    base_right_bounds_y  = scaled(m([-1.525, 1.525])),
-    base_left_bounds_y   = scaled(m([-1.525, 1.855])),
-    head_front_y         = scaled(m(-2.475)),
+    front_bounds_x       = [scaled(m(-6.890)) + _abri_wall, scaled(m(2.400)) - _abri_wall],
+    back_bounds_x        = [scaled(m(-6.890)) + _abri_wall, scaled(m(2.550)) - _abri_wall],
+    base_left_bounds_y   = [scaled(m(-1.525)) + _abri_wall, scaled(m(1.525)) - _abri_wall],
+    base_right_bounds_y  = [scaled(m(-1.525)) + _abri_wall, scaled(m(1.855)) - _abri_wall],
+    head_front_y         =  scaled(m(-2.475)) + _abri_wall,
     head_height          = scaled(m(4.1)),
     roof_bound_x         = scaled(m([-7.200, 2.710])),
     backwall_to_bridge_z = scaled(m(0.3)),
@@ -66,7 +66,7 @@ function AbriConfig(
 
 function Tower1Config(
     position_x      = scaled(m(-8.32)),
-    base_size       = scaled(m([2.74, 2.46, 7.8])),
+    base_size       = scaled(m([2.54, 2.26, 7.8])),
     head_size       = scaled(m([3.24, 2.96, 3.6])),
     head_roof_r     = scaled(m(5.5)) // ?
 ) = Config(undef,
@@ -81,7 +81,7 @@ function Tower1Config(
 
 function Tower2Config(
     position_x      = scaled(m(4.17)), // ???
-    base_size       = scaled(m([2.74, 2.46, 9.6])), // ???
+    base_size       = scaled(m([2.54, 2.26, 9.6])), // ???
     head_size       = scaled(m([3.68, 3.4, 3.3])),
     roof_overhang   = scaled(m(0.3)),
     roof_height     = scaled(m(0.35))
@@ -250,7 +250,7 @@ function WalkBridgeConfig(
         ), link_size = (
             ConfigGet(link_config, "size")
         ), bridge_floor_from = (
-            ConfigGet(platform_a_config, ["abri_config", "head_bounds_y"])[1]
+            ConfigGet(platform_a_config, ["abri_config", "head_front_y"])
             + abri_wall
         ), bridge_floor_to = (
             distance_platform_a_b

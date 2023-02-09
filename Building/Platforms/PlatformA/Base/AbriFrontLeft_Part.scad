@@ -43,7 +43,7 @@ module AbriFrontLeft_Part(
         base_left_bounds_y   = ConfigGet(platform_a_config, ["abri_config", "base_left_bounds_y"]);
         abri_head_height     = ConfigGet(platform_a_config, ["abri_config", "head_height"]);
         abri_head_roof_r     = ConfigGet(platform_a_config, ["abri_config", "head_roof_r"]);
-        tower1_base_size     = ConfigGet(platform_a_config, ["tower1_config", "base_size"]);
+        tower2_base_size     = ConfigGet(platform_a_config, ["tower2_config", "base_size"]);
 
         head_size_y          = base_left_bounds_y[1] - head_front_y;
         roof_center_z = (
@@ -68,7 +68,7 @@ module AbriFrontLeft_Part(
                 points        = [
                     [
                         0,
-                        tower1_base_size[1] / 2
+                        tower2_base_size[1] / 2
                     ], [
                         0,
                         -base_left_bounds_y[0]
@@ -83,7 +83,7 @@ module AbriFrontLeft_Part(
                         -head_front_y
                     ], [
                         h,
-                        tower1_base_size[1] / 2
+                        tower2_base_size[1] / 2
                     ]
                 ],
                 chamfer_angle = [0, 45, 0, 45, 0, -45],

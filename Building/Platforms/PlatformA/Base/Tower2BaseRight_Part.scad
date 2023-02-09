@@ -7,6 +7,8 @@ use     <../../../../../Utils/Chamfered.scad>
 
 use <../../../../Reference/MapPlatformA.scad>
 
+use <misc/Tower2Panels.scad>
+
 walk_bridge_config = WalkBridgeConfig();
 Tower2BaseRight_Part(
     walk_bridge_config,
@@ -55,6 +57,20 @@ module Tower2BaseRight_Part(
                 chamfer_angle = [0, 45, 0, -45],
                 align     = "outer"
             );
+            
+            translate([
+                tower2_position_x,
+                0
+            ]) {
+                Tower2Panels(
+                    walk_bridge_config = walk_bridge_config,
+                    width  = tower2_base_size[0],
+                    height = tower2_base_size[2],
+                    left_bevel = 45,
+                    right_bevel = 0,
+                    beams = "crosses"
+                );
+            }
             
             translate([
                 tower2_position_x,
