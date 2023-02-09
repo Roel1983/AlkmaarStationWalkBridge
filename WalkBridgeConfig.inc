@@ -196,11 +196,11 @@ function WalkBridgeConfig(
     "WalkBridgeConfig",
     let(
         wall_segment1_config = WallSegmentConfig(
-            pos_y  = ConfigGet(platform_a_config, ["abri_config", "head_bounds_y"])[0],
+            pos_y  = ConfigGet(platform_a_config, ["abri_config", "base_right_bounds_y"])[1],
             size_y = (
                 bridge_support_position_y
                 - bridge_wall_support_panel_width / 2
-                - ConfigGet(platform_a_config, ["abri_config", "head_bounds_y"])[0]
+                - ConfigGet(platform_a_config, ["abri_config", "base_right_bounds_y"])[1]
             ),
             offset_begin       = wall_segmment_offset_y,
             window_panel_count = 14
@@ -228,11 +228,11 @@ function WalkBridgeConfig(
             offset_end         = wall_segmment_offset_y,
             window_panel_count = 10
         ), roof_segment1_config = RoofSegmentConfig(
-            pos_y  = ConfigGet(platform_b_config, ["abri_config", "head_bounds_y"])[0],
+            pos_y  = ConfigGet(platform_b_config, ["abri_config", "base_right_bounds_y"])[1],
             size_y = (
                 distance_platform_a_b
-                - ConfigGet(platform_a_config, ["abri_config", "head_bounds_y"])[0]
-                - ConfigGet(platform_b_config, ["abri_config", "head_bounds_y"])[0]
+                - ConfigGet(platform_a_config, ["abri_config", "base_right_bounds_y"])[1]
+                - ConfigGet(platform_b_config, ["abri_config", "base_right_bounds_y"])[1]
             ),
             section_count = 4
         ), roof_segment2_config = RoofSegmentConfig(

@@ -192,7 +192,7 @@ module RoofSection(
         
         module Wallcap() {
             assert(is_config(platform_config, "PlatformConfig"));
-            abri_head_size = ConfigGet(platform_config, ["abri_config", "head_size"]);
+            head_height = ConfigGet(platform_config, ["abri_config", "head_height"]);
             
             color("#81cdc6") {
                 translate([0,0, bridge_height]) LinearExtrude(
@@ -200,9 +200,9 @@ module RoofSection(
                 ) {
                     mirror(VEC_Y)difference() {
                         Box(
-                            x_size = inner_bridge_width,
+                            x_size = bridge_size_xz[0],
                             y_from = h,
-                            y_to   = abri_head_size[Z]
+                            y_to   = head_height
                         );
                         translate([
                             0,
