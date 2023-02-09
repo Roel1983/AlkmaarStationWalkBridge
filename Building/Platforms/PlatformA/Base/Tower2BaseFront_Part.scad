@@ -40,21 +40,50 @@ module Tower2BaseFront_Part(
             tower2_position_x + tower2_base_size[X] / 2,
             0
         ]) rotate(90, VEC_Y) rotate(90) {
-            ChamferedSquare(
-                x_size    = tower2_base_size[Y],
-                y_to      = tower2_base_size[Z],
-                thickness = abri_wall,
-                chamfer_angle = [0, 45, 0, 45],
-                align     = "outer"
-            );
-            Tower2Panels(
-                walk_bridge_config = walk_bridge_config,
-                width  = tower2_base_size[1],
-                height = tower2_base_size[2],
-                left_bevel = 45,
-                right_bevel = 45,
-                beams = "horizontals"
-            );
+            door_size       = scaled(m([1.5, 1.8]));
+            door_frame_size = [nozzle(4), layer(6)];
+            door_seam       = nozzle(.5);
+            
+            difference() {
+                union() {
+                    ChamferedSquare(
+                        x_size    = tower2_base_size[Y],
+                        y_to      = tower2_base_size[Z],
+                        thickness = abri_wall,
+                        chamfer_angle = [0, 45, 0, 45],
+                        align     = "outer"
+                    );
+                    Tower2Panels(
+                        walk_bridge_config = walk_bridge_config,
+                        width  = tower2_base_size[1],
+                        height = tower2_base_size[2],
+                        left_bevel = 45,
+                        right_bevel = 45,
+                        beams = "horizontals"
+                    );
+                    
+                    Box(
+                        x_size = door_size[X] + 2 * door_frame_size[0],
+                        y_to   = door_size[Y] + door_frame_size[0],
+                        z_to   = door_frame_size[1]
+                    );
+                }
+                BIAS = .1;
+                Box(
+                    x_size = door_size[X],
+                    y_from = -BIAS,
+                    y_to   = door_size[Y],
+                    z_from = -layer(2),
+                    z_to   = 2 *abri_wall
+                );
+                Box(
+                    x_size = door_seam,
+                    y_from = -BIAS,
+                    y_to   = door_size[Y],
+                    z_from = -layer(4),
+                    z_to   = 2 *abri_wall
+                );
+            }
             
             translate([
                 0,
