@@ -41,17 +41,19 @@ module AbriBackLeft_Part(
         
         head_front_y         = ConfigGet(platform_a_config, ["abri_config", "head_front_y"]);
         base_left_bounds_y   = ConfigGet(platform_a_config, ["abri_config", "base_left_bounds_y"]);
+        base_right_bounds_y  = ConfigGet(platform_a_config, ["abri_config", "base_right_bounds_y"]);
         abri_head_height     = ConfigGet(platform_a_config, ["abri_config", "head_height"]);
         abri_head_roof_r     = ConfigGet(platform_a_config, ["abri_config", "head_roof_r"]);
+        backwall_to_bridge_z = ConfigGet(platform_a_config, ["abri_config", "backwall_to_bridge_z"]);
         tower2_base_size     = ConfigGet(platform_a_config, ["tower2_config", "base_size"]);
-
-        head_size_y          = base_left_bounds_y[1] - head_front_y;
+        
+        head_size_y          = base_right_bounds_y[1] - head_front_y;
         roof_center_z = (
             bridge_clearance +
             abri_head_height -
             sqrt(pow(abri_head_roof_r, 2) - pow(head_size_y/2, 2))
         );
-        roof_center_y = (base_left_bounds_y[1] + head_front_y) / 2;
+        roof_center_y = (base_right_bounds_y[1] + head_front_y) / 2;
         h = (
             roof_center_z + abri_head_roof_r
         );
@@ -74,13 +76,19 @@ module AbriBackLeft_Part(
                         tower2_base_size[1] / 2 - abri_wall
                     ], [
                         h,
+                        -base_right_bounds_y[1]
+                    ], [
+                        bridge_clearance - backwall_to_bridge_z,
+                        -base_right_bounds_y[1]
+                    ], [
+                        bridge_clearance - backwall_to_bridge_z,
                         -base_left_bounds_y[1]
                     ], [
                         0,
                         -base_left_bounds_y[1]
                     ]
                 ],
-                chamfer_angle = [0, 0, 45, 0],
+                chamfer_angle = [0, 0, 45, 0, 45, 0],
                 align         = "outer"
             );
         }

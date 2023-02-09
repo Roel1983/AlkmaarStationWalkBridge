@@ -8,11 +8,12 @@ use <AbriHeadFront_Part.scad>
 use <AbriFrontLeft_Part.scad>
 use <AbriBackLeft_Part.scad>
 use <AbriRight_Part.scad>
+
 use <Tower2BaseRight_Part.scad>
 use <Tower2BaseFront_Part.scad>
 use <Tower2BaseLeft_Part.scad>
 
-use <Back_Part.scad>
+use <RightBack_Part.scad>
 use <AbriHeadFront_Part.scad>
 use <AbriHeadBack_Part.scad>
 use <AbriHeadLeft_Part.scad>
@@ -46,17 +47,12 @@ module Base(
         AbriHeadFront_Part        (walk_bridge_config);
         AbriFrontLeft_Part        (walk_bridge_config);
         AbriBackLeft_Part         (walk_bridge_config);
-        //AbriBack_Part             (walk_bridge_config);
+        RightBack_Part            (walk_bridge_config);
         
         Tower2BaseRight_Part      (walk_bridge_config);
         Tower2BaseFront_Part      (walk_bridge_config);
         Tower2BaseLeft_Part       (walk_bridge_config);
         
-        //Front_Part                (walk_bridge_config); // TODO remove
-        //Back_Part                 (walk_bridge_config); // TODO remove
-        AbriHeadBack_Part         (walk_bridge_config);
-        //AbriHeadLeft_Part         (walk_bridge_config);
-        //AbriHeadRight_Part        (walk_bridge_config);
         AbriRoofPart2_Part        (walk_bridge_config);
         Tower1BaseSide_Part       (walk_bridge_config);
         Tower1HeadFront_Part      (walk_bridge_config);
