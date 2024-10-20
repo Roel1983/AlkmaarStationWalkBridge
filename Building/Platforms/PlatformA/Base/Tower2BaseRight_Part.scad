@@ -91,20 +91,24 @@ module Tower2BaseRight_Part(
                 0,
                 - abri_wall
             ]) {
+                x_size_1 = tower2_base_size[X] - 2 * abri_wall;
+                x_size_2 = tower2_base_size[X] + (tower2_head_size[Y] - tower2_base_size[Y]) - 2 * abri_wall;
+                
                 Box(
-                    x_size    = tower2_base_size[X] - 2 * abri_wall,
+                    x_from    = -x_size_2 / 2,
+                    x_to      = x_size_1 / 2,
                     y_from    = tower2_base_size[Z],
                     y_size    = nozzle(6),
                     z_to      = (tower2_head_size[Y] - tower2_base_size[Y]) / 2
                 );
                 Box(
-                    x_size    = tower2_base_size[X] + (tower2_head_size[Y] - tower2_base_size[Y]) - 2 * abri_wall,
+                    x_size    = x_size_2,
                     y_from    = tower2_base_size[Z] + nozzle(0),
                     y_size    = nozzle(2),
                     z_to      = (tower2_head_size[Y] - tower2_base_size[Y]) / 2
                 );
                 Box(
-                    x_size    = tower2_base_size[X] + (tower2_head_size[Y] - tower2_base_size[Y]) - 2 * abri_wall,
+                    x_size    = x_size_2,
                     y_from    = tower2_base_size[Z] + nozzle(4),
                     y_size    = nozzle(2),
                     z_to      = (tower2_head_size[Y] - tower2_base_size[Y]) / 2
