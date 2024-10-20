@@ -30,19 +30,22 @@ use <Tower1HeadRight_Part.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 Base(
-    walk_bridge_config
+    walk_bridge_config,
+    colorize = true
 );
 
 module Base(
     walk_bridge_config,
     xray     = false,
-    colorize = false
+    colorize = false,
+    index    = undef
 ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     
     GlueTogether(
         xray     = xray,
-        colorize = colorize
+        colorize = colorize,
+        index    = index
     ) {
         AbriRight_Part            (walk_bridge_config);
         AbriBaseFront_Part        (walk_bridge_config);

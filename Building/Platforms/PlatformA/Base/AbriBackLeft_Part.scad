@@ -12,7 +12,7 @@ MapPlatformA();
 walk_bridge_config = WalkBridgeConfig();
 AbriBackLeft_Part(
     walk_bridge_config,
-    is_printable = false
+    is_printable = true
 );
 
 module AbriBackLeft_Part(
@@ -29,8 +29,8 @@ module AbriBackLeft_Part(
     if(is_printable) {
         translate([
             0, 0,
-            back_bounds_x[1]
-        ]) rotate(90, VEC_Y) Part();
+            -back_bounds_x[1]
+        ]) rotate(-90, VEC_Y) Part();
     } else {
         color("#81cdc6") Part();
     }
@@ -46,6 +46,7 @@ module AbriBackLeft_Part(
         abri_head_roof_r     = ConfigGet(platform_a_config, ["abri_config", "head_roof_r"]);
         backwall_to_bridge_z = ConfigGet(platform_a_config, ["abri_config", "backwall_to_bridge_z"]);
         tower2_base_size     = ConfigGet(platform_a_config, ["tower2_config", "base_size"]);
+        glue_strip_height    = mm(1.5);
         
         head_size_y          = base_right_bounds_y[1] - head_front_y;
         roof_center_z = (
@@ -60,8 +61,34 @@ module AbriBackLeft_Part(
         
         translate([back_bounds_x[1], 0]) rotate(180, VEC_Z) rotate(-90, VEC_Y) {
             difference() {
-                Wall();
+                union() {
+                    Wall();
+                    GlueStrips();
+                }
                 Roof();
+            }
+        }
+        module GlueStrips() {
+            translate([0, -tower2_base_size[Y] / 2 + abri_wall]) {
+                GlueStrip();
+            }
+            translate([0,  tower2_base_size[Y] / 2 - abri_wall]) {
+                mirror(VEC_Y) GlueStrip();
+            }
+            
+            module GlueStrip() {
+                hull() {
+                    Box(
+                        x_to = h,
+                        y_to = nozzle(4),
+                        z_to = layer(1)
+                    );
+                    Box(
+                        x_to = h,
+                        y_to = nozzle(2),
+                        z_to = glue_strip_height
+                    );
+                }
             }
         }
         module Wall() {
@@ -94,7 +121,7 @@ module AbriBackLeft_Part(
         }
         
         module Roof() {
-            BIAS = 1;
+            BIAS = 1 + glue_strip_height;
             LinearExtrude(
                 z_from = -abri_wall -BIAS,
                 z_to   = BIAS
