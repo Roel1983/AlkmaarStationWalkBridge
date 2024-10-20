@@ -25,6 +25,7 @@ module AbriFrontLeft_Part(
     assert(is_config(platform_a_config, "PlatformConfig"));
     
     front_bounds_x       = ConfigGet(platform_a_config, ["abri_config", "front_bounds_x"]);
+    back_bounds_x        = ConfigGet(platform_a_config, ["abri_config", "back_bounds_x"]);
     
     if(is_printable) {
         translate([
@@ -59,7 +60,10 @@ module AbriFrontLeft_Part(
         
         translate([front_bounds_x[1], 0]) rotate(180) rotate(-90, VEC_Y) {
             difference() {
-                Wall();
+                union() {
+                    Wall();
+                    GlueStrip();
+                }
                 Roof();
             }
         }
@@ -69,7 +73,7 @@ module AbriFrontLeft_Part(
                 points        = [
                     [
                         0,
-                        tower2_base_size[1] / 2
+                        tower2_base_size[1] / 2 - abri_wall - nozzle(4)
                     ], [
                         0,
                         -base_left_bounds_y[0]
@@ -84,14 +88,24 @@ module AbriFrontLeft_Part(
                         -head_front_y
                     ], [
                         h,
-                        tower2_base_size[1] / 2
+                        tower2_base_size[1] / 2 - abri_wall - nozzle(4)
                     ]
                 ],
-                chamfer_angle = [0, 45, 0, 45, 0, -45],
+                chamfer_angle = [0, 45, 0, 45, 0, 0],
                 align         = "outer"
             );
         }
         
+        module GlueStrip() {
+            BIAS = 0.1;
+            Box(
+                y_to = tower2_base_size[1] / 2 - abri_wall,
+                y_from   = tower2_base_size[1] / 2 - abri_wall - nozzle(4),
+                z_from = -BIAS,
+                z_to   =  back_bounds_x[1] - front_bounds_x[1] - abri_wall,
+                x_to   =  h
+            );
+        }
         module Roof() {
             BIAS = 1;
             LinearExtrude(

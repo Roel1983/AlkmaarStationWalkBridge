@@ -54,7 +54,7 @@ module Tower2BaseRight_Part(
                 x_from    = abri_front_bounds_x[1],
                 x_to      = tower2_position_x + tower2_base_size[0] / 2,
                 y_to      = tower2_base_size[2],
-                chamfer_angle = [0, 45, 0, -45],
+                chamfer_angle = [0, 45, 0, 0],
                 align     = "outer"
             );
             
