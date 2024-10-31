@@ -201,7 +201,7 @@ module RoofSection(
             assert(is_config(platform_config, "PlatformConfig"));
             head_height = ConfigGet(platform_config, ["abri_config", "head_height"]);
             
-            color("#81cdc6") {
+            /*color("#81cdc6") {
                 translate([0,0, bridge_height]) LinearExtrude(
                     y_from = -layer(5)
                 ) {
@@ -219,7 +219,7 @@ module RoofSection(
                         }
                     }
                 }
-            }
+            }*/
         }
         
         module SeamCap() {
