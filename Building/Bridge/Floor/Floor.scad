@@ -16,13 +16,15 @@ Floor(
 module Floor(
     walk_bridge_config,
     xray     = false,
-    colorize = true
+    colorize = true,
+    index    = undef
 ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     
     GlueTogether(
         xray     = xray,
-        colorize = colorize
+        colorize = colorize,
+        index    = index
     ) {
         FloorBegin (walk_bridge_config, colorize = false);
         FloorCenter(walk_bridge_config, colorize = false);

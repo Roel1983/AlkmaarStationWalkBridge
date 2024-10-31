@@ -90,6 +90,7 @@ module WallSegment3WindowsSides(walk_bridge_config, what, vec) {
 
 module WallSegmentNWindowsSides(wall_segment_config, what, vec = VEC_Y) {
     assert(is_config(wall_segment_config, "WallSegmentConfig"));
+    assert(what == "even" || what == "odd" || what == "all");
     
     pos_y              = ConfigGet(wall_segment_config, "pos_y");
     window_panel_count = ConfigGet(wall_segment_config, "window_panel_count");
@@ -100,9 +101,9 @@ module WallSegmentNWindowsSides(wall_segment_config, what, vec = VEC_Y) {
     
     for(i = [0:window_panel_count]) {
         translate(_vec * (offset_begin + pos_y + window_panel_width * i)) {
-            if (what == "even") {
+            if (what == "even" || what == "all") {
                 if (i % 2 == 0) children();
-            } else if (what == "odd") {
+            } else if (what == "odd" || what == "all") {
                 if (i % 2 == 1) children();
             } else {
                 children();
