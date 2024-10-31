@@ -171,3 +171,7 @@ module Arc_Part(
         }
     }
 }
+
+module Arc_Part_cutout(walk_bridge_config) {
+    // TODO
+}

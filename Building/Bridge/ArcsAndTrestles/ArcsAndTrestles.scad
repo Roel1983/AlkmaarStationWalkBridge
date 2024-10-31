@@ -12,6 +12,7 @@ walk_bridge_config = WalkBridgeConfig();
 ArcsAndTrestles(
     walk_bridge_config
 );
+%ArcsAndTrestles_cutout();
 
 module ArcsAndTrestles(
     walk_bridge_config,
@@ -31,6 +32,17 @@ module ArcsAndTrestles(
             rotate_copy(180, VEC_Z) {
                 Trestle_Part(walk_bridge_config);
             }
+        }
+    }
+}
+
+module ArcsAndTrestles_cutout() {
+    WallSegmentWindowsSides(walk_bridge_config, "even") {
+        Arc_Part_cutout(walk_bridge_config);
+    }
+    WallSegmentWindowsSides(walk_bridge_config, "odd") {
+        rotate_copy(180, VEC_Z) {
+            Trestle_Part_cutout(walk_bridge_config);
         }
     }
 }
