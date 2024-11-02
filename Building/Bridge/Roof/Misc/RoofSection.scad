@@ -8,67 +8,79 @@ walk_bridge_config = WalkBridgeConfig();
 roof_segment_config     = ConfigGet(walk_bridge_config, "roof_segment1_config");
 platform_config         = ConfigGet(walk_bridge_config, "platform_a_config");
 
+$fn = $preview?32:256;
+
 RoofSectionBegin(
     roof_segment_config,
     is_printable = true,
-    platform_config = platform_config
+    platform_config = platform_config,
+    roof_length = 10
 );
 
 module RoofSectionBegin(
     roof_segment_config,
     is_printable,
-    platform_config
+    platform_config,
+    roof_length = undef
 ) {
     assert(is_config(roof_segment_config, "RoofSegmentConfig"));
     pos_y                    = ConfigGet(roof_segment_config, "pos_y");
     size_y                   = ConfigGet(roof_segment_config, "size_y");
     section_count            = ConfigGet(roof_segment_config, "section_count");
     
-    roof_length = size_y / section_count;
+    _roof_length = optional(roof_length, size_y / section_count);
     
     translate([0, pos_y]) {
         RoofSection(
             walk_bridge_config,
-            roof_length, 
+            _roof_length, 
             cap1            = "wall",
             cap2            = "seam",
-            platform_config = platform_config);
+            platform_config = platform_config
+        );
     }
 }
 
 module RoofSectionCenter(
     roof_segment_config,
     index = 0,
-    is_printable
+    is_printable,
+    roof_length = undef
 ) {
     assert(is_config(roof_segment_config, "RoofSegmentConfig"));
     pos_y                    = ConfigGet(roof_segment_config, "pos_y");
     size_y                   = ConfigGet(roof_segment_config, "size_y");
     section_count            = ConfigGet(roof_segment_config, "section_count");
     
-    roof_length = size_y / section_count;
+    _roof_length = optional(roof_length, size_y / section_count);
     
     translate([0, pos_y + (index + 1) * roof_length]) {
-        RoofSection(walk_bridge_config, roof_length, cap1="none", cap2="seam");
+        RoofSection(
+            walk_bridge_config,
+            _roof_length,
+            cap1="none",
+            cap2="seam"
+        );
     }
 }
 
 module RoofSectionEnd(
     roof_segment_config,
     is_printable,
-    platform_config
+    platform_config,
+    roof_length = undef
 ) {
     assert(is_config(roof_segment_config, "RoofSegmentConfig"));
     pos_y                    = ConfigGet(roof_segment_config, "pos_y");
     size_y                   = ConfigGet(roof_segment_config, "size_y");
     section_count            = ConfigGet(roof_segment_config, "section_count");
     
-    roof_length = size_y / section_count;
+    _roof_length = optional(roof_length, size_y / section_count);
     
     translate([0, pos_y + size_y]) {
         mirror(VEC_Y) RoofSection(
             walk_bridge_config,
-            roof_length,
+            _roof_length,
             cap1            = "wall",
             cap2            = "none",
             platform_config = platform_config
@@ -83,6 +95,11 @@ module RoofSection(
     cap2 = "none",
     platform_config
 ) {
+    echo("Print settings");
+    echo("- Layer Height = 0.15mm");
+    echo("- Perimeters   = 1");
+    echo("- Infill       = 0%");
+        
     bridge_size_xz           = ConfigGet(walk_bridge_config, "bridge_size_xz");
     bridge_roof_radius       = ConfigGet(walk_bridge_config, "bridge_roof_radius");
     bridge_height            = ConfigGet(walk_bridge_config, "bridge_clearance");
