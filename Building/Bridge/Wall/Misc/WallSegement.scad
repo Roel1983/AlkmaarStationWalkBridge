@@ -5,6 +5,7 @@ include <../../../../../Utils/Constants.inc>
 include <../../../../../Utils/LinearExtrude.inc>
 include <../../../../../Utils/TransformIf.inc>
 use <../../../Misc/Window.scad>
+use <../../ArcsAndTrestles/ArcsAndTrestles.scad>
 
 walk_bridge_config  = WalkBridgeConfig();
 wall_segment_config = ConfigGet(walk_bridge_config, "wall_segment1_config");
@@ -18,7 +19,6 @@ module WallSegment(
  ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     assert(is_config(wall_segment_config, "WallSegmentConfig"));
-     
     
     bridge_clearance      = ConfigGet(walk_bridge_config, "bridge_clearance");
     bridge_wall           = ConfigGet(walk_bridge_config, "bridge_wall");
@@ -48,71 +48,74 @@ module WallSegment(
         width  = window_panel_width - horizontal_beam_width - 2 * window_clearance_yz[0]
     );
     
-    mirror_if(mirror_x, VEC_X) {
-        translate([bridge_size_xz[0] / 2 - bridge_wall, pos_y, bridge_clearance]) {
-            color("#81cdc6") {
-                rotate(90, VEC_Y) rotate(90, VEC_Z) {
-                    difference() { 
+    difference() {
+        mirror_if(mirror_x, VEC_X) {
+            translate([bridge_size_xz[0] / 2 - bridge_wall, pos_y, bridge_clearance]) {
+                color("#81cdc6") {
+                    rotate(90, VEC_Y) rotate(90, VEC_Z) {
+                        difference() {
+                            Box(
+                                x_to   = size_y,
+                                y_to   = size_z,
+                                z_to   = bridge_wall
+                            );
+                            AtEachWindowPosition() {
+                                WindowGap(adjusted_window_config);
+                            }
+                        }
                         Box(
                             x_to   = size_y,
                             y_to   = size_z,
-                            z_to   = bridge_wall
+                            y_from = size_z - bridge_wall_top_rim_size[0],
+                            z_to   = bridge_wall + bridge_wall_top_rim_size[1]
                         );
                         AtEachWindowPosition() {
-                            WindowGap(adjusted_window_config);
+                            WindowSlats(adjusted_window_config);
                         }
-                    }
-                    Box(
-                        x_to   = size_y,
-                        y_to   = size_z,
-                        y_from = size_z - bridge_wall_top_rim_size[0],
-                        z_to   = bridge_wall + bridge_wall_top_rim_size[1]
-                    );
-                    AtEachWindowPosition() {
-                        WindowSlats(adjusted_window_config);
-                    }
-                    AtEachWindowSidePosition() {
+                        AtEachWindowSidePosition() {
+                            Box(
+                                x_size = scaled(m(.2)),
+                                z_to   = scaled(m(.1)),
+                                y_to   = size_z - bridge_wall_top_height
+                            );
+                            Box(
+                                x_size = nozzle(2),
+                                z_to   = scaled(m(.15)),
+                                y_to   = size_z - bridge_wall_top_height
+                            );
+                        }
                         Box(
-                            x_size = scaled(m(.2)),
-                            z_to   = scaled(m(.1)),
-                            y_to   = size_z - bridge_wall_top_height
+                            x_to   = size_y,
+                            y_to   = bridge_window_position_z - window_clearance_yz[1],
+                            y_size = scaled(m(.2)),
+                            z_to   = scaled(m(.15))
                         );
                         Box(
-                            x_size = nozzle(2),
-                            z_to   = scaled(m(.15)),
-                            y_to   = size_z - bridge_wall_top_height
+                            x_to   = size_y,
+                            y_to   = bridge_window_position_z - window_clearance_yz[1],
+                            y_size = scaled(m(.1)),
+                            z_to   = scaled(m(.2))
+                        );
+                        Box(
+                            x_to   = size_y,
+                            y_to   = bridge_window_position_z - window_clearance_yz[1],
+                            y_size = nozzle(1),
+                            z_to   = scaled(m(.25))
                         );
                     }
-                    Box(
-                        x_to   = size_y,
-                        y_to   = bridge_window_position_z - window_clearance_yz[1],
-                        y_size = scaled(m(.2)),
-                        z_to   = scaled(m(.15))
-                    );
-                    Box(
-                        x_to   = size_y,
-                        y_to   = bridge_window_position_z - window_clearance_yz[1],
-                        y_size = scaled(m(.1)),
-                        z_to   = scaled(m(.2))
-                    );
-                    Box(
-                        x_to   = size_y,
-                        y_to   = bridge_window_position_z - window_clearance_yz[1],
-                        y_size = nozzle(1),
-                        z_to   = scaled(m(.25))
+                }
+                *if(!is_printable) {
+                    color("black", alpha= 0.2) Box(
+                        x_from = -0.2,
+                        x_to   = -0.1,
+                        y_to   = size_y,
+                        z_from = size_z / 2,
+                        z_to   = size_z
                     );
                 }
             }
-            *if(!is_printable) {
-                color("black", alpha= 0.2) Box(
-                    x_from = -0.2,
-                    x_to   = -0.1,
-                    y_to   = size_y,
-                    z_from = size_z / 2,
-                    z_to   = size_z
-                );
-            }
         }
+        ArcsAndTrestles_cutout();
     }
     module AtEachWindowPosition() {
         for(i = [0 : window_panel_count - 1 ]) {

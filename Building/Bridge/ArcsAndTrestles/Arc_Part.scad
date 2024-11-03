@@ -123,34 +123,7 @@ module Arc_Part(
                     LedStripArcCutOut_2D(walk_bridge_config);
                 }
                 if (with_gutter_support) {
-                    mirror_copy(VEC_X) GutterSupport();
-                }
-                
-                module GutterSupport() {
-                    bridge_wall_top_height = ConfigGet(walk_bridge_config, "bridge_wall_top_height");
-                    bridge_wall_to_roof    = ConfigGet(walk_bridge_config, "bridge_wall_to_roof");
-                    bridge_wall            = ConfigGet(walk_bridge_config, "bridge_wall");
-                    gutter_width           = ConfigGet(walk_bridge_config, "gutter_width");
-                    
-                    BIAS = 0.1;
-                    polygon([
-                        [
-                            inner_bridge_width / 2 - BIAS,
-                            bridge_size_xz[1] - bridge_wall_to_roof - bridge_wall_top_height
-                        ], [
-                            inner_bridge_width / 2 + bridge_wall + gutter_width,
-                            bridge_size_xz[1] - bridge_wall_to_roof - bridge_wall_top_height
-                        ], [
-                            inner_bridge_width / 2 + bridge_wall + gutter_width,
-                            bridge_size_xz[1] - bridge_wall_to_roof - bridge_wall_top_height - nozzle(1)
-                        ], [
-                            inner_bridge_width / 2 + bridge_wall,
-                            bridge_size_xz[1] - bridge_wall_to_roof - bridge_wall_top_height - gutter_width
-                        ], [
-                            inner_bridge_width / 2 - BIAS,
-                            bridge_size_xz[1] - bridge_wall_to_roof - bridge_wall_top_height - gutter_width
-                        ]
-                    ]);
+                    mirror_copy(VEC_X) Arc_Part_GutterSupport_2D(walk_bridge_config);
                 }
             }
             
@@ -172,6 +145,50 @@ module Arc_Part(
     }
 }
 
-module Arc_Part_cutout(walk_bridge_config) {
-    // TODO
+module Arc_Part_GutterSupport_2D(walk_bridge_config, tolerance = 0) {
+    bridge_size_xz         = ConfigGet(walk_bridge_config, "bridge_size_xz");
+    bridge_wall_top_height = ConfigGet(walk_bridge_config, "bridge_wall_top_height");
+    bridge_wall_to_roof    = ConfigGet(walk_bridge_config, "bridge_wall_to_roof");
+    bridge_wall            = ConfigGet(walk_bridge_config, "bridge_wall");
+    gutter_width           = ConfigGet(walk_bridge_config, "gutter_width");
+    
+    inner_bridge_width = bridge_size_xz[0] - 2 * bridge_wall;
+    
+    BIAS = nozzle(.5);
+    offset(delta=tolerance) polygon([
+        [
+            inner_bridge_width / 2 - BIAS,
+            bridge_size_xz[1] - bridge_wall_to_roof - bridge_wall_top_height
+        ], [
+            inner_bridge_width / 2 + bridge_wall + gutter_width,
+            bridge_size_xz[1] - bridge_wall_to_roof - bridge_wall_top_height
+        ], [
+            inner_bridge_width / 2 + bridge_wall + gutter_width,
+            bridge_size_xz[1] - bridge_wall_to_roof - bridge_wall_top_height - nozzle(1)
+        ], [
+            inner_bridge_width / 2 + bridge_wall,
+            bridge_size_xz[1] - bridge_wall_to_roof - bridge_wall_top_height - gutter_width
+        ], [
+            inner_bridge_width / 2 - BIAS,
+            bridge_size_xz[1] - bridge_wall_to_roof - bridge_wall_top_height - gutter_width
+        ]
+    ]);
+}
+
+module Arc_Part_cutout(walk_bridge_config, tolerance = mm(0.05)) {
+    assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
+    bridge_height = ConfigGet(walk_bridge_config, "bridge_clearance");
+    arc_thickness = ConfigGet(walk_bridge_config, "arc_thickness");
+   
+    translate([0,0,bridge_height]) rotate(90, VEC_X) {
+        LinearExtrude(z_size = arc_thickness + 2 * tolerance) {
+            Arc_Part_cutout_2D(walk_bridge_config, tolerance);
+        }
+    }
+}
+
+module Arc_Part_cutout_2D(walk_bridge_config, tolerance) {
+    assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
+    Trestle_Part_cutout2D(walk_bridge_config, tolerance);
+    Arc_Part_GutterSupport_2D(walk_bridge_config, tolerance);
 }
