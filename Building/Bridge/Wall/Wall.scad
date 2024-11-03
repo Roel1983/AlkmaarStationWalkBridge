@@ -23,13 +23,15 @@ Wall(
 module Wall(
     walk_bridge_config,
     xray     = false,
-    colorize = false
+    colorize = false,
+    index    = undef
 ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     
     GlueTogether(
         xray     = xray,
-        colorize = colorize
+        colorize = colorize,
+        index    = index
     ) {
         WallSegment1Left_Part (walk_bridge_config);
         WallSegment1Right_Part(walk_bridge_config);

@@ -9,13 +9,14 @@ use <../../ArcsAndTrestles/ArcsAndTrestles.scad>
 
 walk_bridge_config  = WalkBridgeConfig();
 wall_segment_config = ConfigGet(walk_bridge_config, "wall_segment1_config");
-WallSegment(walk_bridge_config, wall_segment_config);
+WallSegment(walk_bridge_config, wall_segment_config, window_panel_count_override=2);
 
 module WallSegment(
     walk_bridge_config,
     wall_segment_config,
     mirror_x = false,
-    is_printable = false
+    is_printable = false,
+    window_panel_count_override = undef
  ) {
     assert(is_config(walk_bridge_config, "WalkBridgeConfig"));
     assert(is_config(wall_segment_config, "WallSegmentConfig"));
@@ -26,10 +27,19 @@ module WallSegment(
     bridge_wall_window_panel_width = ConfigGet(walk_bridge_config, "bridge_wall_window_panel_width");
     
     pos_y              = ConfigGet(wall_segment_config, "pos_y");
-    size_y             = ConfigGet(wall_segment_config, "size_y");
-    window_panel_count = ConfigGet(wall_segment_config, "window_panel_count");
+    _window_panel_count= ConfigGet(wall_segment_config, "window_panel_count");
+    window_panel_count = (window_panel_count_override != undef) ? (
+                            window_panel_count_override
+                         ) : (
+                            _window_panel_count
+                         );
     window_panel_width = ConfigGet(wall_segment_config, "window_panel_width");
     offset_begin       = ConfigGet(wall_segment_config, "offset_begin");
+    size_y             = ConfigGet(wall_segment_config, "size_y")
+                       - ((window_panel_count_override != undef) ? (
+                            (_window_panel_count - window_panel_count)
+                            * window_panel_width
+                         ) : 0);
     
     bridge_wall_to_roof      = ConfigGet(walk_bridge_config, "bridge_wall_to_roof");
     bridge_wall_top_height   = ConfigGet(walk_bridge_config, "bridge_wall_top_height");
