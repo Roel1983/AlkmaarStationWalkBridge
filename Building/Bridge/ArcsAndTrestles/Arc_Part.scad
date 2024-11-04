@@ -182,7 +182,9 @@ module Arc_Part_cutout(walk_bridge_config, tolerance = mm(0.05)) {
    
     translate([0,0,bridge_height]) rotate(90, VEC_X) {
         LinearExtrude(z_size = arc_thickness + 2 * tolerance) {
-            Arc_Part_cutout_2D(walk_bridge_config, tolerance);
+            mirror_copy(VEC_X) {
+                Arc_Part_cutout_2D(walk_bridge_config, tolerance);
+            }
         }
     }
 }
