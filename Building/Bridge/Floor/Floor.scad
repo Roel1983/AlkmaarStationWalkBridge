@@ -3,9 +3,9 @@ include <../../../WalkBridgeConfig.inc>
 include <../../../../Utils/GlueTogether.inc>
 include <../../../../Utils/Box.inc>
 
-use <FloorBegin.scad>
-use <FloorCenter.scad>
-use <FloorEnd.scad>
+use <FloorBegin/FloorBegin.scad>
+use <FloorCenter/FloorCenter.scad>
+use <FloorEnd/FloorEnd.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 Floor(

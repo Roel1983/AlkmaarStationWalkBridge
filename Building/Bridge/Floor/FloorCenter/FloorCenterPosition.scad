@@ -1,13 +1,6 @@
-include <../../../WalkBridgeConfig.inc>
+include <../../../../WalkBridgeConfig.inc>
 
-use <../../../../FlatChain/FloorStraight.scad>
-use <../../../../FlatChain/Floor.scad>
-
-walk_bridge_config = WalkBridgeConfig();
-
-FloorCenter(walk_bridge_config);
-
-module FloorCenter(
+module FloorCenterPosition(
     walk_bridge_config,
     colorize = true
 ) {
@@ -22,6 +15,6 @@ module FloorCenter(
         bridge_floor_from + hub_length,
         bridge_clearance + floor_thickness
     ]) {
-        rotate(90) FloorStraight(bridge_chain_floor_config);;
+        rotate(90) children();
     }
 }

@@ -1,13 +1,6 @@
-include <../../../WalkBridgeConfig.inc>
+include <../../../../WalkBridgeConfig.inc>
 
-use <../../../../FlatChain/FloorHub.scad>
-use <../../../../FlatChain/Floor.scad>
-
-walk_bridge_config = WalkBridgeConfig();
-
-FloorBegin(walk_bridge_config);
-
-module FloorBegin(
+module FloorBeginPosition(
     walk_bridge_config,
     colorize = true
 ) {
@@ -20,6 +13,6 @@ module FloorBegin(
         bridge_floor_from,
         bridge_clearance + floor_thickness
     ]) {
-        rotate(90) FloorHub(bridge_chain_floor_config, show_links = true);
+        rotate(90) children();
     }
 }
