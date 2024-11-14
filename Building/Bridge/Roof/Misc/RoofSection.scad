@@ -54,7 +54,7 @@ module RoofSectionCenter(
     
     _roof_length = optional(roof_length, size_y / section_count);
     
-    translate([0, pos_y + (index + 1) * roof_length]) {
+    translate([0, pos_y + (index + 1) * _roof_length]) {
         RoofSection(
             walk_bridge_config,
             _roof_length,
