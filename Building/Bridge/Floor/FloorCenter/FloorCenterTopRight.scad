@@ -1,6 +1,9 @@
 include <../../../../WalkBridgeConfig.inc>
 
-use <FloorCenterTopLeft.scad>
+use <../../../../../FlatChain/FloorStraightTopRight.scad>
+use <../../../../../FlatChain/Floor.scad>
+
+use <FloorCenterPosition.scad>
 
 walk_bridge_config = WalkBridgeConfig();
 
@@ -10,10 +13,12 @@ module FloorCenterTopRight(
     walk_bridge_config,
     colorize = true
 ) {
-    mirror(VEC_X) {
-        FloorCenterTopLeft(
-            walk_bridge_config = walk_bridge_config,
-            colorize = colorize
-        );
+    bridge_chain_floor_config = ConfigGet(walk_bridge_config, "bridge_chain_floor_config");
+    
+    FloorCenterPosition(
+        walk_bridge_config = walk_bridge_config,
+        colorize = colorize
+    ) {
+        FloorStraightTopRight(bridge_chain_floor_config);
     }
 }

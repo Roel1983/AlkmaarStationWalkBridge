@@ -1,6 +1,6 @@
 include <../../../../WalkBridgeConfig.inc>
 
-use <../../../../../FlatChain/FloorStraightTopOuter.scad>
+use <../../../../../FlatChain/FloorStraightTopLeft.scad>
 use <../../../../../FlatChain/Floor.scad>
 
 use <FloorCenterPosition.scad>
@@ -19,6 +19,6 @@ module FloorCenterTopLeft(
         walk_bridge_config = walk_bridge_config,
         colorize = colorize
     ) {
-        FloorStraightTopOuter(bridge_chain_floor_config);
+        FloorStraightTopLeft(bridge_chain_floor_config);
     }
 }
