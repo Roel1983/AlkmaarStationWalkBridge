@@ -19,6 +19,6 @@ module FloorEndTopInner(
         walk_bridge_config = walk_bridge_config,
         colorize = colorize
     ) {
-        FloorHubTopInner(bridge_chain_floor_config);
+        FloorHubTopInner(bridge_chain_floor_config, inner_overlap = true);
     }
 }
