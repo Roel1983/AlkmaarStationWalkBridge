@@ -268,7 +268,9 @@ function WalkBridgeConfig(
             groove_config       = GrooveConfig(link_config = link_config),
             hub_length          = bridge_floor_hub_length,
             straight_link_count = bridge_floor_straight_link_count,
-            width               = bridge_size_xz[0] - 2 * bridge_wall
+            width               = bridge_size_xz[0] - 2 * bridge_wall,
+            slot_width          = mm(3.0),
+            slot_edge_distance  = mm(4.0)
         ) 
     ) [
         ["platform_height",           platform_height],
